@@ -3,7 +3,6 @@ package com.yuan.springbootwebmapper.mapper;
 import com.yuan.springbootwebmapper.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.BaseMapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
