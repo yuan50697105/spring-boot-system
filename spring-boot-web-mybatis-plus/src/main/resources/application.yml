@@ -12,8 +12,9 @@ logging:
     web: debug
 mybatis:
   mapper-locations: classpath:mapper/*
+  configuration:
+    default-executor-type: batch
 mybatis-plus:
   mapper-locations: classpath:mapper/*
-  global-config:
-    db-config:
-      id-type: none
+  configuration:
+    default-executor-type: batch

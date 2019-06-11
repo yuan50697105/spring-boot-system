@@ -16,8 +16,8 @@
     <description>个人测试项目</description>
     <modules>
         <module>spring-boot-web</module>
-        <module>spring-boot-web-flux</module>
         <module>spring-boot-web-freemarker</module>
+        <module>spring-boot-web-thymeleaf</module>
         <module>spring-boot-web-jpa</module>
         <module>spring-boot-web-jdbc</module>
         <module>spring-boot-web-jooq</module>
@@ -26,6 +26,7 @@
         <module>spring-boot-web-mybatis-mapper</module>
         <module>spring-boot-web-mybatis-enhance</module>
         <module>spring-boot-web-socket</module>
+        <module>spring-boot-web-flux</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

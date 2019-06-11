@@ -1,6 +1,4 @@
 spring:
-  freemarker:
-    suffix: .html
   datasource:
     username: root
     password: root
@@ -12,3 +10,5 @@ logging:
     web: debug
 mybatis:
   mapper-locations: classpath:mapper/*
+  configuration:
+    default-executor-type: batch
