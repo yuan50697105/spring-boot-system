@@ -5,12 +5,21 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/webjpa
+    url: jdbc:mysql://localhost:3306/webjpa?serverTimezone=Asia/Shanghai
   jpa:
     hibernate:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        cache:
+          factory_class:  org.hibernate.cache.ehcache.internal.SingletonEhcacheRegionFactory
+#        search:
+#          default:
+#            directory_provider: filesystem
+#            indexBase:  indexes
+#            lucene_version: LUCENE_36
 logging:
   level:
     sql: debug

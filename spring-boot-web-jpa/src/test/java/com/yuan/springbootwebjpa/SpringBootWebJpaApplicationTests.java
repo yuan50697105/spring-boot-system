@@ -1,6 +1,11 @@
 package com.yuan.springbootwebjpa;
 
 import com.yuan.springbootwebjpa.entity.User;
+import org.hibernate.jpa.QueryHints;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -61,6 +67,37 @@ public class SpringBootWebJpaApplicationTests {
         EntityManager bean = context.getBean(EntityManager.class);
         StoredProcedureQuery selectUser = bean.createStoredProcedureQuery("selectUser", User.class);
         System.out.println(selectUser.getResultList());
+    }
+
+    @Test
+    @Transactional
+    @Rollback(false)
+    public void testFullText() {
+        FullTextEntityManager entityManager = Search.getFullTextEntityManager(context.getBean(EntityManager.class));
+        try {
+            entityManager.createIndexer(User.class).startAndWait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        QueryBuilder queryBuilder = entityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class).get();
+//        org.apache.lucene.search.Query query = queryBuilder.keyword().onField("name").matching("aa").createQuery();
+        org.apache.lucene.search.Query query = queryBuilder.keyword().wildcard().onField("name").matching("*a*").createQuery();
+        FullTextQuery fullTextQuery = entityManager.createFullTextQuery(query, User.class);
+        fullTextQuery.setHint(QueryHints.HINT_CACHEABLE, true);
+        System.out.println(fullTextQuery.getResultList());
+        System.out.println(fullTextQuery.getResultList());
+
+    }
+
+    @Test
+    @Transactional
+    public void testSelectFullText() {
+        EntityManager entityManager = context.getBean(EntityManager.class);
+        TypedQuery<User> select_u_from_user_u = entityManager.createQuery("SELECT u from User u", User.class);
+        select_u_from_user_u.setHint(QueryHints.HINT_CACHEABLE, true);
+        List<User> resultList = select_u_from_user_u.getResultList();
+        System.out.println(resultList);
+        System.out.println(resultList);
     }
 
 }
