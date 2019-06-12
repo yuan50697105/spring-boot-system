@@ -1,6 +1,8 @@
 package com.yuan.springbootwebjdbc.entity;
 
 import lombok.Data;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /**
  * @author yuane
@@ -9,4 +11,6 @@ import lombok.Data;
 @Data
 public class User {
     private String id;
+    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 }
