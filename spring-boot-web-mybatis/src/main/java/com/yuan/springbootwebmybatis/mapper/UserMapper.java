@@ -4,6 +4,8 @@ import com.yuan.springbootwebmybatis.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author yuane
  * @date 2019/6/8 16:13
@@ -11,5 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserMapper {
-    public int insert(User user);
+    int insert(User user);
+
+    List<User> selectAll();
 }

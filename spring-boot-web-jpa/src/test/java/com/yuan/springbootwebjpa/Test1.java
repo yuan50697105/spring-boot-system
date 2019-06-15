@@ -1,11 +1,8 @@
 package com.yuan.springbootwebjpa;
 
-import com.yuan.springbootwebjpa.entity.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
-
-import java.util.function.Function;
 
 /**
  * @author yuane
@@ -20,7 +17,9 @@ public class Test1 {
         String id=yyyyMMddhhmmss+s;
         System.out.println(id);
         System.out.println(id.length());
+    }
 
-        Function<User, String> getId = User::getId;
+    public void $() {
+
     }
 }

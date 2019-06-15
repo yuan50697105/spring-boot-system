@@ -2,6 +2,7 @@ package com.yuan.springbootwebjdbc;
 
 import com.yuan.springbootwebjdbc.dao.UserDao;
 import com.yuan.springbootwebjdbc.entity.User;
+import com.yuan.springbootwebjdbc.utils.IdUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class SpringBootWebJdbcApplicationTests {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             User user = new User();
-//            user.setId(IdUtils.generateId());
+            user.setId(IdUtils.generateId());
             user.setName("datajdbc");
             users.add(user);
         }

@@ -12,11 +12,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootWebMybatisApplicationTests {
     @Autowired
     ApplicationContext context;
+
     @Test
     public void contextLoads() {
     }
@@ -24,12 +27,21 @@ public class SpringBootWebMybatisApplicationTests {
     @Test
     @Transactional
     @Rollback(false)
-    public void testInsert(){
-        User user=new User();
+    public void testInsert() {
+
+        User user = new User();
         user.setId(IdUtils.generateId());
         user.setName("myaaa");
         UserMapper bean = context.getBean(UserMapper.class);
         bean.insert(user);
+        user = new User();
+        user.setId(IdUtils.generateId());
+        user.setName("myaaa");
+        bean.insert(user);
+        List<User> users = bean.selectAll();
+        System.out.println(users);
+        List<User> users1 = bean.selectAll();
+        System.out.println(users1);
     }
 
 }

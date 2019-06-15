@@ -9,6 +9,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author yuane
@@ -20,7 +21,7 @@ import javax.persistence.*;
 @Analyzer(impl = SmartChineseAnalyzer.class)
 @Table(name = "user")
 @Data
-public class User {
+public class User implements Serializable {
     @Id
     @DocumentId
     @GeneratedValue(generator = "idGenerator")

@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -65,8 +64,6 @@ public class SpringBootWebJpaApplicationTests {
     @Test
     public void testSelect3(){
         EntityManager bean = context.getBean(EntityManager.class);
-        StoredProcedureQuery selectUser = bean.createStoredProcedureQuery("selectUser", User.class);
-        System.out.println(selectUser.getResultList());
     }
 
     @Test

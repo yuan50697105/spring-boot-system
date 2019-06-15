@@ -5,10 +5,11 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/webjpa
+    url: jdbc:mysql://localhost:3306/webjpa?serverTimezone=Asia/Shanghai
   jooq:
     sql-dialect: mysql_8_0
 logging:
   level:
     sql: debug
     web: debug
+#    root: debug
