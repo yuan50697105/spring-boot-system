@@ -29,6 +29,7 @@ public class SpringBootWebJooqApplicationTests {
     @Transactional
 //    @Rollback(false)
     public void testDelete() {
+
     }
 
 }
