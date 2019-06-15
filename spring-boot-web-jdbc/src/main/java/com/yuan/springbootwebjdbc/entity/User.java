@@ -1,8 +1,9 @@
 package com.yuan.springbootwebjdbc.entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 /**
  * @author yuane
@@ -11,8 +12,10 @@ import org.springframework.data.relational.core.mapping.Column;
 @Data
 public class User {
     @Id
-    @Column(value = "id")
+    @Column(name = "id")
     private String id;
-    @Column(value = "name")
+    @Column(name = "name")
     private String name;
+
+
 }

@@ -8,7 +8,6 @@ logging:
   level:
     sql: debug
     web: debug
-mybatis:
-  mapper-locations: classpath:mapper/*
-  configuration:
-    default-executor-type: batch
+easyjdbc:
+  use-local-cache: true
+  show-sql: true

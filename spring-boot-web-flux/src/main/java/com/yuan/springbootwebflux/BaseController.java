@@ -3,7 +3,6 @@ package com.yuan.springbootwebflux;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,9 +18,10 @@ public class BaseController {
         return Mono.justOrEmpty("aaa");
     }
 
-    @RequestMapping
+
+    @RequestMapping("createMono1")
     @ResponseBody
-    public Flux createFlux() {
-        return Flux.just("a", "b");
+    public Mono createMono1(String aaa) {
+        return Mono.justOrEmpty(aaa);
     }
 }
