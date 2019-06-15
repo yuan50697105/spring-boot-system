@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-chinese2pinyin</artifactId>
+    <artifactId>spring-boot-base-chinese2pinyin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-chinese2pinyin</name>
     <description>Demo project for Spring Boot</description>
