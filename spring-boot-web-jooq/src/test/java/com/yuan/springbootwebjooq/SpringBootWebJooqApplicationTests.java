@@ -1,6 +1,5 @@
 package com.yuan.springbootwebjooq;
 
-import com.yuan.springbootwebjooq.dao.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +23,12 @@ public class SpringBootWebJooqApplicationTests {
     @Transactional
     @Rollback(false)
     public void testSave(){
-        UserDao userDao = context.getBean(UserDao.class);
-//        userDao.insert(new User());
-        userDao.selectAll();
     }
 
     @Test
     @Transactional
 //    @Rollback(false)
     public void testDelete() {
-        UserDao userDao = context.getBean(UserDao.class);
-        userDao.testDelete();
     }
 
 }

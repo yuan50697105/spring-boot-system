@@ -1,8 +1,5 @@
 package com.yuan.springbootwebmapper;
 
-import com.yuan.springbootwebmapper.entity.User;
-import com.yuan.springbootwebmapper.mapper.UserMapper;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +23,6 @@ public class SpringBootWebMapperApplicationTests {
     @Transactional
     @Rollback(false)
     public void testSave() {
-        SqlSession bean = context.getBean(SqlSession.class);
-        UserMapper mapper = bean.getMapper(UserMapper.class);
-        User user = new User();
-        user.setName("testmapper");
-        mapper.insert(user);
-        System.out.println(user);
     }
 
 }
