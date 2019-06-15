@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>./pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-thymleaf</artifactId>
+    <artifactId>spring-boot-web-thymeleaf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-web-thymleaf</name>
     <description>Demo project for Spring Boot</description>

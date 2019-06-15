@@ -26,6 +26,8 @@
         <module>spring-boot-web-mybatis-mapper</module>
         <module>spring-boot-web-mybatis-enhance</module>
         <module>spring-boot-web-socket</module>
+        <module>spring-boot-web-shiro</module>
+        <module>spring-boot-web-security</module>
         <module>spring-boot-web-flux</module>
     </modules>
     <properties>
