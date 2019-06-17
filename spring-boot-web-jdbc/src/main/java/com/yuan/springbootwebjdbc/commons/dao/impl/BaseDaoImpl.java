@@ -9,4 +9,5 @@ import com.yuan.springbootwebjdbc.commons.entity.BaseEntity;
  * @date 2019/6/15 16:27
  **/
 public abstract class BaseDaoImpl<T extends BaseEntity> extends SimpleJdbcDao<T> implements BaseDao<T> {
+
 }
