@@ -34,7 +34,7 @@ public class SpringBootWebJdbcApplicationTests {
     }
 
     public void test1() {
-        jdbcTemplate.queryForList("select * from ")
+//        jdbcTemplate.queryForList("select * from ")
     }
 
 }
