@@ -2,6 +2,7 @@ package com.yuan.springbootwebmapper.commons.service;
 
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,6 +16,11 @@ public interface BaseService<T> {
     int insert(T t);
 
     int insertSelective(T t);
+
+    int save(T t);
+
+    @Transactional
+    int saveSelective(T t);
 
     int insertAll(T[] arrays);
 

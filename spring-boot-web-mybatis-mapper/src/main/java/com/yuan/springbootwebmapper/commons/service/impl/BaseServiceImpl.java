@@ -6,7 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.yuan.springbootwebmapper.commons.entity.BaseEntity;
 import com.yuan.springbootwebmapper.commons.mapper.BaseMapper;
 import com.yuan.springbootwebmapper.commons.service.BaseService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -27,8 +29,41 @@ public abstract class BaseServiceImpl<T extends BaseEntity, S extends BaseMapper
     }
 
     @Override
+    @Transactional
     public int insertSelective(T t) {
         return getMapper().insertSelective(t);
+    }
+
+    @Override
+    @Transactional
+    public int save(T t) {
+        if (StringUtil.isEmpty(t.getId())) {
+            return insert(t);
+        } else {
+            T byId = findById(t.getId());
+            if (byId == null) {
+                return insert(t);
+            } else {
+                BeanUtils.copyProperties(t, byId);
+                return update(byId);
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public int saveSelective(T t) {
+        if (StringUtil.isEmpty(t.getId())) {
+            return insertSelective(t);
+        } else {
+            T byId = findById(t.getId());
+            if (byId == null) {
+                return insertSelective(t);
+            } else {
+                BeanUtils.copyProperties(t, byId);
+                return updateSelecttive(byId);
+            }
+        }
     }
 
     @Override
