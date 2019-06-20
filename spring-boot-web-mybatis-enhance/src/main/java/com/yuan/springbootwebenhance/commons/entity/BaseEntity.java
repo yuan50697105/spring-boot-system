@@ -1,6 +1,6 @@
 package com.yuan.springbootwebenhance.commons.entity;
 
-import com.yuan.springbootutils.utils.IdUtils;
+import com.gitee.hengboy.mybatis.enhance.common.annotation.Id;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,5 +11,6 @@ import java.io.Serializable;
  **/
 @Data
 public class BaseEntity implements Serializable {
-    private String id = IdUtils.getTimeId(20);
+    @Id
+    private String id;
 }
