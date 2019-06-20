@@ -11,6 +11,10 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.SelectQuery;
+import org.jooq.impl.DSL;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,16 +44,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
     private final EntityInformation<T, ID> entityInformation;
     private final FullTextEntityManager fullTextEntityManager;
     private final JPAQueryFactory jpaQueryFactory;
-    private final SearchQuery searchQuery;
+    private final SearchQuery<T> searchQuery;
+    private final DSLContext dslContext;
 
-    @SuppressWarnings("unchecked")
-    public BaseRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager, EntityPathResolver resolver) {
+    public BaseRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager, EntityPathResolver resolver, DSLContext dslContext) {
         super(entityInformation, entityManager, resolver);
         this.entityManager = entityManager;
         this.fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         this.entityInformation = entityInformation;
         this.jpaQueryFactory = new JPAQueryFactory(entityManager);
-        this.searchQuery = new SearchQuery((FullTextSession) fullTextEntityManager.getDelegate(), resolver.createPath(entityInformation.getJavaType()));
+        this.dslContext = dslContext;
+        this.searchQuery = new SearchQuery<>((FullTextSession) fullTextEntityManager.getDelegate(), resolver.createPath(entityInformation.getJavaType()));
     }
 
     @Override
@@ -73,12 +78,14 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<T> fullTextList(org.apache.lucene.search.Query query) {
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, entityInformation.getJavaType());
         return (List<T>) fullTextQuery.getResultList();
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public Optional<T> fullTextOne(org.apache.lucene.search.Query query) {
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, entityInformation.getJavaType());
         return Optional.ofNullable((T) fullTextQuery.getSingleResult());
@@ -118,6 +125,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         return query.executeUpdate();
     }
 
+    @Override
+    public int excueteByQuery(org.jooq.Query query) {
+        return dslContext.execute(query);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Optional<T> findOneBySQL(String sql, Object... objects) {
@@ -152,6 +164,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         TypedQuery<T> query = entityManager.createQuery(hql, entityInformation.getJavaType());
         map.forEach(query::setParameter);
         return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
+    public Optional<T> findOneByQuery(SelectQuery<org.jooq.Record> selectQuery) {
+        SelectQuery<org.jooq.Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findOneByHQL(query.getSQL(), query.getBindValues());
     }
 
 
@@ -197,6 +215,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         return Optional.ofNullable(((Map<String, Object>) nativeQuery.getSingleResult()));
     }
 
+    @Override
+    public Optional<Map<String, Object>> findOneByQueryToMap(SelectQuery<Record> selectQuery) {
+        SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findOneBySQLToMap(query.getSQL(), query.getBindValues());
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<T> findAllBySQL(String sql, Object... objects) {
@@ -231,6 +255,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         TypedQuery<T> nativeQuery = entityManager.createQuery(hql, entityInformation.getJavaType());
         map.forEach(nativeQuery::setParameter);
         return nativeQuery.getResultList();
+    }
+
+    @Override
+    public List<T> findAllByQuery(SelectQuery<Record> selectQuery) {
+        SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllByHQL(query.getSQL(), query.getBindValues());
     }
 
 
@@ -274,6 +304,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         map.forEach(nativeQuery::setParameter);
         nativeQuery.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return (List<Map<String, Object>>) nativeQuery.getResultList();
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByQueryToMap(SelectQuery<Record> selectQuery) {
+        SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllBySQLToMap(query.getSQL(), query.getBindValues());
     }
 
     private String createCountSQL(String sql) {
@@ -344,6 +380,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         return new PageImpl<>(resultList, pageable, singleResult);
     }
 
+    @Override
+    public Page<T> findAllByQuery(SelectQuery<Record> selectQuery, Pageable pageable) {
+        SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllBySQL(query.getSQL(),pageable,query.getBindValues());
+    }
+
     @SuppressWarnings({"unchecked", "Duplicates"})
     @Override
     public Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Object... objects) {
@@ -406,5 +448,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         List<T> resultList = nativeQuery.getResultList();
         Long singleResult = countQuery.getSingleResult();
         return new PageImpl<>(((List<Map<String, Object>>) resultList), pageable, singleResult);
+    }
+
+    @Override
+    public Page<Map<String, Object>> findAllByQueryToMap(SelectQuery<Record> selectQuery, Pageable pageable) {
+        SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllBySQLToMap(query.getSQL(),pageable,query.getBindValues());
     }
 }
