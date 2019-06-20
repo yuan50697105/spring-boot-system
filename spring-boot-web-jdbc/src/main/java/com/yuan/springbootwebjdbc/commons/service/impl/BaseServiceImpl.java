@@ -15,6 +15,7 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/6/15 16:28
  **/
+@Transactional
 public abstract class BaseServiceImpl<T extends BaseEntity, S extends BaseDao<T>> implements BaseService<T> {
     protected abstract S getDao();
 

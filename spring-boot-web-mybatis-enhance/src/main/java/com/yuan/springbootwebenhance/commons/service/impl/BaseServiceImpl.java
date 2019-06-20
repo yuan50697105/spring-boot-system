@@ -16,47 +16,48 @@ import java.util.List;
  * @author yuane
  * @date 2019/6/15 22:22
  **/
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
     protected abstract S getMapper();
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
         getMapper().insert(t);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void insertAll(T[] ts) {
         getMapper().insertArray(ts);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void insertAll(Collection<T> collection) {
         getMapper().insertCollection(collection);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
         getMapper().update(t);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(ID id) {
         getMapper().deleteOne(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(ID[] ids) {
         getMapper().deleteArray(ids);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Collection<ID> ids) {
         getMapper().deleteCollection(ids);
     }

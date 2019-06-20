@@ -2,7 +2,7 @@ package com.yuan.springbootwebmapper.commons.service;
 
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageInfo;
-import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,18 +17,13 @@ public interface BaseService<T> {
 
     int insertSelective(T t);
 
-    int save(T t);
-
-    @Transactional
-    int saveSelective(T t);
-
     int insertAll(T[] arrays);
 
     int insertAll(List<T> list);
 
     int update(T t);
 
-    int updateSelecttive(T t);
+    int updateSelective(T t);
 
     int delete(Serializable id);
 
@@ -40,9 +35,21 @@ public interface BaseService<T> {
 
     List<T> findAll(T t);
 
+    T findOne(T t);
+
+    T findByExample(Example example);
+
     PageInfo<T> findAll(IPage page);
 
     PageInfo<T> findAll(T t, IPage page);
 
+    PageInfo<T> findAll(Example example, IPage page);
+
     List<T> findAll();
+
+    List<T> findAllByExmaple(Example example);
+
+    int count(T t);
+
+    int countByExample(Example example);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,34 +20,41 @@ import java.util.Optional;
  * @date 2019/6/15 19:07
  **/
 
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseSerivceImpl<T extends BaseEntity, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
     protected abstract S getRepository();
 
+    protected boolean isNotEmpty(Object object) {
+        return !StringUtils.isEmpty(object);
+    }
+
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public T save(T t) {
         return getRepository().save(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Iterable<T> saveAll(Iterable<T> ts) {
         return getRepository().saveAll(ts);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(ID id) {
         getRepository().deleteById(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(ID... ids) {
         delete(Arrays.asList(ids));
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Iterable<ID> ids) {
         List<T> list = getRepository().findAllById(ids);
         if (list.size() > 0) {
