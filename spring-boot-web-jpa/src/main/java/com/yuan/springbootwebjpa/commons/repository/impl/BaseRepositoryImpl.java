@@ -126,7 +126,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
     }
 
     @Override
-    public int excueteByQuery(org.jooq.Query query) {
+    public int executeByQuery(org.jooq.Query query) {
         return dslContext.execute(query);
     }
 

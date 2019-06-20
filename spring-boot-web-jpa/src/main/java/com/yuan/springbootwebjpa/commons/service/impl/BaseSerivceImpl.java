@@ -1,6 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service.impl;
 
-import com.yuan.springbootwebjpa.commons.entity.BaseEntity;
+import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
 import org.springframework.data.domain.Example;
@@ -21,7 +21,7 @@ import java.util.Optional;
  **/
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseSerivceImpl<T extends BaseEntity, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
+public abstract class BaseSerivceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
     protected abstract S getRepository();
 
     protected boolean isNotEmpty(Object object) {

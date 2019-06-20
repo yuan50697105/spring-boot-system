@@ -46,7 +46,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     int executeByHQL(String sql, Map<String, Object> map);
 
-    int excueteByQuery(org.jooq.Query query);
+    int executeByQuery(org.jooq.Query query);
 
     Optional<T> findOneBySQL(String sql, Object... objects);
 
@@ -66,7 +66,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     Optional<Map<String, Object>> findOneByHQLToMap(String hql, Map<String, Object> map);
 
-    Optional<Map<String, Object> findOneByQueryToMap(SelectQuery<Record> selectQuery);
+    Optional<Map<String, Object>> findOneByQueryToMap(SelectQuery<Record> selectQuery);
 
     List<T> findAllBySQL(String sql, Object... objects);
 

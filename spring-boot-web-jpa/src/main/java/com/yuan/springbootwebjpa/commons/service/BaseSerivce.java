@@ -1,6 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service;
 
-import com.yuan.springbootwebjpa.commons.entity.BaseEntity;
+import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/6/15 19:07
  **/
-public interface BaseSerivce<T extends BaseEntity, ID extends Serializable> {
+public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     @Transactional
     T save(T t);
 
