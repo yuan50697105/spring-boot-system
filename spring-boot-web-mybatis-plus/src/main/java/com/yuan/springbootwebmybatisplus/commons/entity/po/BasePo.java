@@ -12,7 +12,7 @@ import java.util.Date;
  * @date 2019/6/15 23:28
  **/
 @Data
-public class BasePo implements Serializable {
+public abstract class BasePo implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
     private String createUser;

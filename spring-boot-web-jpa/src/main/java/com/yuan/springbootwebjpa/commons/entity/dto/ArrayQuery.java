@@ -7,7 +7,7 @@ import lombok.Data;
  * @date 2019/6/20 19:28
  **/
 @Data
-public class ArrayQuery {
+public final class ArrayQuery {
     private String sql;
     private Object[] objects;
 

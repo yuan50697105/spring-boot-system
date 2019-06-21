@@ -1,17 +1,15 @@
-package com.yuan.springbootwebjpa.commons.entity.vo;
+package com.yuan.springbootwebenhance.commons.entity.vo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/6/20 19:24
+ * @date 2019/6/21 20:49
  **/
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public final class AjaxResult implements Serializable {
+@JsonFormat(pattern = "yyyy-MM-dd")
+public final class AjaxResult {
     private String code;
     private String message;
     private Object data;

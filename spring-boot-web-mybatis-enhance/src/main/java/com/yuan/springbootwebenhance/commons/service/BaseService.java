@@ -2,7 +2,7 @@ package com.yuan.springbootwebenhance.commons.service;
 
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageInfo;
-import com.yuan.springbootwebenhance.commons.entity.BaseEntity;
+import com.yuan.springbootwebenhance.commons.entity.po.BasePo;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/6/15 22:22
  **/
-public interface BaseService<T extends BaseEntity, ID extends Serializable> {
+public interface BaseService<T extends BasePo, ID extends Serializable> {
     void insert(T t);
 
     void insertAll(T[] ts);

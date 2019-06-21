@@ -1,14 +1,12 @@
 package com.yuan.springbootwebjpa.commons.entity.po;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.DocumentId;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,18 +16,26 @@ import java.util.Date;
  **/
 @Data
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public class BasePo implements Serializable {
+public abstract class BasePo implements Serializable {
     @Id
     @DocumentId
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(strategy = "uuid2", name = "uuid2 ")
     private String id;
-    @CreatedDate
     private Date createDate;
-    @LastModifiedDate
     private Date updateDate;
-    @CreatedBy
     private String createUser;
-    @LastModifiedBy
     private String updateUser;
+
+    public BasePo() {
+    }
+
+    public BasePo(String id, Date createDate, Date updateDate, String createUser, String updateUser) {
+        this.id = id;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
+    }
+
 }

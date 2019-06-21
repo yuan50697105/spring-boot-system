@@ -10,7 +10,7 @@ import java.util.Map;
  * @date 2019/6/20 19:27
  **/
 @Data
-public class MapQuery {
+public final class MapQuery {
     private String sql;
     private Map<String, Object> map = new HashMap<>();
 

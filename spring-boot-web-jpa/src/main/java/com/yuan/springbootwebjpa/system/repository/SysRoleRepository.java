@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2019/6/20 22:41
  **/
 @Repository
-public interface SysRoleRepository extends BaseRepository<SysRole, Long> {
+public interface SysRoleRepository extends BaseRepository<SysRole, String> {
 }

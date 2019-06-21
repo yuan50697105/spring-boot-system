@@ -10,7 +10,7 @@ import java.util.Collection;
  * @date 2019/6/20 19:30
  **/
 @Data
-public class CollectionQuery {
+public final class CollectionQuery {
     private String sql;
     private Collection collection;
 

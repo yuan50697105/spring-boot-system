@@ -12,18 +12,19 @@ import java.io.Serializable;
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Result implements Serializable {
+public final class Result<T> implements Serializable {
     private String code;
     private String message;
-    private Object data;
+    private T data;
 
-    private Result(String code, String message, Object data) {
+    private Result(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public static Result of(String code, String message, Object data) {
+    @SuppressWarnings("unchecked")
+    public static <T> Result of(String code, String message, T data) {
         return new Result(code, message, data);
     }
 

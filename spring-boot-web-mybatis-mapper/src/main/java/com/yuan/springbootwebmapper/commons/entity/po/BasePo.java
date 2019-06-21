@@ -1,12 +1,14 @@
 package com.yuan.springbootwebmapper.commons.entity.po;
 
 import lombok.Data;
+import tk.mybatis.mapper.annotation.KeySql;
+import tk.mybatis.mapper.genid.GenId;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yuane
@@ -14,8 +16,17 @@ import java.io.Serializable;
  **/
 @Data
 @MappedSuperclass
-public class BasePo implements Serializable {
+public abstract class BasePo implements Serializable, GenId<String> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @KeySql(genId = BasePo.class)
     private String id;
+    private String createUser;
+    private String updateUser;
+    private Date createDate;
+    private Date updateDate;
+
+    @Override
+    public String genId(String table, String column) {
+        return UUID.randomUUID().toString();
+    }
 }

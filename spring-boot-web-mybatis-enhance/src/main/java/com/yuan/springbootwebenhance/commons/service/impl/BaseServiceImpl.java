@@ -3,7 +3,7 @@ package com.yuan.springbootwebenhance.commons.service.impl;
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yuan.springbootwebenhance.commons.entity.BaseEntity;
+import com.yuan.springbootwebenhance.commons.entity.po.BasePo;
 import com.yuan.springbootwebenhance.commons.mapper.BaseMapper;
 import com.yuan.springbootwebenhance.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2019/6/15 22:22
  **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
+public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
     protected abstract S getMapper();
 
     @Override
