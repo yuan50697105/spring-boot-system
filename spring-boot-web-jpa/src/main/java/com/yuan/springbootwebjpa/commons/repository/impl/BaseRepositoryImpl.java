@@ -260,7 +260,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
     @Override
     public List<T> findAllByQuery(SelectQuery<Record> selectQuery) {
         SelectQuery<Record> query = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
-        return findAllByHQL(query.getSQL(), query.getBindValues());
+        return findAllBySQL(query.getSQL(), query.getBindValues());
     }
 
 
@@ -417,6 +417,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends QuerydslJpaR
         Object singleResult = countQuery.getSingleResult();
         return new PageImpl<>((List<Map<String, Object>>) resultList, pageable, (Long) singleResult);
     }
+
 
     @SuppressWarnings({"unchecked", "Duplicates"})
     @Override

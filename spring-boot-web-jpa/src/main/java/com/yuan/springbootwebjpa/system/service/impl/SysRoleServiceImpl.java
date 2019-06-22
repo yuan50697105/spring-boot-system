@@ -1,7 +1,7 @@
 package com.yuan.springbootwebjpa.system.service.impl;
 
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
-import com.yuan.springbootwebjpa.commons.service.impl.BaseSerivceImpl;
+import com.yuan.springbootwebjpa.commons.service.impl.BaseServiceImpl;
 import com.yuan.springbootwebjpa.system.entity.bo.SysRoleQueryParam;
 import com.yuan.springbootwebjpa.system.entity.po.SysRole;
 import com.yuan.springbootwebjpa.system.repository.SysRoleRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @date 2019/6/20 22:44
  **/
 @Service
-public class SysRoleServiceImpl extends BaseSerivceImpl<SysRole, String, SysRoleRepository> implements SysRoleService {
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, String, SysRoleRepository> implements SysRoleService {
     private final SysRoleRepository sysRoleRepository;
 
     public SysRoleServiceImpl(SysRoleRepository sysRoleRepository) {

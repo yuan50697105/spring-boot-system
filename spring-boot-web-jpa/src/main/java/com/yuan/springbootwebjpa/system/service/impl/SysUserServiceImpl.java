@@ -1,7 +1,7 @@
 package com.yuan.springbootwebjpa.system.service.impl;
 
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
-import com.yuan.springbootwebjpa.commons.service.impl.BaseSerivceImpl;
+import com.yuan.springbootwebjpa.commons.service.impl.BaseServiceImpl;
 import com.yuan.springbootwebjpa.system.entity.bo.SysUserQueryParam;
 import com.yuan.springbootwebjpa.system.entity.po.SysUser;
 import com.yuan.springbootwebjpa.system.repository.SysUserRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @date 2019/6/20 22:32
  **/
 @Service
-public class SysUserServiceImpl extends BaseSerivceImpl<SysUser, Long, SysUserRepository> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Long, SysUserRepository> implements SysUserService {
     private final SysUserRepository sysUserRepository;
 
     public SysUserServiceImpl(SysUserRepository sysUserRepository) {
