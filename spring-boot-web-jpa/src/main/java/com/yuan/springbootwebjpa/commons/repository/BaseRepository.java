@@ -252,4 +252,5 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     Page<Map<String, Object>> findAllByHQLToMap(MapQuery query, Pageable pageable);
 
+    List<T> findAllByStore(String store, Object... objects);
 }

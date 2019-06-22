@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.EntityManager;
+import javax.persistence.StoredProcedureQuery;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -608,6 +609,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Page<Map<String, Object>> findAllByHQLToMap(MapQuery query, Pageable pageable) {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Optional<T> findOneByStore(String store, Object... objects) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store, entityInformation.getJavaType());
+        return Optional.ofNullable((T) storedProcedureQuery.getSingleResult())
+    }
+
+    @Override
+    public List<T> findAllByStore(String store, Object... objects) {
         return null;
     }
 }
