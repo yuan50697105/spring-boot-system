@@ -6,6 +6,8 @@ import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -148,5 +150,106 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> List<R> findAllBySQL(Class<R> type, CollectionQuery query);
 
+    <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Object... objects);
+
+    <R> List<R> findAllByHQL(Class<R> type, ArrayQuery query);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Collection collection);
+
+    <R> List<R> findAllByHQL(Class<R> type, CollectionQuery query);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Map<String, Object> map);
+
+    <R> List<R> findAllByHQL(Class<R> type, MapQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Object... objects);
+
+    List<Map<String, Object>> findAllBySQLToMap(ArrayQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Collection collection);
+
+    List<Map<String, Object>> findAllBySQLToMap(CollectionQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Map<String, Object> map);
+
+    List<Map<String, Object>> findAllBySQLToMap(MapQuery query);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Object... objects);
+
+    Page<T> findAllBySQL(ArrayQuery query, Pageable pageable);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Collection collection);
+
+    Page<T> findAllBySQL(CollectionQuery query, Pageable pageable);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Map<String, Object> map);
+
+    Page<T> findAllByDSL(SelectQuery<Record> selectQuery, Pageable pageable);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects);
+
+    Page<T> findAllByHQL(ArrayQuery query, Pageable pageable);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Collection collection);
+
+    Page<T> findAllByHQL(CollectionQuery query, Pageable pageable);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Map<String, Object> map);
+
+    Page<T> findAllByHQL(MapQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllBySQL(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllBySQL(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllBySQL(Class<R> type, MapQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllByHQL(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllByHQL(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllByHQL(Class<R> type, MapQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Object... objects);
+
+    Page<Map<String, Object>> findAllBySQLToMap(ArrayQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Collection collection);
+
+    Page<Map<String, Object>> findAllBySQLToMap(CollectionQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Map<String, Object> map);
+
+    Page<Map<String, Object>> findAllBySQLToMap(MapQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllByDSLToMap(SelectQuery<Record> selectQuery, Pageable pageable);
+
+    Page<Map<String, Object>> findAllByHQLToMap(String sql, Pageable pageable, Object... objects);
+
+    Page<Map<String, Object>> findAllByHQLToMap(ArrayQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllByHQLToMap(String hql, Pageable pageable, Collection collection);
+
+    Page<Map<String, Object>> findAllByHQLToMap(CollectionQuery query, Pageable pageable);
+
+    Page<Map<String, Object>> findAllByHQLToMap(String hql, Pageable pageable, Map<String, Object> map);
+
+    Page<Map<String, Object>> findAllByHQLToMap(MapQuery query, Pageable pageable);
 
 }
