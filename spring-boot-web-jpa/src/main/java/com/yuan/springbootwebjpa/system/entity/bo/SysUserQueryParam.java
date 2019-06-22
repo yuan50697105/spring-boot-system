@@ -1,14 +1,14 @@
 package com.yuan.springbootwebjpa.system.entity.bo;
 
 import com.yuan.springbootwebjpa.commons.entity.bo.BaseQueryParam;
-import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
-import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yuane
@@ -27,23 +27,24 @@ public class SysUserQueryParam extends BaseQueryParam {
     }
 
     @Builder
-    public SysUserQueryParam(String id, String[] ids, Iterable<String> iterable, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd, String name) {
-        super(id, ids, iterable, createUser, updateUser, createDate, createDateStart, createDateEnd, updateDate, updateDateStart, updateDateEnd);
+    public SysUserQueryParam(String id, String[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd, String name) {
+        super(id, ids, createUser, updateUser, createDate, createDateStart, createDateEnd, updateDate, updateDateStart, updateDateEnd);
         this.name = name;
     }
 
-    @Override
-    public MapQuery createMapQuery() {
-        return null;
+    public MapQuery createBaseQuery() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Map<String, Object> map = new HashMap<>();
+        if (isNotEmpty(getId())) {
+
+        }
+        if (isNotEmpty(getIds())) {
+
+        }
+        if (isNotEmpty(getName())) {
+
+        }
+        return MapQuery.of(stringBuilder.toString(), map);
     }
 
-    @Override
-    public ArrayQuery createArrayQuery() {
-        return null;
-    }
-
-    @Override
-    public CollectionQuery createCollectQuery() {
-        return null;
-    }
 }

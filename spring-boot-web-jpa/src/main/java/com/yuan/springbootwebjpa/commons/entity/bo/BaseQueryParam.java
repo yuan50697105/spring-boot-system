@@ -2,6 +2,7 @@ package com.yuan.springbootwebjpa.commons.entity.bo;
 
 import lombok.Data;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -17,7 +18,6 @@ import java.util.Map;
 public abstract class BaseQueryParam implements Serializable {
     private String id;
     private String[] ids;
-    private Iterable<String> iterable;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -30,10 +30,9 @@ public abstract class BaseQueryParam implements Serializable {
     public BaseQueryParam() {
     }
 
-    public BaseQueryParam(String id, String[] ids, Iterable<String> iterable, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParam(String id, String[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
-        this.iterable = iterable;
         this.createUser = createUser;
         this.updateUser = updateUser;
         this.createDate = createDate;
@@ -54,6 +53,10 @@ public abstract class BaseQueryParam implements Serializable {
             map.put(name, value);
         }
         return map;
+    }
+
+    protected boolean isNotEmpty(Object object) {
+        return !StringUtils.isEmpty(object);
     }
 
 }

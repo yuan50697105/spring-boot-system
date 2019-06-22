@@ -32,27 +32,24 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Long, SysUserRe
     }
 
     @Override
-    public Page findPageByBo(SysUserQueryParam sysUserBo, Pageable pageable) {
-        MapQuery baseQuery = createBaseQuery(sysUserBo);
-        return getRepository().findAllBySQL(baseQuery.getSql(), pageable, baseQuery.getMap());
+    public Page findPageByParams(SysUserQueryParam sysUserBo, Pageable pageable) {
+        return findAllBySQLToMap(createBaseQuery(sysUserBo), pageable);
     }
 
     @Override
-    public List findListByBo(SysUserQueryParam sysUserBo) {
-        MapQuery baseQuery = createBaseQuery(sysUserBo);
-        return getRepository().findAllBySQL(baseQuery.getSql(), baseQuery.getMap());
+    public List findListByParams(SysUserQueryParam sysUserBo) {
+        return findAllBySQLToMap(createBaseQuery(sysUserBo));
     }
 
     @Override
-    public Optional findOneByBo(SysUserQueryParam sysUserBo) {
-        MapQuery baseQuery = createBaseQuery(sysUserBo);
-        return getRepository().findOneBySQL(baseQuery.getSql(), baseQuery.getMap());
+    public Optional findOneByParams(SysUserQueryParam sysUserBo) {
+        return findOneBySQL(createBaseQuery(sysUserBo));
     }
 
     private MapQuery createBaseQuery(SysUserQueryParam sysUserBo) {
         StringBuilder stringBuilder = new StringBuilder();
-
         Map<String, Object> map = sysUserBo.toParamsMap();
+
         return MapQuery.of(stringBuilder.toString(), map);
     }
 }

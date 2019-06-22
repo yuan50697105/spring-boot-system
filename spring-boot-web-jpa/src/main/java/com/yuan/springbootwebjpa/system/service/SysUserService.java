@@ -14,9 +14,9 @@ import java.util.Optional;
  * @date 2019/6/20 22:32
  **/
 public interface SysUserService extends BaseSerivce<SysUser, Long> {
-    Page findPageByBo(SysUserQueryParam sysUserBo, Pageable pageable);
+    Page findPageByParams(SysUserQueryParam sysUserBo, Pageable pageable);
 
-    List findListByBo(SysUserQueryParam sysUserBo);
+    List findListByParams(SysUserQueryParam sysUserBo);
 
-    Optional findOneByBo(SysUserQueryParam sysUserBo);
+    Optional findOneByParams(SysUserQueryParam sysUserBo);
 }

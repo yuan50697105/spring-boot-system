@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/6/20 22:44
  **/
-public interface SysRoleService extends BaseSerivce<SysRole, Long> {
+public interface SysRoleService extends BaseSerivce<SysRole, String> {
     Page findPageByBo(SysRoleQueryParam sysRoleBo, Pageable pageable);
 
     List findListByBo(SysRoleQueryParam sysRoleBo);
