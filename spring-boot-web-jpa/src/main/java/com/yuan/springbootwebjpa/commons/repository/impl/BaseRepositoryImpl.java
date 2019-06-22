@@ -25,7 +25,6 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/6/15 17:09
  **/
-@SuppressWarnings("deprecation")
 @NoRepositoryBean
 public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
     private final EntityManager entityManager;
