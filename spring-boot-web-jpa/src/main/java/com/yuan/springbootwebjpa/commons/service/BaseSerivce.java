@@ -1,5 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service;
 
+import com.querydsl.core.types.Predicate;
 import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
@@ -38,17 +39,31 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     Optional<T> findById(ID id);
 
+    Optional<T> findOneByQuery(ArrayQuery query);
+
+    Optional<T> findOneByQuery(CollectionQuery query);
+
+    Optional<T> findOneByQuery(MapQuery query);
+
     List<T> findAllById(Iterable<ID> ids);
 
     Optional<T> findOne(T t);
 
     Optional<T> findOne(Specification<T> specification);
 
+    Optional<T> findOne(Predicate predicate);
+
     Optional<T> findOneBySQL(String sql, Object... objects);
 
     Optional<T> findOneBySQL(String sql, Collection collection);
 
     Optional<T> findOneBySQL(String sql, Map<String, Object> map);
+
+    Optional<T> findOneByHQL(String hql, Object... objects);
+
+    Optional<T> findOneByHQL(String hql, Collection collection);
+
+    Optional<T> findOneByHQL(String hql, Map<String, Object> map);
 
     Optional<T> findOneByDSLQuery(SelectQuery<Record> selectQuery);
 
@@ -57,8 +72,6 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     Optional<T> findOneBySQLQuery(ArrayQuery query);
 
     Optional<T> findOneBySQLQuery(CollectionQuery query);
-
-    Optional<T> findOneByHQL(String hql, Object... objects);
 
     List<T> findAll();
 
@@ -70,11 +83,19 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     List<T> findAll(Specification<T> specification, Sort sort);
 
+    List<T> findAll(Predicate predicate);
+
     List<T> findAllBySQL(String sql, Object... objects);
 
     List<T> findAllBySQL(String sql, Collection collections);
 
     List<T> findAllBySQL(String sql, Map<String, Object> map);
+
+    List<T> findAllByHQL(String hql, Object... objects);
+
+    List<T> findAllByHQL(String hql, Collection collection);
+
+    List<T> findAllByHQL(String hql, Map<String, Object> map);
 
     List<T> findAllByDSLQuery(SelectQuery<Record> selectQuery);
 
@@ -84,17 +105,29 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     List<T> findAllBySQLQuery(MapQuery query);
 
+    List<T> findAllByQuery(ArrayQuery query);
+
+    List<T> findAllByQuery(CollectionQuery query);
+
+    List<T> findAllByQuery(MapQuery query);
+
     Page<T> findAll(Pageable pageable);
 
     Page<T> findAll(T t, Pageable pageable);
 
     Page<T> findAll(Specification<T> specification, Pageable pageable);
 
+    Page<T> findAll(Predicate predicate, Pageable pageable);
+
     Page<T> findAllBySQL(String sql, Pageable pageable, Object... objects);
 
     Page<T> findAllBySQL(String sql, Pageable pageable, Collection collections);
 
     Page<T> findAllBySQL(String sql, Pageable pageable, Map<String, Object> map);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Collection collection);
 
     Page<T> findAllByDSLQuery(SelectQuery<Record> selectQuery, Pageable pageable);
 

@@ -1,8 +1,5 @@
 package com.yuan.springbootwebjpa.commons.entity.bo;
 
-import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
-import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
-import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import lombok.Data;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -29,7 +26,6 @@ public abstract class BaseQueryParam implements Serializable {
     private Date updateDate;
     private Date updateDateStart;
     private Date updateDateEnd;
-    private QueryType queryType;
 
     public BaseQueryParam() {
     }
@@ -60,13 +56,4 @@ public abstract class BaseQueryParam implements Serializable {
         return map;
     }
 
-    public abstract MapQuery createMapQuery();
-
-    public abstract ArrayQuery createArrayQuery();
-
-    public abstract CollectionQuery createCollectQuery();
-
-    public enum QueryType {
-        MAP, ARRAY, COLLECTION
-    }
 }

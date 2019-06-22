@@ -1,5 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service.impl;
 
+import com.querydsl.core.types.Predicate;
 import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
@@ -79,6 +80,11 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public Optional<T> findOne(Predicate predicate) {
+        return getRepository().findOne(predicate);
+    }
+
+    @Override
     public Optional<T> findOneBySQL(String sql, Object... objects) {
         return getRepository().findOneBySQL(sql, objects);
     }
@@ -94,14 +100,23 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Optional<T> findOneByDSLQuery(SelectQuery<Record> selectQuery) {
-        return getRepository().findOneByQuery(selectQuery);
+    public Optional<T> findOneByHQL(String hql, Object... objects) {
+        return getRepository().findOneByHQL(hql, objects);
     }
 
+    @Override
+    public Optional<T> findOneByHQL(String hql, Collection collection) {
+        return getRepository().findOneByHQL(hql, collection.toArray());
+    }
 
     @Override
-    public Optional<T> findOneBySQLQuery(MapQuery query) {
-        return findOneBySQL(query.getSql(), query.getMap());
+    public Optional<T> findOneByHQL(String hql, Map<String, Object> map) {
+        return getRepository().findOneByHQL(hql, map);
+    }
+
+    @Override
+    public Optional<T> findOneByDSLQuery(SelectQuery<Record> selectQuery) {
+        return getRepository().findOneByQuery(selectQuery);
     }
 
     @Override
@@ -115,8 +130,23 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Optional<T> findOneByHQL(String hql, Object... objects) {
-        return getRepository().findOneByHQL(hql, objects);
+    public Optional<T> findOneBySQLQuery(MapQuery query) {
+        return findOneBySQL(query.getSql(), query.getMap());
+    }
+
+    @Override
+    public Optional<T> findOneByQuery(ArrayQuery query) {
+        return findOneByHQL(query.getSql(), query.getObjects());
+    }
+
+    @Override
+    public Optional<T> findOneByQuery(CollectionQuery query) {
+        return findOneByHQL(query.getSql(), query.getCollection());
+    }
+
+    @Override
+    public Optional<T> findOneByQuery(MapQuery query) {
+        return findOneByHQL(query.getSql(), query.getMap());
     }
 
     @Override
@@ -155,6 +185,14 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public List<T> findAll(Predicate predicate) {
+        List<T> list = new ArrayList<>();
+        Iterable<T> iterable = getRepository().findAll(predicate);
+        iterable.forEach(list::add);
+        return list;
+    }
+
+    @Override
     public List<T> findAllBySQL(String sql, Collection collections) {
         return getRepository().findAllBySQL(sql, collections.toArray());
     }
@@ -165,13 +203,23 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public List<T> findAllByDSLQuery(SelectQuery<Record> selectQuery) {
-        return getRepository().findAllByQuery(selectQuery);
+    public List<T> findAllByHQL(String hql, Object... objects) {
+        return getRepository().findAllByHQL(hql, objects);
     }
 
     @Override
-    public List<T> findAllBySQLQuery(MapQuery query) {
-        return findAllBySQL(query.getSql(), query.getMap());
+    public List<T> findAllByHQL(String hql, Collection collection) {
+        return getRepository().findAllByHQL(hql, collection.toArray());
+    }
+
+    @Override
+    public List<T> findAllByHQL(String hql, Map<String, Object> map) {
+        return getRepository().findAllByHQL(hql, map);
+    }
+
+    @Override
+    public List<T> findAllByDSLQuery(SelectQuery<Record> selectQuery) {
+        return getRepository().findAllByQuery(selectQuery);
     }
 
     @Override
@@ -182,6 +230,26 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     public List<T> findAllBySQLQuery(CollectionQuery query) {
         return findAllBySQL(query.getSql(), query.getCollection());
+    }
+
+    @Override
+    public List<T> findAllBySQLQuery(MapQuery query) {
+        return findAllBySQL(query.getSql(), query.getMap());
+    }
+
+    @Override
+    public List<T> findAllByQuery(ArrayQuery query) {
+        return findAllByHQL(query.getSql(), query.getObjects());
+    }
+
+    @Override
+    public List<T> findAllByQuery(CollectionQuery query) {
+        return findAllByHQL(query.getSql(), query.getCollection());
+    }
+
+    @Override
+    public List<T> findAllByQuery(MapQuery query) {
+        return findAllByHQL(query.getSql(), query.getMap());
     }
 
     @Override
@@ -200,13 +268,18 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public Page<T> findAll(Predicate predicate, Pageable pageable) {
+        return getRepository().findAll(predicate, pageable);
+    }
+
+    @Override
     public Page<T> findAllBySQL(String sql, Pageable pageable, Object... objects) {
         return getRepository().findAllBySQL(sql, pageable, objects);
     }
 
     @Override
-    public Page<T> findAllBySQL(String sql, Pageable pageable, Collection collections) {
-        return getRepository().findAllBySQL(sql, pageable, collections.toArray());
+    public Page<T> findAllBySQL(String sql, Pageable pageable, Collection collection) {
+        return getRepository().findAllBySQL(sql, pageable, collection.toArray());
     }
 
     @Override
@@ -215,13 +288,18 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Page<T> findAllByDSLQuery(SelectQuery<Record> selectQuery, Pageable pageable) {
-        return getRepository().findAllByQuery(selectQuery, pageable);
+    public Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects) {
+        return getRepository().findAllByHQL(hql, pageable, objects);
     }
 
     @Override
-    public Page<T> findAllBySQLQuery(MapQuery query, Pageable pageable) {
-        return findAllBySQL(query.getSql(), pageable, query.getMap());
+    public Page<T> findAllByHQL(String hql, Pageable pageable, Collection collection) {
+        return getRepository().findAllByHQL(hql, pageable, collection.toArray());
+    }
+
+    @Override
+    public Page<T> findAllByDSLQuery(SelectQuery<Record> selectQuery, Pageable pageable) {
+        return getRepository().findAllByQuery(selectQuery, pageable);
     }
 
     @Override
@@ -235,13 +313,18 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public Page<T> findAllBySQLQuery(MapQuery query, Pageable pageable) {
+        return findAllBySQL(query.getSql(), pageable, query.getMap());
+    }
+
+    @Override
     public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Object... objects) {
         return getRepository().findOneBySQLToMap(sql, objects);
     }
 
     @Override
     public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Collection collection) {
-        return getRepository().findOneBySQLToMap(sql, collection);
+        return getRepository().findOneBySQLToMap(sql, collection.toArray());
     }
 
     @Override
@@ -255,11 +338,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Optional<Map<String, Object>> findOneBySQLQueryToMap(MapQuery query) {
-        return findOneBySQLToMap(query.getSql(), query.getMap());
-    }
-
-    @Override
     public Optional<Map<String, Object>> findOneBySQLQueryToMap(ArrayQuery query) {
         return findOneBySQLToMap(query.getSql(), query.getObjects());
     }
@@ -270,13 +348,18 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public Optional<Map<String, Object>> findOneBySQLQueryToMap(MapQuery query) {
+        return findOneBySQLToMap(query.getSql(), query.getMap());
+    }
+
+    @Override
     public List<Map<String, Object>> findAllBySQLToMap(String sql, Object... objects) {
         return getRepository().findAllBySQLToMap(sql, objects);
     }
 
     @Override
     public List<Map<String, Object>> findAllBySQLToMap(String sql, Collection collection) {
-        return getRepository().findAllBySQLToMap(sql, collection);
+        return getRepository().findAllBySQLToMap(sql, collection.toArray());
     }
 
     @Override
@@ -290,11 +373,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public List<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query) {
-        return findAllBySQLToMap(query.getSql(), query.getMap());
-    }
-
-    @Override
     public List<Map<String, Object>> findAllBySQLQueryToMap(ArrayQuery query) {
         return findAllBySQLToMap(query.getSql(), query.getObjects());
     }
@@ -305,13 +383,18 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
+    public List<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query) {
+        return findAllBySQLToMap(query.getSql(), query.getMap());
+    }
+
+    @Override
     public Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Object... objects) {
         return getRepository().findAllBySQLToMap(sql, pageable, objects);
     }
 
     @Override
     public Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Collection collection) {
-        return getRepository().findAllBySQLToMap(sql, pageable, collection);
+        return getRepository().findAllBySQLToMap(sql, pageable, collection.toArray());
     }
 
     @Override
@@ -325,11 +408,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Page<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query, Pageable pageable) {
-        return findAllBySQLToMap(query.getSql(), pageable, query.getMap());
-    }
-
-    @Override
     public Page<Map<String, Object>> findAllBySQLQueryToMap(ArrayQuery query, Pageable pageable) {
         return findAllBySQLToMap(query.getSql(), pageable, query.getObjects());
     }
@@ -337,6 +415,11 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     public Page<Map<String, Object>> findAllBySQLQueryToMap(CollectionQuery query, Pageable pageable) {
         return findAllBySQLToMap(query.getSql(), pageable, query.getCollection());
+    }
+
+    @Override
+    public Page<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query, Pageable pageable) {
+        return findAllBySQLToMap(query.getSql(), pageable, query.getMap());
     }
 
 
