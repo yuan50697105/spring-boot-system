@@ -3,6 +3,7 @@ package com.yuan.springbootwebjpa.commons.repository;
 import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
+import org.jooq.DSLContext;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,10 @@ import java.util.Optional;
  **/
 @NoRepositoryBean
 public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+
+    EntityManager getEntityManager();
+
+    DSLContext getDslContext();
 
     void executeBySQL(String sql, Object... objects);
 
@@ -251,6 +257,12 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
     Page<Map<String, Object>> findAllByHQLToMap(String hql, Pageable pageable, Map<String, Object> map);
 
     Page<Map<String, Object>> findAllByHQLToMap(MapQuery query, Pageable pageable);
+
+    void executeByStore(String store, Object... objects);
+
+    void executeByStore(String store, Collection collection);
+
+    void executeByStore(String store, Map<String, Object> map);
 
     List<T> findAllByStore(String store, Object... objects);
 }
