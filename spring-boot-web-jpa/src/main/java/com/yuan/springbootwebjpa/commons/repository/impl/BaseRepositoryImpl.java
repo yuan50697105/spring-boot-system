@@ -4,10 +4,14 @@ import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
+import org.hibernate.query.internal.NativeQueryImpl;
+import org.hibernate.query.internal.QueryImpl;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.jooq.DSLContext;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
+import org.jooq.impl.DSL;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -16,6 +20,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +47,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public void executeBySQL(String sql, Object... objects) {
-
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.executeUpdate();
     }
 
     @Override
@@ -52,7 +61,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public void executeBySQL(String sql, Collection collection) {
-
+        executeBySQL(sql, collection.toArray());
     }
 
     @Override
@@ -62,7 +71,9 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public void executeBySQL(String sql, Map<String, Object> map) {
-
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.executeUpdate();
     }
 
     @Override
@@ -72,12 +83,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public void executeByDSL(Query query) {
-
+        dslContext.execute(query.getSQL(), query.getBindValues());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<T> findOneBySQL(String sql, Object... objects) {
-        return Optional.empty();
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, entityInformation.getJavaType());
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        return Optional.ofNullable((T) nativeQuery.getSingleResult());
     }
 
     @Override
@@ -96,9 +112,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findOneBySQL(query.getSql(), query.getCollection());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<T> findOneBySQL(String sql, Map<String, Object> map) {
-        return Optional.empty();
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, entityInformation.getJavaType());
+        map.forEach(nativeQuery::setParameter);
+        return Optional.ofNullable((T) nativeQuery.getSingleResult());
     }
 
     @Override
@@ -108,7 +127,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<T> findOneByHQL(String hql, Object... objects) {
-        return Optional.empty();
+        TypedQuery<T> query = entityManager.createQuery(hql, entityInformation.getJavaType());
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i + 1, objects[i]);
+        }
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -118,7 +141,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<T> findOneByHQL(String hql, Collection collection) {
-        return Optional.empty();
+        return findOneByHQL(hql, collection.toArray());
     }
 
     @Override
@@ -128,7 +151,9 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<T> findOneByHQL(String hql, Map<String, Object> map) {
-        return Optional.empty();
+        TypedQuery<T> query = entityManager.createQuery(hql, entityInformation.getJavaType());
+        map.forEach(query::setParameter);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -138,12 +163,18 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<T> findOneByDSL(SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findOneBySQL(selectQuery.getSQL(), selectQuery.getBindValues());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <R> Optional<R> findOneBySQL(Class<R> type, String sql, Object... objects) {
-        return Optional.empty();
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        return Optional.ofNullable(((R) nativeQuery.getSingleResult()));
     }
 
     @Override
@@ -153,7 +184,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> Optional<R> findOneBySQL(Class<R> type, String sql, Collection collection) {
-        return Optional.empty();
+        return findOneBySQL(type, sql, collection.toArray());
     }
 
     @Override
@@ -173,12 +204,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> Optional<R> findOneByDSL(Class<R> type, SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findOneBySQL(type, selectQuery.getSQL(), selectQuery.getBindValues());
     }
 
     @Override
     public <R> Optional<R> findOneByHQL(Class<R> type, String hql, Object... objects) {
-        return Optional.empty();
+        TypedQuery<R> query = entityManager.createQuery(hql, type);
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i + 1, objects[i]);
+        }
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -188,7 +224,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> Optional<R> findOneByHQL(Class<R> type, String hql, Collection collection) {
-        return Optional.empty();
+        return findOneByHQL(type, hql, collection.toArray());
     }
 
     @Override
@@ -198,6 +234,9 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> Optional<R> findOneByHQL(Class<R> type, String hql, Map<String, Object> map) {
+        TypedQuery<R> query = entityManager.createQuery(hql, type);
+        map.forEach(query::setParameter);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
 
@@ -206,9 +245,15 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findOneByHQL(type, query.getSql(), query.getMap());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Object... objects) {
-        return Optional.empty();
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
     }
 
     @Override
@@ -218,7 +263,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Collection collection) {
-        return Optional.empty();
+        return findOneBySQLToMap(sql, collection.toArray());
     }
 
     @Override
@@ -227,9 +272,13 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Map<String, Object> map) {
-        return Optional.empty();
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
     }
 
     @Override
@@ -239,12 +288,19 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<Map<String, Object>> findOneByDSLToMap(SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findOneBySQLToMap(selectQuery.getSQL(), selectQuery.getBindValues());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<Map<String, Object>> findOneByHQLToMap(String hql, Object... objects) {
-        return Optional.empty();
+        javax.persistence.Query query = entityManager.createQuery(hql);
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i + 1, objects[i]);
+        }
+        query.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return Optional.ofNullable((Map<String, Object>) query.getSingleResult());
     }
 
     @Override
@@ -254,7 +310,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public Optional<Map<String, Object>> findOneByHQLToMap(String hql, Collection collection) {
-        return Optional.empty();
+        return findOneByHQLToMap(hql, collection.toArray());
     }
 
     @Override
@@ -262,9 +318,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findOneByHQLToMap(query.getSql(), query.getCollection());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<Map<String, Object>> findOneByHQLToMap(String hql, Map<String, Object> map) {
-        return Optional.empty();
+        javax.persistence.Query query = entityManager.createQuery(hql);
+        map.forEach(query::setParameter);
+        return Optional.ofNullable((Map<String, Object>) query.getSingleResult());
     }
 
     @Override
@@ -272,9 +331,14 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findOneByHQLToMap(query.getSql(), query.getMap());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> findAllBySQL(String sql, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, entityInformation.getJavaType());
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        return (List<T>) nativeQuery.getResultList();
     }
 
     @Override
@@ -284,7 +348,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public List<T> findAllBySQL(String sql, Collection collection) {
-        return null;
+        return findAllBySQL(sql, collection.toArray());
     }
 
     @Override
@@ -292,9 +356,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findAllBySQL(query.getSql(), query.getCollection());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> findAllBySQL(String sql, Map<String, Object> map) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, entityInformation.getJavaType());
+        map.forEach(nativeQuery::setParameter);
+        return (List<T>) nativeQuery.getResultList();
     }
 
     @Override
@@ -304,12 +371,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public List<T> findAllByDSL(SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllBySQL(selectQuery.getSQL(), selectQuery.getBindValues());
     }
 
     @Override
     public List<T> findAllByHQL(String hql, Object... objects) {
-        return null;
+        TypedQuery<T> query = entityManager.createQuery(hql, entityInformation.getJavaType());
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i + 1, objects[i]);
+        }
+        return query.getResultList();
     }
 
     @Override
@@ -329,7 +401,9 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public List<T> findAllByHQL(String hql, Map<String, Object> map) {
-        return null;
+        TypedQuery<T> query = entityManager.createQuery(hql, entityInformation.getJavaType());
+        map.forEach(query::setParameter);
+        return query.getResultList();
     }
 
     @Override
@@ -337,9 +411,14 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return findAllByHQL(query.getSql(), query.getMap());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <R> List<R> findAllBySQL(Class<R> type, String sql, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        return (List<R>) nativeQuery.getResultList();
     }
 
     @Override
@@ -354,12 +433,13 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> List<R> findAllBySQL(Class<R> type, CollectionQuery query) {
-        return null;
+        return findAllBySQL(type, query.getSql(), query.getCollection());
     }
 
     @Override
     public <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
+        return findAllBySQL(type, selectQuery.getSQL(), selectQuery.getBindValues());
     }
 
     @Override
