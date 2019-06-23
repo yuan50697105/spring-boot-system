@@ -96,6 +96,32 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> Optional<R> findOneByHQL(Class<R> type, MapQuery query);
 
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Object... objects);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, ArrayQuery query);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Collection collection);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, CollectionQuery query);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, MapQuery query);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, SelectQuery<Record> selectQuery);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Object... objects);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, ArrayQuery query);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Collection collection);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, CollectionQuery query);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Map<String, Object> map);
+
+    <R> Optional<R> findOneByHQLToBean(Class<R> type, MapQuery query);
+
     Optional<Map<String, Object>> findOneBySQLToMap(String sql, Object... objects);
 
     Optional<Map<String, Object>> findOneBySQLToMap(ArrayQuery query);
@@ -170,6 +196,30 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> List<R> findAllByHQL(Class<R> type, MapQuery query);
 
+    <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Object... objects);
+
+    <R> List<R> findAllBySQLToBean(Class<R> type, ArrayQuery query);
+
+    <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Collection collection);
+
+    <R> List<R> findAllBySQLToBean(Class<R> type, CollectionQuery query);
+
+    <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> List<R> findAllBySQLToBean(Class<R> type, MapQuery query);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Object... objects);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, ArrayQuery query);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Collection collection);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, CollectionQuery query);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Map<String, Object> map);
+
+    <R> List<R> findAllByHQLToBean(Class<R> type, MapQuery query);
+
     List<Map<String, Object>> findAllBySQLToMap(String sql, Object... objects);
 
     List<Map<String, Object>> findAllBySQLToMap(ArrayQuery query);
@@ -231,6 +281,30 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
     <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Map<String, Object> map);
 
     <R> Page<R> findAllByHQL(Class<R> type, MapQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllBySQLToBean(Class<R> type, MapQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllByHQLToBean(Class<R> type, MapQuery query, Pageable pageable);
 
     Page<Map<String, Object>> findAllBySQLToMap(String sql, Pageable pageable, Object... objects);
 
