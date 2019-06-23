@@ -264,5 +264,15 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     void executeByStore(String store, Map<String, Object> map);
 
-    List<T> findAllByStore(String store, Object... objects);
+    Optional<Object> findOneByStore(String store, Collection collection);
+
+    Optional<Object> findOneByStore(String store, Map<String, Object> map);
+
+    Optional<Object> findOneByStore(String store, Object... objects);
+
+    List findAllByStore(String store, Object... objects);
+
+    List findAllByStore(String store, Collection collection);
+
+    List findAllByStore(String store, Map<String, Object> map);
 }

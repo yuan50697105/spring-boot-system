@@ -864,17 +864,46 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         storedProcedureQuery.executeUpdate();
     }
 
-    @SuppressWarnings("unchecked")
-    public Optional<T> findOneByStore(String store, Object... objects) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store, entityInformation.getJavaType());
-        return Optional.ofNullable((T) storedProcedureQuery.getSingleResult());
+    @Override
+    public Optional<Object> findOneByStore(String store, Object... objects) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store);
+        for (int i = 0; i < objects.length; i++) {
+            storedProcedureQuery.setParameter(i + i, objects[i]);
+        }
+        return Optional.ofNullable(storedProcedureQuery.getSingleResult());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<T> findAllByStore(String store, Object... objects) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store, entityInformation.getJavaType());
-        return (List<T>) storedProcedureQuery.getResultList();
+    public Optional<Object> findOneByStore(String store, Collection collection) {
+        return findOneByStore(store, collection.toArray());
+    }
+
+    @Override
+    public Optional<Object> findOneByStore(String store, Map<String, Object> map) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store);
+        map.forEach(storedProcedureQuery::setParameter);
+        return Optional.ofNullable(storedProcedureQuery.getSingleResult());
+    }
+
+    @Override
+    public List findAllByStore(String store, Object... objects) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store);
+        for (int i = 0; i < objects.length; i++) {
+            storedProcedureQuery.setParameter(i + i, objects[i]);
+        }
+        return storedProcedureQuery.getResultList();
+    }
+
+    @Override
+    public List findAllByStore(String store, Collection collection) {
+        return findAllByStore(store, collection.toArray());
+    }
+
+    @Override
+    public List findAllByStore(String store, Map<String, Object> map) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(store);
+        map.forEach(storedProcedureQuery::setParameter);
+        return storedProcedureQuery.getResultList();
     }
 
     private String createCountSQL(String sql) {
