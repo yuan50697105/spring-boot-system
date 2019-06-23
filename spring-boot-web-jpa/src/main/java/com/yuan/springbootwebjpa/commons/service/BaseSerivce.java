@@ -1,10 +1,20 @@
 package com.yuan.springbootwebjpa.commons.service;
 
+import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
+import com.yuan.springbootwebjpa.commons.entity.dto.CollectionQuery;
+import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
+import org.jooq.Record;
+import org.jooq.SelectQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -30,4 +40,88 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     List<T> findAllById(ID[] ids);
 
     List<T> findAllById(Collection<ID> collection);
+
+    Optional<T> findOne(T t);
+
+    Optional<T> findOne(Specification<T> specification);
+
+    List<T> findAll(T t);
+
+    List<T> findAll(T t, Sort sort);
+
+    List<T> findAll(Specification<T> specification);
+
+    List<T> findAll(Specification<T> specification, Sort sort);
+
+    Page<T> findAll(Pageable pageable);
+
+    Page<T> findAll(T t, Pageable pageable);
+
+    Page<T> findAll(Specification<T> specification, Pageable pageable);
+
+    Optional<T> findOneBySQL(String sql, Object... objects);
+
+    Optional<T> findOneBySQL(String sql, Collection collection);
+
+    Optional<T> findOneBySQL(String sql, Map<String, Object> map);
+
+    Optional<T> findOneBySQL(ArrayQuery query);
+
+    Optional<T> findOneBySQL(CollectionQuery query);
+
+    Optional<T> findOneBySQL(MapQuery query);
+
+    Optional<T> findOneByDSL(SelectQuery<Record> selectQuery);
+
+    Optional<T> findOneByHQL(String hql, Object... objects);
+
+    Optional<T> findOneByHQL(String hql, Collection collection);
+
+    Optional<T> findOneByHQL(String hql, Map<String, Object> map);
+
+    Optional<T> findOneByHQL(ArrayQuery query);
+
+    Optional<T> findOneByHQL(CollectionQuery query);
+
+    Optional<T> findOneByHQL(MapQuery query);
+
+    List<T> findAllBySQL(String sql, Object... objects);
+
+    List<T> findAllBySQL(String sql, Collection collection);
+
+    List<T> findAllBySQL(String sql, Map<String, Object> map);
+
+    List<T> findAllBySQL(ArrayQuery query);
+
+    List<T> findAllBySQL(CollectionQuery query);
+
+    List<T> findAllBySQL(MapQuery query);
+
+    List<T> findAllByDSL(SelectQuery<Record> selectQuery);
+
+    List<T> findAllByHQL(String hql, Object... objects);
+
+    List<T> findAllByHQL(String hql, Collection collection);
+
+    List<T> findAllByHQL(String hql, Map<String, Object> map);
+
+    List<T> findAllByHQL(ArrayQuery query);
+
+    List<T> findAllByHQL(CollectionQuery query);
+
+    List<T> findAllByHQL(MapQuery query);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Object... objects);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Collection collection);
+
+    Page<T> findAllBySQL(String sql, Pageable pageable, Map<String, Object> map);
+
+    Page<T> findAllByDSL(SelectQuery<Record> selectQuery, Pageable pageable);
+
+    Page<T> findAllBySQL(ArrayQuery query, Pageable pageable);
+
+    Page<T> findAllBySQL(CollectionQuery query, Pageable pageable);
+
+    Page<T> findAllBySQL(MapQuery query, Pageable pageable);
 }

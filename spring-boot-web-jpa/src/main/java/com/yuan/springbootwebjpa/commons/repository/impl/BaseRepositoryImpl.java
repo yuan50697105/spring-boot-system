@@ -736,6 +736,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
     @Override
+    public Page<T> findAllBySQL(MapQuery query, Pageable pageable) {
+        return findAllBySQL(query.getSql(), pageable, query.getMap());
+    }
+
+    @Override
     public Page<T> findAllByDSL(SelectQuery<Record> selectQuery, Pageable pageable) {
         selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
         return findAllBySQL(selectQuery.getSQL(), pageable, selectQuery.getBindValues());

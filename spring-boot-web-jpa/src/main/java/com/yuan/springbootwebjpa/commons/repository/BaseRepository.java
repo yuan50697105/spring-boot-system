@@ -242,6 +242,8 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     Page<T> findAllBySQL(String sql, Pageable pageable, Map<String, Object> map);
 
+    Page<T> findAllBySQL(MapQuery query, Pageable pageable);
+
     Page<T> findAllByDSL(SelectQuery<Record> selectQuery, Pageable pageable);
 
     Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects);
