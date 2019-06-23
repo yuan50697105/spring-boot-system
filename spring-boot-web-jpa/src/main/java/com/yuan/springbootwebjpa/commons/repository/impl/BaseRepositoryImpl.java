@@ -576,62 +576,78 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
     }
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, ArrayQuery query) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), query.getObjects());
     }
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Collection collection) {
-        return null;
+        return findAllBySQLToBean(type, sql, collection.toArray());
     }
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, CollectionQuery query) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), query.getCollection());
     }
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Map<String, Object> map) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
     }
 
     @Override
     public <R> List<R> findAllBySQLToBean(Class<R> type, MapQuery query) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), query.getMap());
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createQuery(hql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, ArrayQuery query) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), query.getObjects());
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Collection collection) {
-        return null;
+        return findAllByHQLToBean(type, hql, collection.toArray());
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, CollectionQuery query) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), query.getCollection());
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Map<String, Object> map) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createQuery(hql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
     }
 
     @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, MapQuery query) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), query.getMap());
     }
 
     @SuppressWarnings("unchecked")
@@ -882,62 +898,102 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        javax.persistence.Query nativeQuery1 = entityManager.createNativeQuery(createCountSQL(sql), Long.class);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+            nativeQuery1.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageSize() * pageable.getPageNumber());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        List<R> resultList = nativeQuery.getResultList();
+        Long singleResult = (Long) nativeQuery1.getSingleResult();
+        return new PageImpl<>(resultList, pageable, singleResult);
     }
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), pageable, query.getObjects());
     }
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Collection collection) {
-        return null;
+        return findAllBySQLToBean(type, sql, pageable, collection.toArray());
     }
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, CollectionQuery query, Pageable pageable) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), pageable, query.getCollection());
     }
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Map<String, Object> map) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql);
+        javax.persistence.Query nativeQuery1 = entityManager.createNativeQuery(createCountSQL(sql), Long.class);
+        map.forEach(nativeQuery::setParameter);
+        map.forEach(nativeQuery1::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageSize() * pageable.getPageNumber());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        List<R> resultList = nativeQuery.getResultList();
+        Long singleResult = (Long) nativeQuery1.getSingleResult();
+        return new PageImpl<>(resultList, pageable, singleResult);
     }
 
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
-        return null;
+        return findAllBySQLToBean(type, query.getSql(), pageable, query.getMap());
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Object... objects) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(hql);
+        javax.persistence.Query nativeQuery1 = entityManager.createQuery(createCountHQL(hql), Long.class);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+            nativeQuery1.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageSize() * pageable.getPageNumber());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        List<R> resultList = nativeQuery.getResultList();
+        Long singleResult = (Long) nativeQuery1.getSingleResult();
+        return new PageImpl<>(resultList, pageable, singleResult);
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), pageable, query.getObjects());
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Collection collection) {
-        return null;
+        return findAllByHQLToBean(type, hql, pageable, collection.toArray());
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, CollectionQuery query, Pageable pageable) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), pageable, query.getCollection());
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Map<String, Object> map) {
-        return null;
+        javax.persistence.Query nativeQuery = entityManager.createQuery(hql);
+        javax.persistence.Query nativeQuery1 = entityManager.createNativeQuery(createCountHQL(hql), Long.class);
+        map.forEach(nativeQuery::setParameter);
+        map.forEach(nativeQuery1::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageSize() * pageable.getPageNumber());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        List<R> resultList = nativeQuery.getResultList();
+        Long singleResult = (Long) nativeQuery1.getSingleResult();
+        return new PageImpl<>(resultList, pageable, singleResult);
     }
 
     @Override
     public <R> Page<R> findAllByHQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
-        return null;
+        return findAllByHQLToBean(type, query.getSql(), pageable, query.getMap());
     }
 
     @SuppressWarnings({"Duplicates", "unchecked"})
