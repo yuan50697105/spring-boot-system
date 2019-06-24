@@ -212,6 +212,8 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> List<R> findAllBySQLToBean(Class<R> type, MapQuery query);
 
+    <R> List<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery);
+
     <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Object... objects);
 
     <R> List<R> findAllByHQLToBean(Class<R> type, ArrayQuery query);
@@ -300,6 +302,8 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> Page<R> findAllBySQLToBean(Class<R> type, MapQuery query, Pageable pageable);
 
+    <R> Page<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable);
+
     <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Object... objects);
 
     <R> Page<R> findAllByHQLToBean(Class<R> type, ArrayQuery query, Pageable pageable);
@@ -354,5 +358,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     List findAllByStore(String store, Collection collection);
 
+
     List findAllByStore(String store, Map<String, Object> map);
+
 }

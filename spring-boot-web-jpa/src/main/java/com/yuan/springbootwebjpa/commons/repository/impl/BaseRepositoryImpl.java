@@ -625,6 +625,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
     @Override
+    public <R> List<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery) {
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
+        return findAllBySQLToBean(type, selectQuery.getSQL(), selectQuery.getBindValues());
+    }
+
+    @Override
     public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Object... objects) {
         javax.persistence.Query nativeQuery = entityManager.createQuery(hql);
         for (int i = 0; i < objects.length; i++) {
@@ -961,6 +967,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     @Override
     public <R> Page<R> findAllBySQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
         return findAllBySQLToBean(type, query.getSql(), pageable, query.getMap());
+    }
+
+    @Override
+    public <R> Page<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
+        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
+        return findAllBySQLToBean(type, selectQuery.getSQL(), pageable, selectQuery.getBindValues());
     }
 
     @Override

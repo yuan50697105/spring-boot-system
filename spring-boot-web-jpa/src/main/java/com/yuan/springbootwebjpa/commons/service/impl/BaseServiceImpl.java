@@ -24,6 +24,7 @@ import java.util.*;
  * @date 2019/6/15 19:07
  **/
 
+@SuppressWarnings({"unchecked", "InfiniteRecursion"})
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
     protected abstract S getRepository();
@@ -45,7 +46,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveAll(Collection<T> collection) {
         saveAll(collection);
     }
@@ -93,6 +94,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getRepository().findOne(specification);
     }
 
+    @Override
     public List<T> findAll() {
         return getRepository().findAll();
     }
@@ -558,5 +560,148 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getRepository().findOneBySQLToBean(type, query);
     }
 
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Object... objects) {
+        return getRepository().findOneByHQLToBean(type, hql, objects);
+    }
 
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Collection collection) {
+        return getRepository().findOneByHQLToBean(type, hql, collection);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, String hql, Map<String, Object> map) {
+        return getRepository().findOneByHQLToBean(type, hql, map);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, ArrayQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, CollectionQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQLToBean(Class<R> type, MapQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Object... objects) {
+        return getRepository().findAllBySQLToBean(type, sql, objects);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Collection collection) {
+        return getRepository().findAllBySQLToBean(type, sql, collection);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, String sql, Map<String, Object> map) {
+        return getRepository().findAllBySQLToBean(type, sql, map);
+    }
+
+    @Override
+    public <R> List<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery) {
+        return getRepository().findAllByDSLToBean(type, selectQuery);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, ArrayQuery query) {
+        return getRepository().findAllBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, CollectionQuery query) {
+        return getRepository().findAllBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQLToBean(Class<R> type, MapQuery query) {
+        return getRepository().findAllBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Object... objects) {
+        return getRepository().findAllBySQLToBean(type, hql, objects);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Collection collection) {
+        return getRepository().findAllBySQLToBean(type, hql, collection);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQLToBean(Class<R> type, String hql, Map<String, Object> map) {
+        return getRepository().findAllBySQLToBean(type, hql, map);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Object... objects) {
+        return getRepository().findAllBySQLToBean(type, sql, pageable, objects);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Collection collection) {
+        return getRepository().findAllBySQLToBean(type, sql, pageable, collection);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, String sql, Pageable pageable, Map<String, Object> map) {
+        return getRepository().findAllBySQLToBean(type, sql, pageable, map);
+    }
+
+    @Override
+    public <R> Page<R> findAllByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
+        return getRepository().findAllByDSLToBean(type, selectQuery, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
+        return getRepository().findAllBySQLToBean(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, CollectionQuery query, Pageable pageable) {
+        return getRepository().findAllBySQLToBean(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
+        return getRepository().findAllBySQLToBean(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Object... objects) {
+        return getRepository().findAllByHQLToBean(type, hql, pageable, objects);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Collection collection) {
+        return getRepository().findAllByHQLToBean(type, hql, pageable, collection);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, String hql, Pageable pageable, Map<String, Object> map) {
+        return getRepository().findAllByHQLToBean(type, hql, pageable, map);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
+        return getRepository().findAllByHQLToBean(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, CollectionQuery query, Pageable pageable) {
+        return getRepository().findAllByHQLToBean(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
+        return getRepository().findAllByHQLToBean(type, query, pageable);
+    }
 }
