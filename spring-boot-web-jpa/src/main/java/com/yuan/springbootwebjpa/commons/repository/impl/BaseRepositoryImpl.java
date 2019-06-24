@@ -7,6 +7,7 @@ import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.SelectQuery;
 import org.jooq.impl.DSL;
 import org.springframework.data.domain.Page;
@@ -53,35 +54,43 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
     public Optional<T> findOne(SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBaseResult(entityInformation.getJavaType(), selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public <R> Optional<R> findOne(Class<R> type, SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBaseResult(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public Optional<Map<String, Object>> findOneToMap(SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryMap(selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
-    public <R> Optional<R> findOneToBean(SelectQuery<Record> selectQuery) {
-        return Optional.empty();
+    public <R> Optional<R> findOneToBean(Class<R> type, SelectQuery<Record> selectQuery) {
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBean(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public List<T> findAll(SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBaseResultList(entityInformation.getJavaType(), selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public <R> List<R> findAll(Class<R> type, SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBaseResultList(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public List<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryMapList(selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
     public <R> List<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        return getSQLQueryBeanList(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
     }
 
 
@@ -303,6 +312,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return Optional.ofNullable((R) nativeQuery.getSingleResult());
     }
 
+    private <R> Optional<R> getSQLQueryBaseResult(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        map.forEach(nativeQuery::setParameter);
+        return Optional.ofNullable((R) nativeQuery.getSingleResult());
+    }
+
     private <R> Optional<R> getQueryBaseResult(Class<R> type, String query, Object... objects) {
         TypedQuery<R> query1 = entityManager.createQuery(query, type);
         for (int i = 0; i < objects.length; i++) {
@@ -311,11 +326,24 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return Optional.ofNullable(query1.getSingleResult());
     }
 
+    private <R> Optional<R> getQueryBaseResult(Class<R> type, String query, Map<String, Object> map) {
+        TypedQuery<R> nativeQuery = entityManager.createQuery(query, type);
+        map.forEach(nativeQuery::setParameter);
+        return Optional.ofNullable(nativeQuery.getSingleResult());
+    }
+
     private Optional<Map<String, Object>> getSQLQueryMap(String sql, Object... objects) {
         Query nativeQuery = entityManager.createNativeQuery(sql);
         for (int i = 0; i < objects.length; i++) {
             nativeQuery.setParameter(i + 1, objects[i]);
         }
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
+    }
+
+    private Optional<Map<String, Object>> getSQLQueryMap(String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
         nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
     }
@@ -329,6 +357,13 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
     }
 
+    private Optional<Map<String, Object>> getQueryMap(String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return Optional.ofNullable((Map<String, Object>) nativeQuery.getSingleResult());
+    }
+
     private <R> Optional<R> getSQLQueryBean(Class<R> type, String sql, Object... objects) {
         Query nativeQuery = entityManager.createNativeQuery(sql);
         for (int i = 0; i < objects.length; i++) {
@@ -338,11 +373,25 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return Optional.ofNullable((R) nativeQuery.getSingleResult());
     }
 
+    private <R> Optional<R> getSQLQueryBean(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return Optional.ofNullable((R) nativeQuery.getSingleResult());
+    }
+
     private <R> Optional<R> getQueryBean(Class<R> type, String sql, Object... objects) {
         Query nativeQuery = entityManager.createQuery(sql);
         for (int i = 0; i < objects.length; i++) {
             nativeQuery.setParameter(i + 1, objects[i]);
         }
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return Optional.ofNullable((R) nativeQuery.getSingleResult());
+    }
+
+    private <R> Optional<R> getQueryBean(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
         nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
         return Optional.ofNullable((R) nativeQuery.getSingleResult());
     }
@@ -357,6 +406,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return nativeQuery.getResultList();
     }
 
+    private <R> List<R> getSQLQueryBaseResultList(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        map.forEach(nativeQuery::setParameter);
+        return nativeQuery.getResultList();
+    }
+
 
     private <R> List<R> getQueryBaseResultList(Class<R> type, String query, Object... objects) {
         TypedQuery<R> nativeQuery = entityManager.createQuery(query, type);
@@ -366,11 +421,24 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return nativeQuery.getResultList();
     }
 
+    private <R> List<R> getQueryBaseResultList(Class<R> type, String query, Map<String, Object> map) {
+        TypedQuery<R> nativeQuery = entityManager.createQuery(query, type);
+        map.forEach(nativeQuery::setParameter);
+        return nativeQuery.getResultList();
+    }
+
     private List<Map<String, Object>> getSQLQueryMapList(String sql, Object... objects) {
         Query nativeQuery = entityManager.createNativeQuery(sql);
         for (int i = 0; i < objects.length; i++) {
             nativeQuery.setParameter(i + 1, objects[i]);
         }
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
+    private List<Map<String, Object>> getSQLQueryMapList(String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
         nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return nativeQuery.getResultList();
     }
@@ -384,11 +452,25 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return nativeQuery.getResultList();
     }
 
+    private List<Map<String, Object>> getQueryMapList(String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
     private <R> List<R> getSQLQueryBeanList(Class<R> type, String sql, Object... objects) {
         Query nativeQuery = entityManager.createNativeQuery(sql);
         for (int i = 0; i < objects.length; i++) {
             nativeQuery.setParameter(i + 1, objects[i]);
         }
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getSQLQueryBeanList(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
         nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
         return nativeQuery.getResultList();
     }
@@ -402,10 +484,27 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return nativeQuery.getResultList();
     }
 
+    private <R> List<R> getQueryBeanList(Class<R> type, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
 
     private SelectQuery<Record> getDslQuery(SelectQuery<Record> selectQuery) {
-        selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
-        return selectQuery;
+        return dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
+    }
+
+    private SelectQuery<Record1<Integer>> getCountQuery(SelectQuery<Record> selectQuery) {
+        return dslContext.select(DSL.count()).from(DSL.table(selectQuery).asTable()).getQuery();
+    }
+
+    private String getCountSQL(String sql) {
+        return "select count(1) from (" + sql + ") count_table";
+    }
+
+    private String getCountQuery(String query) {
+        return "select count(1) from (" + query + ") count_table";
     }
 
 }
