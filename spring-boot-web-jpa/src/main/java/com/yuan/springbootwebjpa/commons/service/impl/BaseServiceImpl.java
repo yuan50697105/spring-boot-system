@@ -704,4 +704,126 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     public <R> Page<R> findAllByHQLToBean(Class<R> type, MapQuery query, Pageable pageable) {
         return getRepository().findAllByHQLToBean(type, query, pageable);
     }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Object... objects) {
+        return getRepository().findOneBySQLToMap(sql, objects);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Collection collection) {
+        return getRepository().findOneBySQLToMap(sql, collection);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(String sql, Map<String, Object> map) {
+        return getRepository().findOneBySQLToMap(sql, map);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByDSLToMap(SelectQuery<Record> selectQuery) {
+        return getRepository().findOneByDSLToMap(selectQuery);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(ArrayQuery query) {
+        return getRepository().findOneBySQLToMap(query);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(CollectionQuery query) {
+        return getRepository().findOneBySQLToMap(query);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneBySQLToMap(MapQuery query) {
+        return getRepository().findOneBySQLToMap(query);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(String sql, Object... objects) {
+        return getRepository().findOneByHQLToMap(sql, objects);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(String sql, Collection collection) {
+        return getRepository().findOneByHQLToMap(sql, collection);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(String sql, Map<String, Object> map) {
+        return getRepository().findOneByHQLToMap(sql, map);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(ArrayQuery query) {
+        return getRepository().findOneByHQLToMap(query);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(CollectionQuery query) {
+        return getRepository().findOneByHQLToMap(query);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> findOneByHQLToMap(MapQuery query) {
+        return getRepository().findOneByHQLToMap(query);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(String sql, Object... objects) {
+        return getRepository().findAllBySQLToMap(sql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(String sql, Collection objects) {
+        return getRepository().findAllBySQLToMap(sql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(String sql, Map<String, Object> objects) {
+        return getRepository().findAllBySQLToMap(sql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByDSLToMap(SelectQuery<Record> selectQuery) {
+        return getRepository().findAllByDSLToMap(selectQuery);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(ArrayQuery query) {
+        return getRepository().findAllBySQLToMap(query);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(CollectionQuery query) {
+        return getRepository().findAllBySQLToMap(query);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllBySQLToMap(MapQuery query) {
+        return getRepository().findAllBySQLToMap(query);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByHQLToMap(String hql, Object... objects) {
+        return getRepository().findAllByHQLToMap(hql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByHQLToMap(String hql, Collection objects) {
+        return getRepository().findAllByHQLToMap(hql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByHQLToMap(String hql, Map<String, Object> objects) {
+        return getRepository().findAllByHQLToMap(hql, objects);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByHQLToMap(ArrayQuery query) {
+        return getRepository().findAllByHQLToMap(query);
+    }
+
+
 }

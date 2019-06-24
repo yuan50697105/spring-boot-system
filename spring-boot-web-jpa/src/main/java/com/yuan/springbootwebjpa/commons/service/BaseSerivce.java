@@ -296,4 +296,52 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     <R> Page<R> findAllByHQLToBean(Class<R> type, CollectionQuery query, Pageable pageable);
 
     <R> Page<R> findAllByHQLToBean(Class<R> type, MapQuery query, Pageable pageable);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(String sql, Object... objects);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(String sql, Collection collection);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(String sql, Map<String, Object> map);
+
+    Optional<Map<String, Object>> findOneByDSLToMap(SelectQuery<Record> selectQuery);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(ArrayQuery query);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(CollectionQuery query);
+
+    Optional<Map<String, Object>> findOneBySQLToMap(MapQuery query);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(String sql, Object... objects);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(String sql, Collection collection);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(String sql, Map<String, Object> map);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(ArrayQuery query);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(CollectionQuery query);
+
+    Optional<Map<String, Object>> findOneByHQLToMap(MapQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Object... objects);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Collection objects);
+
+    List<Map<String, Object>> findAllBySQLToMap(String sql, Map<String, Object> objects);
+
+    List<Map<String, Object>> findAllByDSLToMap(SelectQuery<Record> selectQuery);
+
+    List<Map<String, Object>> findAllBySQLToMap(ArrayQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(CollectionQuery query);
+
+    List<Map<String, Object>> findAllBySQLToMap(MapQuery query);
+
+    List<Map<String, Object>> findAllByHQLToMap(String hql, Object... objects);
+
+    List<Map<String, Object>> findAllByHQLToMap(String hql, Collection objects);
+
+    List<Map<String, Object>> findAllByHQLToMap(String hql, Map<String, Object> objects);
+
+    List<Map<String, Object>> findAllByHQLToMap(ArrayQuery query);
 }
