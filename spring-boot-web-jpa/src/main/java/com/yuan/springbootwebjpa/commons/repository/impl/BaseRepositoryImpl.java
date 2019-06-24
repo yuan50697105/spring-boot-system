@@ -11,6 +11,7 @@ import org.jooq.Record1;
 import org.jooq.SelectQuery;
 import org.jooq.impl.DSL;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -95,35 +96,51 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
 
 
     public Page<T> findAll(SelectQuery<Record> selectQuery, Pageable pageable) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
+        List<T> list = getSQLQueryBeanList(entityInformation.getJavaType(), pageable, selectQuery.getSQL(), selectQuery.getBindValues());
+        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
+        return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
     public <R> Page<R> findAll(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
+        List<R> list = getSQLQueryBeanList(type, pageable, selectQuery.getSQL(), selectQuery.getBindValues());
+        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
+        return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
     public Page<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery, Pageable pageable) {
-        return null;
+        selectQuery = getDslQuery(selectQuery);
+        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
+        List<Map<String, Object>> list = getSQLQueryMapList(pageable, selectQuery.getSQL(), selectQuery.getBindValues());
+        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
+        return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
-    public <R> Page<R> findAllToBean(SelectQuery<Record> selectQuery, Pageable pageable) {
-        return null;
+    public <R> Page<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
+        selectQuery = getDslQuery(selectQuery);
+        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
+        List<R> list = getSQLQueryBeanList(type, pageable, selectQuery.getSQL(), selectQuery.getBindValues());
+        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
+        return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
     public Optional<T> findOneByQuery(String query, Object... objects) {
-        return Optional.empty();
+        return getQueryBaseResult(entityInformation.getJavaType(), query, objects);
     }
 
     public <R> Optional<R> findOneByQuery(Class<R> type, String query, Object... objects) {
-        return Optional.empty();
+        return getQueryBaseResult(type, query, objects);
     }
 
     public Optional<Map<String, Object>> findOneByQueryToMap(String query, Object... objects) {
-        return Optional.empty();
+        return getQueryMap(query, objects);
     }
 
     public <R> Optional<R> findOneByQueryToBean(Class<R> type, String query, Object... objects) {
-        return Optional.empty();
+        return getQueryBean(type, query, objects);
     }
 
     public Optional<T> findOneByQuery(String query, Map<String, Object> map) {
@@ -490,6 +507,125 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
         return nativeQuery.getResultList();
     }
+
+    //////////////////////////////////////////
+    private <R> List<R> getSQLQueryBaseResultList(Class<R> type, Pageable pageable, String sql, Object... objects) {
+        Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getSQLQueryBaseResultList(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        return nativeQuery.getResultList();
+    }
+
+
+    private <R> List<R> getQueryBaseResultList(Class<R> type, Pageable pageable, String query, Object... objects) {
+        TypedQuery<R> nativeQuery = entityManager.createQuery(query, type);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getQueryBaseResultList(Class<R> type, Pageable pageable, String query, Map<String, Object> map) {
+        TypedQuery<R> nativeQuery = entityManager.createQuery(query, type);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        return nativeQuery.getResultList();
+    }
+
+    private List<Map<String, Object>> getSQLQueryMapList(Pageable pageable, String sql, Object... objects) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
+    private List<Map<String, Object>> getSQLQueryMapList(Pageable pageable, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
+    private List<Map<String, Object>> getQueryMapList(Pageable pageable, String sql, Object... objects) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
+    private List<Map<String, Object>> getQueryMapList(Pageable pageable, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getSQLQueryBeanList(Class<R> type, Pageable pageable, String sql, Object... objects) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getSQLQueryBeanList(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(NativeQueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getQueryBeanList(Class<R> type, Pageable pageable, String sql, Object... objects) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        for (int i = 0; i < objects.length; i++) {
+            nativeQuery.setParameter(i + 1, objects[i]);
+        }
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
+
+    private <R> List<R> getQueryBeanList(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+        Query nativeQuery = entityManager.createQuery(sql);
+        map.forEach(nativeQuery::setParameter);
+        nativeQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        nativeQuery.setMaxResults(pageable.getPageSize());
+        nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
+        return nativeQuery.getResultList();
+    }
+
 
     private SelectQuery<Record> getDslQuery(SelectQuery<Record> selectQuery) {
         return dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
