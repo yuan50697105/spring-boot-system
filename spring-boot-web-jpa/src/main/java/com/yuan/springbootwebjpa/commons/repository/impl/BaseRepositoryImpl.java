@@ -533,6 +533,18 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
     @Override
+    public <R> List<R> findAllBySQL(Class<R> type, String sql, Map<String, Object> map) {
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery(sql, type);
+        map.forEach(nativeQuery::setParameter);
+        return nativeQuery.getResultList();
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, MapQuery query) {
+        return findAllBySQL(type, query.getSql(), query.getMap());
+    }
+
+    @Override
     public <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery) {
         selectQuery = dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery.getSQL(), selectQuery.getBindValues()).asTable()).getQuery();
         return findAllBySQL(type, selectQuery.getSQL(), selectQuery.getBindValues());

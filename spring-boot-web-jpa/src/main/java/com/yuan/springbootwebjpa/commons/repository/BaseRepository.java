@@ -182,6 +182,10 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     <R> List<R> findAllBySQL(Class<R> type, CollectionQuery query);
 
+    <R> List<R> findAllBySQL(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> List<R> findAllBySQL(Class<R> type, MapQuery query);
+
     <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery);
 
     <R> List<R> findAllByHQL(Class<R> type, String hql, Object... objects);

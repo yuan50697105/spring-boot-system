@@ -59,7 +59,7 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     Page<T> findAll(Specification<T> specification, Pageable pageable);
 
-    Optional<T> findOneBySQL(String sql, Object... objects);
+    <R> Optional<R> findOneBySQL(String sql, Object... objects);
 
     Optional<T> findOneBySQL(String sql, Collection collection);
 
@@ -124,4 +124,110 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     Page<T> findAllBySQL(CollectionQuery query, Pageable pageable);
 
     Page<T> findAllBySQL(MapQuery query, Pageable pageable);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Collection collection);
+
+    Page<T> findAllByHQL(String hql, Pageable pageable, Map<String, Object> map);
+
+    Page<T> findAllByHQL(ArrayQuery query, Pageable pageable);
+
+    Page<T> findAllByHQL(CollectionQuery query, Pageable pageable);
+
+    Page<T> findAllByHQL(MapQuery query, Pageable pageable);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, String sql, Object... objects);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, String sql, Collection collection);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> Optional<R> findOneByDSL(Class<R> type, SelectQuery<Record> selectQuery);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, ArrayQuery query);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, CollectionQuery query);
+
+    <R> Optional<R> findOneBySQL(Class<R> type, MapQuery query);
+
+    <R> Optional<R> findByOneHQL(Class<R> type, String hql, Object... objects);
+
+    <R> Optional<R> findOneByHQL(Class<R> type, String hql, Collection collection);
+
+    <R> Optional<R> findOneByHQL(Class<R> type, String hql, Map<String, Object> map);
+
+    <R> Optional<R> findOneByHQL(Class<R> type, ArrayQuery query);
+
+    <R> Optional<R> findOneByHQL(Class<R> type, CollectionQuery query);
+
+    <R> Optional<R> findOneByHQL(Class<R> type, MapQuery query);
+
+    <R> List<R> findAllBySQL(Class<R> type, String sql, Object... objects);
+
+    <R> List<R> findAllBySQL(Class<R> type, String sql, Collection collection);
+
+    <R> List<R> findAllBySQL(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery);
+
+    <R> List<R> findAllBySQL(Class<R> type, ArrayQuery query);
+
+    <R> List<R> findAllBySQL(Class<R> type, CollectionQuery query);
+
+    <R> List<R> findAllBySQL(Class<R> type, MapQuery query);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Object... objects);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Collection collection);
+
+    <R> List<R> findAllByHQL(Class<R> type, String hql, Map<String, Object> map);
+
+    <R> List<R> findAllByHQL(Class<R> type, ArrayQuery query);
+
+    <R> List<R> findAllByHQL(Class<R> type, CollectionQuery query);
+
+    <R> List<R> findAllByHQL(Class<R> type, MapQuery query);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Object... objects);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllBySQL(Class<R> type, MapQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Object... objects);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Collection collection);
+
+    <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Map<String, Object> map);
+
+    <R> Page<R> findAllByHQL(Class<R> type, ArrayQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, CollectionQuery query, Pageable pageable);
+
+    <R> Page<R> findAllByHQL(Class<R> type, MapQuery query, Pageable pageable);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Object... objects);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Collection collection);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Map<String, Object> map);
+
+    <R> Optional<R> findOneByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, ArrayQuery query);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, CollectionQuery query);
+
+    <R> Optional<R> findOneBySQLToBean(Class<R> type, MapQuery query);
 }

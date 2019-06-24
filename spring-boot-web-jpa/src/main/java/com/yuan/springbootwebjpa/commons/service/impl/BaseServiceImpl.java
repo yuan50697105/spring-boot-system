@@ -298,4 +298,265 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getRepository().findAllBySQL(query, pageable);
     }
 
+    @Override
+    public Page<T> findAllByHQL(String hql, Pageable pageable, Object... objects) {
+        return getRepository().findAllByHQL(hql, pageable, objects);
+    }
+
+    @Override
+    public Page<T> findAllByHQL(String hql, Pageable pageable, Collection collection) {
+        return getRepository().findAllByHQL(hql, pageable, collection);
+    }
+
+    @Override
+    public Page<T> findAllByHQL(String hql, Pageable pageable, Map<String, Object> map) {
+        return getRepository().findAllByHQL(hql, pageable, map);
+    }
+
+    @Override
+    public Page<T> findAllByHQL(ArrayQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(query, pageable);
+    }
+
+    @Override
+    public Page<T> findAllByHQL(CollectionQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(query, pageable);
+    }
+
+    @Override
+    public Page<T> findAllByHQL(MapQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(query, pageable);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, String sql, Object... objects) {
+        return getRepository().findOneBySQL(type, sql, objects);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, String sql, Collection collection) {
+        return getRepository().findOneBySQL(type, sql, collection);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, String sql, Map<String, Object> map) {
+        return getRepository().findOneBySQL(type, sql, map);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByDSL(Class<R> type, SelectQuery<Record> selectQuery) {
+        return getRepository().findOneByDSL(type, selectQuery);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, ArrayQuery query) {
+        return getRepository().findOneBySQL(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, CollectionQuery query) {
+        return getRepository().findOneBySQL(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQL(Class<R> type, MapQuery query) {
+        return getRepository().findOneBySQL(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findByOneHQL(Class<R> type, String hql, Object... objects) {
+        return getRepository().findOneBySQL(type, hql, objects);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQL(Class<R> type, String hql, Collection collection) {
+        return getRepository().findOneBySQL(type, hql, collection);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQL(Class<R> type, String hql, Map<String, Object> map) {
+        return getRepository().findOneBySQL(type, hql, map);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQL(Class<R> type, ArrayQuery query) {
+        return getRepository().findOneByHQL(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQL(Class<R> type, CollectionQuery query) {
+        return getRepository().findOneByHQL(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByHQL(Class<R> type, MapQuery query) {
+        return getRepository().findOneByHQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, String sql, Object... objects) {
+        return getRepository().findAllBySQL(type, sql, objects);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, String sql, Collection collection) {
+        return getRepository().findAllBySQL(type, sql, collection);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, String sql, Map<String, Object> map) {
+        return getRepository().findAllBySQL(type, sql, map);
+    }
+
+    @Override
+    public <R> List<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery) {
+        return getRepository().findAllByDSL(type, selectQuery);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, ArrayQuery query) {
+        return getRepository().findAllBySQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, CollectionQuery query) {
+        return getRepository().findAllBySQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllBySQL(Class<R> type, MapQuery query) {
+        return getRepository().findAllBySQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, String hql, Object... objects) {
+        return getRepository().findAllByHQL(type, hql, objects);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, String hql, Collection collection) {
+        return getRepository().findAllByHQL(type, hql, collection);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, String hql, Map<String, Object> map) {
+        return getRepository().findAllByHQL(type, hql, map);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, ArrayQuery query) {
+        return getRepository().findAllByHQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, CollectionQuery query) {
+        return getRepository().findAllByHQL(type, query);
+    }
+
+    @Override
+    public <R> List<R> findAllByHQL(Class<R> type, MapQuery query) {
+        return getRepository().findAllByHQL(type, query);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Object... objects) {
+        return getRepository().findAllBySQL(type, sql, pageable, objects);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Collection collection) {
+        return getRepository().findAllBySQL(type, sql, pageable, collection);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, String sql, Pageable pageable, Map<String, Object> map) {
+        return getRepository().findAllBySQL(type, sql, pageable, map);
+    }
+
+    @Override
+    public <R> Page<R> findAllByDSL(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
+        return getRepository().findAllByDSL(type, selectQuery, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, ArrayQuery query, Pageable pageable) {
+        return getRepository().findAllBySQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, CollectionQuery query, Pageable pageable) {
+        return getRepository().findAllBySQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllBySQL(Class<R> type, MapQuery query, Pageable pageable) {
+        return getRepository().findAllBySQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Object... objects) {
+        return getRepository().findAllByHQL(type, hql, pageable, objects);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Collection collection) {
+        return getRepository().findAllByHQL(type, hql, pageable, collection);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, String hql, Pageable pageable, Map<String, Object> map) {
+        return getRepository().findAllByHQL(type, hql, pageable, map);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, ArrayQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, CollectionQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Page<R> findAllByHQL(Class<R> type, MapQuery query, Pageable pageable) {
+        return getRepository().findAllByHQL(type, query, pageable);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Object... objects) {
+        return getRepository().findOneBySQLToBean(type, sql, objects);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Collection collection) {
+        return getRepository().findOneBySQLToBean(type, sql, collection);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, String sql, Map<String, Object> map) {
+        return getRepository().findOneBySQLToBean(type, sql, map);
+    }
+
+    @Override
+    public <R> Optional<R> findOneByDSLToBean(Class<R> type, SelectQuery<Record> selectQuery) {
+        return getRepository().findOneBySQLToBean(type, selectQuery);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, ArrayQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, CollectionQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+    @Override
+    public <R> Optional<R> findOneBySQLToBean(Class<R> type, MapQuery query) {
+        return getRepository().findOneBySQLToBean(type, query);
+    }
+
+
 }
