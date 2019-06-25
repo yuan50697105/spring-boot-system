@@ -19,6 +19,7 @@ import java.util.Optional;
 /**
  * @author yuane
  * @date 2019/6/10 22:03
+ * ToMap 是结果集为map，ToBean是用于VO实体，其他的都是针对持久类实体与基础类型
  **/
 @NoRepositoryBean
 public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
@@ -26,7 +27,6 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
     EntityManager getEntityManager();
 
     DSLContext getDslContext();
-
 
     Optional<T> findOne(SelectQuery<Record> selectQuery);
 
