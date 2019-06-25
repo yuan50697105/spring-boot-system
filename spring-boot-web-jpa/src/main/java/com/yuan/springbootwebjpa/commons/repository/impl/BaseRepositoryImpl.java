@@ -1,5 +1,7 @@
 package com.yuan.springbootwebjpa.commons.repository.impl;
 
+import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
+import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.query.internal.QueryImpl;
@@ -127,196 +129,196 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
         return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
-    public Optional<T> findOneByQuery(String query, Object... objects) {
-        return getQueryBaseResult(entityInformation.getJavaType(), query, objects);
+    public Optional<T> findOneByQuery(ArrayQuery query) {
+        return getQueryBaseResult(entityInformation.getJavaType(), query.getSql(), query.getObjects());
     }
 
-    public <R> Optional<R> findOneByQuery(Class<R> type, String query, Object... objects) {
-        return getQueryBaseResult(type, query, objects);
+    public <R> Optional<R> findOneByQuery(Class<R> type, ArrayQuery query) {
+        return getQueryBaseResult(type, query.getSql(), query.getObjects());
     }
 
-    public Optional<Map<String, Object>> findOneByQueryToMap(String query, Object... objects) {
-        return getQueryMap(query, objects);
+    public Optional<Map<String, Object>> findOneByQueryToMap(ArrayQuery query) {
+        return getQueryMap(query.getSql(), query.getObjects());
     }
 
-    public <R> Optional<R> findOneByQueryToBean(Class<R> type, String query, Object... objects) {
-        return getQueryBean(type, query, objects);
+    public <R> Optional<R> findOneByQueryToBean(Class<R> type, ArrayQuery query) {
+        return getQueryBean(type, query.getSql(), query.getObjects());
     }
 
-    public Optional<T> findOneByQuery(String query, Map<String, Object> map) {
+    public Optional<T> findOneByQuery(MapQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneByQuery(Class<R> type, String query, Map<String, Object> map) {
+    public <R> Optional<R> findOneByQuery(Class<R> type, MapQuery query) {
         return Optional.empty();
     }
 
-    public Optional<Map<String, Object>> findOneByQueryToMap(String query, Map<String, Object> map) {
+    public Optional<Map<String, Object>> findOneByQueryToMap(MapQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneByQueryToBean(Class<R> type, String query, Map<String, Object> map) {
+    public <R> Optional<R> findOneByQueryToBean(Class<R> type, MapQuery query) {
         return Optional.empty();
     }
 
-    public List<T> findAllByQuery(String query, Object... objects) {
+    public List<T> findAllByQuery(ArrayQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllByQuery(Class<R> type, String query, Object... objects) {
+    public <R> List<R> findAllByQuery(Class<R> type, ArrayQuery query) {
         return null;
     }
 
-    public List<Map<String, Object>> findAllByQueryToMap(String query, Object... objects) {
+    public List<Map<String, Object>> findAllByQueryToMap(ArrayQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllByQueryToBean(Class<R> type, String query, Object... objects) {
+    public <R> List<R> findAllByQueryToBean(Class<R> type, ArrayQuery query) {
         return null;
     }
 
-    public List<T> findAllByQuery(String query, Map<String, Object> map) {
+    public List<T> findAllByQuery(MapQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllByQuery(Class<R> type, String query, Map<String, Object> map) {
+    public <R> List<R> findAllByQuery(Class<R> type, MapQuery query) {
         return null;
     }
 
-    public List<Map<String, Object>> findAllByQueryToMap(String query, Map<String, Object> map) {
+    public List<Map<String, Object>> findAllByQueryToMap(MapQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllByQueryToBean(Class<R> type, String query, Map<String, Object> map) {
+    public <R> List<R> findAllByQueryToBean(Class<R> type, MapQuery query) {
         return null;
     }
 
-    public Page<T> findAllByQuery(Pageable pageable, String sql, Object... objects) {
+    public Page<T> findAllByQuery(ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllByQuery(Class<R> type, Pageable pageable, String sql, Object... objects) {
+    public <R> Page<R> findAllByQuery(Class<R> type, ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public Page<Map<String, Object>> findAllByQueryToMap(Pageable pageable, String sql, Object... objects) {
+    public Page<Map<String, Object>> findAllByQueryToMap(ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllByQueryToBean(Class<R> type, Pageable pageable, String sql, Object... objects) {
+    public <R> Page<R> findAllByQueryToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public Page<T> findAllByQuery(Pageable pageable, String sql, Map<String, Object> map) {
+    public Page<T> findAllByQuery(MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllByQuery(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+    public <R> Page<R> findAllByQuery(Class<R> type, MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public Page<Map<String, Object>> findAllByQueryToMap(Pageable pageable, String sql, Map<String, Object> map) {
+    public Page<Map<String, Object>> findAllByQueryToMap(MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllByQueryToBean(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+    public <R> Page<R> findAllByQueryToBean(Class<R> type, MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public Optional<T> findOneBySQLQuery(String sql, Object... objects) {
+    public Optional<T> findOneBySQLQuery(ArrayQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneBySQLQuery(Class<R> type, String sql, Object... objects) {
+    public <R> Optional<R> findOneBySQLQuery(Class<R> type, ArrayQuery query) {
         return Optional.empty();
     }
 
-    public Optional<Map<String, Object>> findOneBySQLQueryToMap(String sql, Object... objects) {
+    public Optional<Map<String, Object>> findOneBySQLQueryToMap(ArrayQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneBySQLQueryToBean(Class<R> type, String sql, Object... objects) {
+    public <R> Optional<R> findOneBySQLQueryToBean(Class<R> type, ArrayQuery query) {
         return Optional.empty();
     }
 
-    public Optional<T> findOneBySQLQuery(String sql, Map<String, Object> map) {
+    public Optional<T> findOneBySQLQuery(MapQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneBySQLQuery(Class<R> type, String sql, Map<String, Object> map) {
+    public <R> Optional<R> findOneBySQLQuery(Class<R> type, MapQuery query) {
         return Optional.empty();
     }
 
-    public Optional<Map<String, Object>> findOneBySQLQueryToMap(String sql, Map<String, Object> map) {
+    public Optional<Map<String, Object>> findOneBySQLQueryToMap(MapQuery query) {
         return Optional.empty();
     }
 
-    public <R> Optional<R> findOneBySQLQueryToBean(Class<R> type, String sql, Map<String, Object> map) {
+    public <R> Optional<R> findOneBySQLQueryToBean(Class<R> type, MapQuery query) {
         return Optional.empty();
     }
 
-    public List<T> findAllBySQLQuery(String sql, Object... objects) {
+    public List<T> findAllBySQLQuery(ArrayQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllBySQLQuery(Class<R> type, String sql, Object... objects) {
+    public <R> List<R> findAllBySQLQuery(Class<R> type, ArrayQuery query) {
         return null;
     }
 
-    public List<Map<String, Object>> findAllBySQLQueryToMap(String sql, Object... objects) {
+    public List<Map<String, Object>> findAllBySQLQueryToMap(ArrayQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllBySQLQueryToBean(Class<R> type, String sql, Object... objects) {
+    public <R> List<R> findAllBySQLQueryToBean(Class<R> type, ArrayQuery query) {
         return null;
     }
 
-    public List<T> findAllBySQLQuery(String sql, Map<String, Object> map) {
+    public List<T> findAllBySQLQuery(MapQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllBySQLQuery(Class<R> type, String sql, Map<String, Object> map) {
+    public <R> List<R> findAllBySQLQuery(Class<R> type, MapQuery query) {
         return null;
     }
 
-    public List<Map<String, Object>> findAllBySQLQueryToMap(String sql, Map<String, Object> map) {
+    public List<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query) {
         return null;
     }
 
-    public <R> List<R> findAllBySQLQueryToBean(Class<R> type, String sql, Map<String, Object> map) {
+    public <R> List<R> findAllBySQLQueryToBean(Class<R> type, MapQuery query) {
         return null;
     }
 
-    public Page<T> findAllBySQLQuery(Pageable pageable, String sql, Object... objects) {
+    public Page<T> findAllBySQLQuery(Pageable pageable, ArrayQuery query) {
         return null;
     }
 
-    public <R> Page<R> findAllBySQLQuery(Class<R> type, Pageable pageable, String sql, Object... objects) {
+    public <R> Page<R> findAllBySQLQuery(Class<R> type, ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public Page<Map<String, Object>> findAllBySQLQueryToMap(Pageable pageable, String sql, Object... objects) {
+    public Page<Map<String, Object>> findAllBySQLQueryToMap(ArrayQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllBySQLQueryToBean(Class<R> type, Pageable pageable, String sql, Object... objects) {
+    public <R> Page<R> findAllBySQLQueryToBean(Class<R> type, ArrayQuery query, Pageable pageable) {
         return null;
     }
 
 
-    public Page<T> findAllBySQLQuery(Pageable pageable, String sql, Map<String, Object> map) {
+    public Page<T> findAllBySQLQuery(MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllBySQLQuery(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+    public <R> Page<R> findAllBySQLQuery(Class<R> type, MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public Page<Map<String, Object>> findAllBySQLQueryToMap(Pageable pageable, String sql, Map<String, Object> map) {
+    public Page<Map<String, Object>> findAllBySQLQueryToMap(MapQuery query, Pageable pageable) {
         return null;
     }
 
-    public <R> Page<R> findAllBySQLQueryToBean(Class<R> type, Pageable pageable, String sql, Map<String, Object> map) {
+    public <R> Page<R> findAllBySQLQueryToBean(Class<R> type, MapQuery query, Pageable pageable) {
         return null;
     }
 
