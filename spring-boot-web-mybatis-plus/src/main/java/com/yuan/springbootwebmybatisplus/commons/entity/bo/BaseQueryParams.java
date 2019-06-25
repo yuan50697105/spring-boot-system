@@ -10,10 +10,10 @@ import java.util.Date;
  * @date 2019/6/20 22:56
  **/
 @Data
-public abstract class BaseBo implements Serializable {
-    private Long id;
-    private Long[] ids;
-    private Iterable<Long> iterable;
+public abstract class BaseQueryParams implements Serializable {
+    private String id;
+    private String[] ids;
+    private Iterable<String> iterable;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -23,10 +23,10 @@ public abstract class BaseBo implements Serializable {
     private Date updateDateStart;
     private Date updateDateEnd;
 
-    public BaseBo() {
+    public BaseQueryParams() {
     }
 
-    public BaseBo(Long id, Long[] ids, Iterable<Long> iterable, String createUser, String updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParams(String id, String[] ids, Iterable<String> iterable, String createUser, String updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
         this.iterable = iterable;

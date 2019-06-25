@@ -13,7 +13,7 @@ import java.util.Date;
  **/
 @Data
 public abstract class BasePo implements Serializable {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.UUID)
     private Long id;
     private String createUser;
     private String updateUser;
