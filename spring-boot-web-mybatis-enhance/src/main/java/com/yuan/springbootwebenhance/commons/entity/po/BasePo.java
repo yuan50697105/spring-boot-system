@@ -36,6 +36,7 @@ public abstract class BasePo implements Serializable {
         this.updateDate = updateDate;
     }
 
+    @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
     public void copyFrom(BasePo basePo) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(basePo);
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();

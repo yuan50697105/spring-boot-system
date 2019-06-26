@@ -35,6 +35,7 @@ public abstract class BasePo implements Serializable, GenId<String> {
         return UUID.randomUUID().toString();
     }
 
+    @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
     public void copyFrom(BasePo basePo) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(basePo);
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
