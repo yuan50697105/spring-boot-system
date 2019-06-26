@@ -1,14 +1,11 @@
 package com.yuan.springbootwebjpa.system.entity.bo;
 
 import com.yuan.springbootwebjpa.commons.entity.bo.BaseQueryParam;
-import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author yuane
@@ -31,20 +28,4 @@ public class SysUserQueryParam extends BaseQueryParam {
         super(id, ids, createUser, updateUser, createDate, createDateStart, createDateEnd, updateDate, updateDateStart, updateDateEnd);
         this.name = name;
     }
-
-    public MapQuery createBaseQuery() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Map<String, Object> map = new HashMap<>();
-        if (isNotEmpty(getId())) {
-
-        }
-        if (isNotEmpty(getIds())) {
-
-        }
-        if (isNotEmpty(getName())) {
-
-        }
-        return MapQuery.of(stringBuilder.toString(), map);
-    }
-
 }

@@ -12,7 +12,6 @@ import java.util.Date;
 public abstract class BaseBo {
     private String id;
     private String[] ids;
-    private Iterable<String> iterable;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -25,10 +24,9 @@ public abstract class BaseBo {
     public BaseBo() {
     }
 
-    public BaseBo(String id, String[] ids, Iterable<String> iterable, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
+    public BaseBo(String id, String[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
-        this.iterable = iterable;
         this.createUser = createUser;
         this.updateUser = updateUser;
         this.createDate = createDate;

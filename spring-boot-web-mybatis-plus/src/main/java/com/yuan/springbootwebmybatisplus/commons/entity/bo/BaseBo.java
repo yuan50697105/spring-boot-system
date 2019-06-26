@@ -11,9 +11,8 @@ import java.util.Date;
  **/
 @Data
 public abstract class BaseBo implements Serializable {
-    private Long id;
-    private Long[] ids;
-    private Iterable<Long> iterable;
+    private String id;
+    private String[] ids;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -26,10 +25,9 @@ public abstract class BaseBo implements Serializable {
     public BaseBo() {
     }
 
-    public BaseBo(Long id, Long[] ids, Iterable<Long> iterable, String createUser, String updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
+    public BaseBo(String id, String[] ids, String createUser, String updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
-        this.iterable = iterable;
         this.createUser = createUser;
         this.updateUser = updateUser;
         this.createDate = createDate;
