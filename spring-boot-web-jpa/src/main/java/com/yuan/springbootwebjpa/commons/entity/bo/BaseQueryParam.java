@@ -2,7 +2,6 @@ package com.yuan.springbootwebjpa.commons.entity.bo;
 
 import lombok.Data;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -55,8 +54,5 @@ public abstract class BaseQueryParam implements Serializable {
         return map;
     }
 
-    protected boolean isNotEmpty(Object object) {
-        return !StringUtils.isEmpty(object);
-    }
 
 }

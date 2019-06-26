@@ -1,9 +1,13 @@
 package com.yuan.springbootwebenhance.commons.entity.bo;
 
 import lombok.Data;
+import org.springframework.beans.BeanWrapperImpl;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yuane
@@ -37,5 +41,17 @@ public abstract class BaseBo implements Serializable {
         this.updateDate = updateDate;
         this.updateDateStart = updateDateStart;
         this.updateDateEnd = updateDateEnd;
+    }
+
+    public Map<String, Object> toParamsMap() {
+        Map<String, Object> map = new HashMap<>();
+        BeanWrapperImpl beanWrapper = new BeanWrapperImpl(this);
+        PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            String name = propertyDescriptor.getName();
+            Object value = beanWrapper.getPropertyValue(name);
+            map.put(name, value);
+        }
+        return map;
     }
 }

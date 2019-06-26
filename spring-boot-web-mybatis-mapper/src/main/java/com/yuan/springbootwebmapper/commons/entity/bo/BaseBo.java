@@ -1,8 +1,12 @@
 package com.yuan.springbootwebmapper.commons.entity.bo;
 
 import lombok.Data;
+import org.springframework.beans.BeanWrapperImpl;
 
+import java.beans.PropertyDescriptor;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yuane
@@ -37,5 +41,16 @@ public abstract class BaseBo {
         this.updateDateEnd = updateDateEnd;
     }
 
+    public Map<String, Object> toParamsMap() {
+        Map<String, Object> map = new HashMap<>();
+        BeanWrapperImpl beanWrapper = new BeanWrapperImpl(this);
+        PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            String name = propertyDescriptor.getName();
+            Object value = beanWrapper.getPropertyValue(name);
+            map.put(name, value);
+        }
+        return map;
+    }
 
 }
