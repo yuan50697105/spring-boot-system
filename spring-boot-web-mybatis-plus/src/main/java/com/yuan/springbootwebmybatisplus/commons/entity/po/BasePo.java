@@ -14,9 +14,20 @@ import java.util.Date;
 @Data
 public abstract class BasePo implements Serializable {
     @TableId(type = IdType.UUID)
-    private Long id;
+    private String id;
     private String createUser;
     private String updateUser;
     private Date createDate;
     private Date updateDate;
+
+    public BasePo() {
+    }
+
+    public BasePo(String id, String createUser, String updateUser, Date createDate, Date updateDate) {
+        this.id = id;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
 }
