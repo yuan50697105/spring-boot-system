@@ -21,7 +21,7 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     void saveAll(T[] ts);
 
-    void saveAll(Collection<T> collection);
+    void saveAll(Iterable<T> iterable);
 
     void delete(ID id);
 
@@ -54,5 +54,4 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
     Page<T> findAll(T t, Pageable pageable);
 
     Page<T> findAll(Specification<T> specification, Pageable pageable);
-
 }

@@ -33,19 +33,17 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, String, SysRole
 
     @Override
     public Page findPageByBo(SysRoleQueryParam sysRoleBo, Pageable pageable) {
-        return findAllBySQLToMap(createBaseQuery(sysRoleBo), pageable);
+        return sysRoleRepository.findAllBySQLQueryToMap(createBaseQuery(sysRoleBo), pageable);
     }
 
     @Override
     public List findListByBo(SysRoleQueryParam sysRoleBo) {
-        MapQuery baseQuery = createBaseQuery(sysRoleBo);
-        return getRepository().findAllBySQL(baseQuery.getSql(), baseQuery.getMap());
+        return sysRoleRepository.findAllBySQLQueryToMap(createBaseQuery(sysRoleBo));
     }
 
     @Override
     public Optional findOneByBo(SysRoleQueryParam sysRoleBo) {
-        MapQuery baseQuery = createBaseQuery(sysRoleBo);
-        return getRepository().findOneBySQL(baseQuery.getSql(), baseQuery.getMap());
+        return sysRoleRepository.findOneBySQLQueryToMap(createBaseQuery(sysRoleBo));
     }
 
     private MapQuery createBaseQuery(SysRoleQueryParam sysRoleBo) {

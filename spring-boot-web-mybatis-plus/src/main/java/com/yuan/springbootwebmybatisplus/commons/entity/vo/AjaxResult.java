@@ -11,19 +11,18 @@ import java.io.Serializable;
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public final class AjaxResult<T> implements Serializable {
+public final class AjaxResult implements Serializable {
     private String code;
     private String message;
-    private T data;
+    private Object data;
 
-    private AjaxResult(String code, String message, T data) {
+    private AjaxResult(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> AjaxResult of(String code, String message, T data) {
+    public static <T> AjaxResult of(String code, String message, Object data) {
         return new AjaxResult(code, message, data);
     }
 }

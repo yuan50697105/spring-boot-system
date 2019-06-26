@@ -13,21 +13,36 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public final class Result implements Serializable {
-    private String code;
+    private Status status;
     private String message;
     private Object data;
 
-    private Result(String code, String message, Object data) {
-        this.code = code;
+    private Result(Status status, String message, Object data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public static Result of(String code, String message, Object data) {
-        return new Result(code, message, data);
+
+    public static Result of(Status status, String message, Object data) {
+        return new Result(status, message, data);
     }
 
     public AjaxResult toAjax() {
-        return AjaxResult.of(code, message, data);
+        return AjaxResult.of(status.getCode(), message, data);
+    }
+
+    public enum Status {
+        SUCCESS("success"), WARN("warn"), INFO("info"), ERROR("error"), FAILURE("failure"), DATA("data");
+
+        private String code;
+
+        Status(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
     }
 }

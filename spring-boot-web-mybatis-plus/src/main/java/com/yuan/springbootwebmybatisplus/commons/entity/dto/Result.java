@@ -12,23 +12,36 @@ import java.io.Serializable;
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public final class Result<T> implements Serializable {
-    private String code;
+public final class Result implements Serializable {
+    private Status status;
     private String message;
-    private T data;
+    private Object data;
 
-    private Result(String code, String message, T data) {
-        this.code = code;
+    private Result(Status status, String message, Object data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Result of(String code, String message, T data) {
-        return new Result(code, message, data);
+    public static <T> Result of(Status status, String message, T data) {
+        return new Result(status, message, data);
     }
 
     public AjaxResult toAjax() {
-        return AjaxResult.of(code, message, data);
+        return AjaxResult.of(status.code, message, data);
+    }
+
+    public enum Status {
+        SUCCESS("success"), WARN("warn"), INFO("info"), ERROR("error"), FAILURE("failure"), DATA("data");
+
+        private String code;
+
+        Status(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
     }
 }

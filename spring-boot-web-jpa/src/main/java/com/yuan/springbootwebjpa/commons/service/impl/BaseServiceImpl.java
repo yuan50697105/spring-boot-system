@@ -1,5 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service.impl;
 
+import com.google.common.collect.Lists;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
@@ -22,7 +23,6 @@ import java.util.Optional;
  * @date 2019/6/15 19:07
  **/
 
-@SuppressWarnings({"unchecked", "InfiniteRecursion"})
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
     protected abstract S getRepository();
@@ -40,13 +40,13 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(T[] ts) {
-        saveAll(Arrays.asList(ts));
+        saveAll(Lists.newArrayList(ts));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveAll(Collection<T> collection) {
-        saveAll(collection);
+    public void saveAll(Iterable<T> iterable) {
+        saveAll(iterable);
     }
 
     @Override
@@ -131,8 +131,5 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     public Page<T> findAll(Specification<T> specification, Pageable pageable) {
         return getRepository().findAll(specification, pageable);
     }
-
-
-
 
 }
