@@ -23,7 +23,7 @@ import java.util.HashSet;
 public abstract class BasePo implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(strategy = "uuid2", name = "uuid2 ")
+    @GenericGenerator(strategy = "uuid2", name = "uuid2")
     private String id;
     private Date createDate;
     private Date updateDate;
