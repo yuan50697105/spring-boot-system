@@ -22,7 +22,7 @@ public final class AjaxResult implements Serializable {
         this.data = data;
     }
 
-    public static <T> AjaxResult of(String code, String message, Object data) {
+    public static AjaxResult of(String code, String message, Object data) {
         return new AjaxResult(code, message, data);
     }
 }

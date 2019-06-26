@@ -29,7 +29,7 @@ public final class Result implements Serializable {
     }
 
     public AjaxResult toAjax() {
-        return AjaxResult.of(status.getCode(), message, data);
+        return AjaxResult.of(status.code, message, data);
     }
 
     public enum Status {

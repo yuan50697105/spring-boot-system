@@ -9,16 +9,16 @@ import java.util.List;
  * @date 2019/6/21 21:12
  **/
 @Data
-public final class PageVo<T> {
+public final class PageVo {
     private Long total;
-    private List<T> list;
+    private List list;
 
-    private PageVo(Long total, List<T> list) {
+    private PageVo(Long total, List list) {
         this.total = total;
         this.list = list;
     }
 
-    public static <T> PageVo<T> of(Long total, List<T> list) {
-        return new PageVo<>(total, list);
+    public static PageVo of(Long total, List list) {
+        return new PageVo(total, list);
     }
 }

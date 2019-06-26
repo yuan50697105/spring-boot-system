@@ -29,4 +29,6 @@
         </if>
         order by create_date desc
     </select>
+    <select id="selectListByQueryParams" resultType="map"></select>
+    <select id="selectOneByQueryParams" resultType="java.lang.Object"></select>
 </mapper>

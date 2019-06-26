@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author yuane
  * @date 2019/6/15 23:30
  **/
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo> extends ServiceImpl<M, T> implements BaseService<T> {
+
 }
