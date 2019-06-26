@@ -43,9 +43,10 @@ public abstract class BaseQueryParam implements Serializable {
     }
 
     public Map<String, Object> toParamsMap() {
-        Map<String, Object> map = new HashMap<>();
+
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(this);
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
+        Map<String, Object> map = new HashMap<>(propertyDescriptors.length);
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             String name = propertyDescriptor.getName();
             Object value = beanWrapper.getPropertyValue(name);
