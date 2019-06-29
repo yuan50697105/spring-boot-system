@@ -21,10 +21,8 @@
         <module>spring-boot-web-jpa</module>
         <module>spring-boot-web-jdbc</module>
         <module>spring-boot-web-jooq</module>
-        <module>spring-boot-web-mybatis</module>
         <module>spring-boot-web-mybatis-plus</module>
         <module>spring-boot-web-mybatis-mapper</module>
-        <module>spring-boot-web-mybatis-enhance</module>
         <module>spring-boot-web-socket</module>
         <module>spring-boot-web-shiro</module>
         <module>spring-boot-web-security</module>

@@ -26,22 +26,48 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     }
 
     @Override
-    protected void beforeInsert(SysUser sysUser) throws RuntimeException {
-        sysUser.setCreateDate(new Date());
+    protected SysUser beforeInsert(SysUser sysUser) throws RuntimeException {
+        int count = count(SysUser.builder().username(sysUser.getUsername()).build());
+        if (count > 0) {
+            throw new RuntimeException(sysUser.getUsername() + "已存在");
+        } else {
+            sysUser.setCreateDate(new Date());
+            return sysUser;
+        }
     }
 
     @Override
-    protected void beforeInsertSelective(SysUser sysUser) throws RuntimeException {
-        sysUser.setCreateDate(new Date());
+    protected SysUser beforeInsertSelective(SysUser sysUser) throws RuntimeException {
+        int count = count(SysUser.builder().username(sysUser.getUsername()).build());
+        if (count > 0) {
+            throw new RuntimeException("此用户已存在");
+        } else {
+            sysUser.setCreateDate(new Date());
+            return sysUser;
+        }
     }
 
     @Override
-    protected void beforeUpdate(SysUser sysUser) throws RuntimeException {
-        sysUser.setUpdateDate(new Date());
+    protected SysUser beforeUpdate(SysUser sysUser) throws RuntimeException {
+        SysUser user = findById(sysUser.getId());
+        if (user != null) {
+            sysUser.setUpdateDate(new Date());
+            user.copyFrom(sysUser);
+            return user;
+        } else {
+            throw new RuntimeException("此用户已被删除");
+        }
     }
 
     @Override
-    protected void beforeUpdateSelective(SysUser sysUser) throws RuntimeException {
-        sysUser.setUpdateDate(new Date());
+    protected SysUser beforeUpdateSelective(SysUser sysUser) throws RuntimeException {
+        SysUser user = findById(sysUser.getId());
+        if (user != null) {
+            sysUser.setUpdateDate(new Date());
+            user.copyFrom(sysUser);
+            return user;
+        } else {
+            throw new RuntimeException("此用户已被删除");
+        }
     }
 }

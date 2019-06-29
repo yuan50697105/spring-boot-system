@@ -28,6 +28,10 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     DSLContext getDslContext();
 
+    void persist(T t);
+
+    void refresh(T t);
+
     Optional<T> findOne(SelectQuery<Record> selectQuery);
 
     <R> Optional<R> findOne(Class<R> type, SelectQuery<Record> selectQuery);

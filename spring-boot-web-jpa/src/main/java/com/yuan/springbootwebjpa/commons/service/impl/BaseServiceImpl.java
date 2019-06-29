@@ -3,6 +3,7 @@ package com.yuan.springbootwebjpa.commons.service.impl;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yuane
@@ -23,7 +22,13 @@ import java.util.Optional;
 
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
-    protected abstract S getRepository();
+    @SuppressWarnings("SpringJavaAutowiredMembersInspection")
+    @Autowired
+    private S baseRepository;
+
+    protected S getRepository() {
+        return baseRepository;
+    }
 
     protected boolean isNotEmpty(Object object) {
         return !StringUtils.isEmpty(object);
@@ -31,6 +36,9 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
 
     protected abstract void beforeSave(T t) throws RuntimeException;
 
+    protected abstract void beforeInsert(T t) throws RuntimeException;
+
+    protected abstract void beforeUpdate(T t) throws RuntimeException;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -39,20 +47,62 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         getRepository().save(t);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insert(T t) {
+        beforeInsert(t);
+        getRepository().persist(t);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveAll(T[] ts) {
-        Arrays.stream(ts).forEach(this::beforeSave);
-        saveAll(Arrays.asList(ts));
+    public void insertAll(T[] arrays) {
+        insertAll(Arrays.asList(arrays));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertAll(Collection<T> collection) {
+        collection.forEach(this::beforeInsert);
+        collection.stream().map(this::setCommonsParameters).forEach(this::insert);
+
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(T t) {
+        beforeUpdate(t);
+        getRepository().refresh(t);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAll(T[] arrays) {
+        updateAll(Arrays.asList(arrays));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAll(Collection<T> collection) {
+        collection.forEach(this::beforeUpdate);
+        collection.stream().map(this::setCommonsParameters).forEach(this::update);
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveAll(Iterable<T> iterable) {
-        iterable.forEach(this::beforeSave);
-        saveAll(iterable);
+    public void saveAll(T[] ts) {
+        saveAll(Arrays.asList(ts));
+    }
+
+
+    @SuppressWarnings("InfiniteRecursion")
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveAll(Collection<T> collection) {
+        collection.forEach(this::beforeSave);
+        collection = collection.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
+        saveAll(collection);
     }
 
     @Override
@@ -118,5 +168,12 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getRepository().findAll(Example.of(t), pageable);
     }
 
+    private T setCommonsParameters(T t) {
+        t.setCreateDate(new Date());
+        t.setUpdateDate(new Date());
+        t.setCreateUser("");
+        t.setUpdateUser("");
+        return t;
+    }
 
 }

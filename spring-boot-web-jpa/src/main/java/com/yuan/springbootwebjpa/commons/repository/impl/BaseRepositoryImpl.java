@@ -2,6 +2,7 @@ package com.yuan.springbootwebjpa.commons.repository.impl;
 
 import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
 import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
+import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.query.internal.QueryImpl;
@@ -33,7 +34,7 @@ import java.util.Optional;
  **/
 @SuppressWarnings({"Duplicates", "unchecked"})
 @NoRepositoryBean
-public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
+public class BaseRepositoryImpl<T extends BasePo, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
     private final DSLContext dslContext;
@@ -55,6 +56,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     public DSLContext getDslContext() {
         return dslContext;
     }
+
+    @Override
+    public void persist(T t) {
+        entityManager.persist(t);
+    }
+
+    @Override
+    public void refresh(T t) {
+        entityManager.refresh(t);
+    }
+
 
     @Override
     public Optional<T> findOne(SelectQuery<Record> selectQuery) {

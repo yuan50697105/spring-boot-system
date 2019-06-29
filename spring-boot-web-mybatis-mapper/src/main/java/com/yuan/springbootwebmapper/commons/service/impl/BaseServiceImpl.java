@@ -12,7 +12,9 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author yuane
@@ -49,13 +51,15 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(T[] arrays) {
         Arrays.stream(arrays).forEach(this::beforeInsert);
-        return insertAll(Arrays.asList(arrays));
+        List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
+        return insertAll(collect);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(List<T> list) {
         list.forEach(this::beforeInsert);
+        list = list.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return getMapper().insertList(list);
     }
 
@@ -148,6 +152,14 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Override
     public int countByExample(Example example) {
         return getMapper().selectCountByExample(example);
+    }
+
+    private T setCommonsParameters(T t) {
+        t.setCreateDate(new Date());
+        t.setUpdateDate(new Date());
+        t.setCreateUser("");
+        t.setUpdateUser("");
+        return t;
     }
 }
 
