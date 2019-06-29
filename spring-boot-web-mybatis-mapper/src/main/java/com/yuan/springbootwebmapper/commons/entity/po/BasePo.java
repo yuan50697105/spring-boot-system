@@ -30,6 +30,17 @@ public abstract class BasePo implements Serializable, GenId<String> {
     private Date createDate;
     private Date updateDate;
 
+    public BasePo() {
+    }
+
+    public BasePo(String id, String createUser, String updateUser, Date createDate, Date updateDate) {
+        this.id = id;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
     @Override
     public String genId(String table, String column) {
         return UUID.randomUUID().toString();

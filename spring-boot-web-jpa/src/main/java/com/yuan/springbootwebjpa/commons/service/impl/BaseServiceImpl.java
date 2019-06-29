@@ -7,7 +7,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -95,11 +94,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public Optional<T> findOne(Specification<T> specification) {
-        return getRepository().findOne(specification);
-    }
-
-    @Override
     public List<T> findAll() {
         return getRepository().findAll();
     }
@@ -115,16 +109,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     }
 
     @Override
-    public List<T> findAll(Specification<T> specification) {
-        return getRepository().findAll(specification);
-    }
-
-    @Override
-    public List<T> findAll(Specification<T> specification, Sort sort) {
-        return getRepository().findAll(specification, sort);
-    }
-
-    @Override
     public Page<T> findAll(Pageable pageable) {
         return getRepository().findAll(pageable);
     }
@@ -134,9 +118,5 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getRepository().findAll(Example.of(t), pageable);
     }
 
-    @Override
-    public Page<T> findAll(Specification<T> specification, Pageable pageable) {
-        return getRepository().findAll(specification, pageable);
-    }
 
 }

@@ -4,7 +4,6 @@ import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -37,21 +36,14 @@ public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
 
     Optional<T> findOne(T t);
 
-    Optional<T> findOne(Specification<T> specification);
-
     List<T> findAll();
 
     List<T> findAll(T t);
 
     List<T> findAll(T t, Sort sort);
 
-    List<T> findAll(Specification<T> specification);
-
-    List<T> findAll(Specification<T> specification, Sort sort);
-
     Page<T> findAll(Pageable pageable);
 
     Page<T> findAll(T t, Pageable pageable);
 
-    Page<T> findAll(Specification<T> specification, Pageable pageable);
 }
