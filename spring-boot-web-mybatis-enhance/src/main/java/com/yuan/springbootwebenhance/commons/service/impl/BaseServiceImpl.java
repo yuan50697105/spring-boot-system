@@ -9,6 +9,7 @@ import com.yuan.springbootwebenhance.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,27 +21,35 @@ import java.util.List;
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
     protected abstract S getMapper();
 
+    protected abstract void beforeInsert(T t);
+
+    protected abstract void beforeUpdate(T t);
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
+        beforeInsert(t);
         getMapper().insert(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(T[] ts) {
+        Arrays.stream(ts).forEach(this::beforeInsert);
         getMapper().insertArray(ts);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(Collection<T> collection) {
+        collection.forEach(this::beforeInsert);
         getMapper().insertCollection(collection);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
+        beforeUpdate(t);
         getMapper().update(t);
     }
 

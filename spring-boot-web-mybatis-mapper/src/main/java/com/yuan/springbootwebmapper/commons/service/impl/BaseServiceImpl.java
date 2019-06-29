@@ -22,15 +22,25 @@ import java.util.List;
 public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>> implements BaseService<T> {
     protected abstract S getMapper();
 
+    protected abstract void beforeInsert(T t);
+
+    protected abstract void beforeInsertSelective(T t);
+
+    protected abstract void beforeUpdate(T t);
+
+    protected abstract void beforeUpdateSelective(T t);
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(T t) {
+        beforeInsert(t);
         return getMapper().insert(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertSelective(T t) {
+        beforeInsertSelective(t);
         return getMapper().insertSelective(t);
     }
 
@@ -38,24 +48,28 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(T[] arrays) {
+        Arrays.stream(arrays).forEach(this::beforeInsert);
         return insertAll(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(List<T> list) {
+        list.forEach(this::beforeInsert);
         return getMapper().insertList(list);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int update(T t) {
+        beforeUpdate(t);
         return getMapper().updateByPrimaryKey(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateSelective(T t) {
+        beforeUpdateSelective(t);
         return getMapper().updateByPrimaryKeySelective(t);
     }
 

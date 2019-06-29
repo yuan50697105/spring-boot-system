@@ -1,6 +1,5 @@
 package com.yuan.springbootwebjpa.commons.service.impl;
 
-import com.google.common.collect.Lists;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
@@ -31,21 +30,32 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return !StringUtils.isEmpty(object);
     }
 
+    protected abstract void beforeSave(T t);
+
+    protected abstract void beforeSaveAll(Iterable<T> asList);
+
+    protected abstract void beforeSaveAll(T[] arrays);
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(T t) {
+        beforeSave(t);
         getRepository().save(t);
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(T[] ts) {
-        saveAll(Lists.newArrayList(ts));
+        beforeSaveAll(ts);
+        saveAll(Arrays.asList(ts));
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(Iterable<T> iterable) {
+        beforeSaveAll(iterable);
         saveAll(iterable);
     }
 
