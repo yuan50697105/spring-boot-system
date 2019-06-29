@@ -30,11 +30,8 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return !StringUtils.isEmpty(object);
     }
 
-    protected abstract void beforeSave(T t);
+    protected abstract void beforeSave(T t) throws RuntimeException;
 
-    protected abstract void beforeSaveAll(Iterable<T> asList);
-
-    protected abstract void beforeSaveAll(T[] arrays);
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -47,7 +44,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(T[] ts) {
-        beforeSaveAll(ts);
+        Arrays.stream(ts).forEach(this::beforeSave);
         saveAll(Arrays.asList(ts));
     }
 
@@ -55,7 +52,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(Iterable<T> iterable) {
-        beforeSaveAll(iterable);
+        iterable.forEach(this::beforeSave);
         saveAll(iterable);
     }
 

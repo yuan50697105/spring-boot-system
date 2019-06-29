@@ -21,9 +21,9 @@ import java.util.List;
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
     protected abstract S getMapper();
 
-    protected abstract void beforeInsert(T t);
+    protected abstract void beforeInsert(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdate(T t);
+    protected abstract void beforeUpdate(T t) throws RuntimeException;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

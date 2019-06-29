@@ -14,11 +14,11 @@ import java.util.Collection;
  **/
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo> extends ServiceImpl<M, T> implements BaseService<T> {
-    protected abstract void beforeSave(T t);
+    protected abstract void beforeSave(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdate(T t);
+    protected abstract void beforeUpdate(T t) throws RuntimeException;
 
-    protected abstract void beforeSaveOrUpdate(T t);
+    protected abstract void beforeSaveOrUpdate(T t) throws RuntimeException;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

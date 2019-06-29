@@ -22,13 +22,13 @@ import java.util.List;
 public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>> implements BaseService<T> {
     protected abstract S getMapper();
 
-    protected abstract void beforeInsert(T t);
+    protected abstract void beforeInsert(T t) throws RuntimeException;
 
-    protected abstract void beforeInsertSelective(T t);
+    protected abstract void beforeInsertSelective(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdate(T t);
+    protected abstract void beforeUpdate(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdateSelective(T t);
+    protected abstract void beforeUpdateSelective(T t) throws RuntimeException;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
