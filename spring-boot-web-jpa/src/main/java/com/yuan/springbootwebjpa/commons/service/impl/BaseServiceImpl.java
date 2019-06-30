@@ -3,6 +3,7 @@ package com.yuan.springbootwebjpa.commons.service.impl;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -20,13 +21,15 @@ import java.util.stream.Collectors;
  * @date 2019/6/15 19:07
  **/
 
+@Slf4j
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
     @SuppressWarnings("SpringJavaAutowiredMembersInspection")
     @Autowired
     private S baseRepository;
 
-    protected S getRepository() {
+    @Override
+    public S getRepository() {
         return baseRepository;
     }
 
@@ -50,6 +53,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
+        log.info("执行插入方法");
         beforeInsert(t);
         getRepository().persist(t);
     }
@@ -57,12 +61,14 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(T[] arrays) {
+        log.info("执行批量插入方法");
         insertAll(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(Collection<T> collection) {
+        log.info("执行批量插入方法");
         collection.forEach(this::beforeInsert);
         collection.stream().map(this::setCommonsParameters).forEach(this::insert);
 
@@ -71,6 +77,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
+        log.info("执行更新方法");
         beforeUpdate(t);
         getRepository().refresh(t);
     }
@@ -78,12 +85,16 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateAll(T[] arrays) {
-        updateAll(Arrays.asList(arrays));
+        log.info("执行批量更新方法");
+        Arrays.stream(arrays).forEach(this::beforeUpdate);
+        List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
+        updateAll(collect);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateAll(Collection<T> collection) {
+        log.info("执行批量更新方法");
         collection.forEach(this::beforeUpdate);
         collection.stream().map(this::setCommonsParameters).forEach(this::update);
     }
@@ -92,6 +103,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(T[] ts) {
+        log.info("执行批量保存方法");
         saveAll(Arrays.asList(ts));
     }
 
@@ -100,6 +112,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(Collection<T> collection) {
+        log.info("执行批量保存方法");
         collection.forEach(this::beforeSave);
         collection = collection.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         saveAll(collection);
@@ -108,6 +121,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(ID id) {
+        log.info("删除ID为" + id + "数据");
         getRepository().deleteById(id);
     }
 

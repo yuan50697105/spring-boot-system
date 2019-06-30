@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.yuan.springbootwebmapper.commons.entity.po.BasePo;
 import com.yuan.springbootwebmapper.commons.mapper.BaseMapper;
 import com.yuan.springbootwebmapper.commons.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
@@ -22,7 +23,13 @@ import java.util.stream.Collectors;
  **/
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>> implements BaseService<T> {
-    protected abstract S getMapper();
+    @Autowired
+    private S baseMapper;
+
+    @Override
+    public S getMapper() {
+        return baseMapper;
+    }
 
     protected abstract void beforeInsert(T t) throws RuntimeException;
 

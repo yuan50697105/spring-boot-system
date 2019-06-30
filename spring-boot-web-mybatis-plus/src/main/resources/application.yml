@@ -10,6 +10,7 @@ logging:
   level:
     sql: debug
     web: debug
+    root: debug
 mybatis:
   mapper-locations: classpath:mapper/*
 mybatis-plus:
