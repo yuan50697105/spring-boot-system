@@ -4,7 +4,6 @@ import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.service.BaseSerivce;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,14 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
-    @SuppressWarnings("SpringJavaAutowiredMembersInspection")
-    @Autowired
-    private S baseRepository;
-
-    @Override
-    public S getRepository() {
-        return baseRepository;
-    }
+    public abstract S getRepository();
 
     protected boolean isNotEmpty(Object object) {
         return !StringUtils.isEmpty(object);
