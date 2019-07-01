@@ -35,8 +35,8 @@ public class SysUserController extends BaseController {
 
     public WebAsyncTask<AjaxResult> dataPage(SysUserQueryParams queryParams, int page, int size) {
         return new WebAsyncTask<>(() -> {
-            Page<Map<String, Object> list = sysUserService.findPage(new Page<Map<String, Object>>(page, size), queryParams);
-            return Result.of(Result.Status.DATA, null, PageVo.of(list.getTotal(), list.getRecords()));
+            Page<Map<String, Object>> list = sysUserService.findPage(new Page<Map<String, Object>>(page, size), queryParams);
+            return Result.of(Result.Status.DATA, null, PageVo.of(list.getTotal(), list.getRecords())).toAjax();
         });
 
 
