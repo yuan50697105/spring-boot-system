@@ -17,16 +17,16 @@ import java.util.stream.Collectors;
  **/
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo> extends ServiceImpl<M, T> implements BaseService<T> {
-    protected abstract void beforeSave(T t) throws RuntimeException;
+    protected abstract void checkSave(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdate(T t) throws RuntimeException;
+    protected abstract void checkUpdate(T t) throws RuntimeException;
 
-    protected abstract void beforeSaveOrUpdate(T t) throws RuntimeException;
+    protected abstract void checkSaveOrUpdate(T t) throws RuntimeException;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(T entity) {
-        beforeSave(entity);
+        checkSave(entity);
         setCommonsParameters(entity);
         return super.save(entity);
     }
@@ -40,7 +40,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<T> entityList) {
-        entityList.parallelStream().forEach(this::beforeSave);
+        entityList.parallelStream().forEach(this::checkSave);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.saveBatch(entityList);
     }
@@ -54,7 +54,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<T> entityList, int batchSize) {
-        entityList.parallelStream().forEach(this::beforeSave);
+        entityList.parallelStream().forEach(this::checkSave);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.saveBatch(entityList, batchSize);
     }
@@ -62,7 +62,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateById(T entity) {
-        beforeUpdate(entity);
+        checkUpdate(entity);
         setCommonsParameters(entity);
         return super.updateById(entity);
     }
@@ -76,7 +76,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateBatchById(Collection<T> entityList) {
-        entityList.parallelStream().forEach(this::beforeUpdate);
+        entityList.parallelStream().forEach(this::checkUpdate);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.updateBatchById(entityList);
     }
@@ -90,7 +90,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateBatchById(Collection<T> entityList, int batchSize) {
-        entityList.parallelStream().forEach(this::beforeUpdate);
+        entityList.parallelStream().forEach(this::checkUpdate);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.updateBatchById(entityList, batchSize);
     }
@@ -99,7 +99,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveOrUpdate(T entity) {
-        beforeSaveOrUpdate(entity);
+        checkSaveOrUpdate(entity);
         setCommonsParameters(entity);
         return super.saveOrUpdate(entity);
     }
@@ -113,7 +113,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveOrUpdateBatch(Collection<T> entityList) {
-        entityList.parallelStream().forEach(this::beforeSaveOrUpdate);
+        entityList.parallelStream().forEach(this::checkSaveOrUpdate);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.saveOrUpdateBatch(entityList);
     }
@@ -127,7 +127,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize) {
-        entityList.parallelStream().forEach(this::beforeSaveOrUpdate);
+        entityList.parallelStream().forEach(this::checkSaveOrUpdate);
         entityList = entityList.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return super.saveOrUpdateBatch(entityList, batchSize);
     }

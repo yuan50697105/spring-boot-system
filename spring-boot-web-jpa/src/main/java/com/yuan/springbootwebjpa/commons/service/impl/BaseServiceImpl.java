@@ -29,16 +29,16 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return !StringUtils.isEmpty(object);
     }
 
-    protected abstract void beforeSave(T t) throws RuntimeException;
+    protected abstract void checkSave(T t) throws RuntimeException;
 
-    protected abstract void beforeInsert(T t) throws RuntimeException;
+    protected abstract void checkInsert(T t) throws RuntimeException;
 
-    protected abstract void beforeUpdate(T t) throws RuntimeException;
+    protected abstract void checkUpdate(T t) throws RuntimeException;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(T t) {
-        beforeSave(t);
+        checkSave(t);
         getRepository().save(t);
     }
 
@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
         log.info("执行插入方法");
-        beforeInsert(t);
+        checkInsert(t);
         getRepository().persist(t);
     }
 
@@ -61,7 +61,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(Collection<T> collection) {
         log.info("执行批量插入方法");
-        collection.forEach(this::beforeInsert);
+        collection.forEach(this::checkInsert);
         collection.stream().map(this::setCommonsParameters).forEach(this::insert);
 
     }
@@ -70,7 +70,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
         log.info("执行更新方法");
-        beforeUpdate(t);
+        checkUpdate(t);
         getRepository().refresh(t);
     }
 
@@ -78,7 +78,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void updateAll(T[] arrays) {
         log.info("执行批量更新方法");
-        Arrays.stream(arrays).forEach(this::beforeUpdate);
+        Arrays.stream(arrays).forEach(this::checkUpdate);
         List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
         updateAll(collect);
     }
@@ -87,7 +87,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void updateAll(Collection<T> collection) {
         log.info("执行批量更新方法");
-        collection.forEach(this::beforeUpdate);
+        collection.forEach(this::checkUpdate);
         collection.stream().map(this::setCommonsParameters).forEach(this::update);
     }
 
@@ -105,7 +105,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(Collection<T> collection) {
         log.info("执行批量保存方法");
-        collection.forEach(this::beforeSave);
+        collection.forEach(this::checkSave);
         collection = collection.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         saveAll(collection);
     }
