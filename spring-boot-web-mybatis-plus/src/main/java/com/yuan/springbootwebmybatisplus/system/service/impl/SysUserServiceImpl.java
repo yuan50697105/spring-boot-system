@@ -9,6 +9,7 @@ import com.yuan.springbootwebmybatisplus.system.mapper.SysUserMapper;
 import com.yuan.springbootwebmybatisplus.system.service.SysUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +39,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     }
 
     @Override
-    public Page<Map<String, Object>> findPage(Page<Map<String, Object>> mapPage, SysUserQueryParams queryParams) {
+    public Page findPage(Page<Map<String, Object>> mapPage, SysUserQueryParams queryParams) {
         return getBaseMapper().findPageByQueryParams(mapPage, queryParams);
+    }
+
+    @Override
+    public List findList(SysUserQueryParams queryParams) {
+        return getBaseMapper().selectList(queryParams);
     }
 }
