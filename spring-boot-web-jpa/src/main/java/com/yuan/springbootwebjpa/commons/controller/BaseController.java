@@ -2,7 +2,6 @@ package com.yuan.springbootwebjpa.commons.controller;
 
 import com.yuan.springbootwebjpa.commons.entity.dto.Result;
 import com.yuan.springbootwebjpa.commons.entity.vo.AjaxResult;
-import com.yuan.springbootwebjpa.system.entity.bo.SysUserQueryParam;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,5 +20,4 @@ public abstract class BaseController {
     }
 
 
-    public abstract WebAsyncTask<AjaxResult> dataList(SysUserQueryParam queryParam);
 }

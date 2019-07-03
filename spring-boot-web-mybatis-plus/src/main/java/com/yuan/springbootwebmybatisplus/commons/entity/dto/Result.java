@@ -2,28 +2,31 @@ package com.yuan.springbootwebmybatisplus.commons.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.yuan.springbootwebmybatisplus.commons.entity.vo.AjaxResult;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/6/20 22:53
+ * @date 2019/6/20 19:24
  **/
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public final class Result implements Serializable {
     private Status status;
     private String message;
     private Object data;
 
-    private Result(Status status, String message, Object data) {
+    @Builder
+    public Result(Status status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public static <T> Result of(Status status, String message, T data) {
+
+    public static Result of(Status status, String message, Object data) {
         return new Result(status, message, data);
     }
 

@@ -1,22 +1,24 @@
 package com.yuan.springbootwebmybatisplus.commons.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/6/20 22:52
+ * @date 2019/6/20 19:24
  **/
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public final class AjaxResult implements Serializable {
     private String code;
     private String message;
     private Object data;
 
-    private AjaxResult(String code, String message, Object data) {
+    @Builder
+    public AjaxResult(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;

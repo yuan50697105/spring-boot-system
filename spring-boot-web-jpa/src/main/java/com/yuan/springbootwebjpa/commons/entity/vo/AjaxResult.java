@@ -1,6 +1,7 @@
 package com.yuan.springbootwebjpa.commons.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +17,8 @@ public final class AjaxResult implements Serializable {
     private String message;
     private Object data;
 
-    private AjaxResult(String code, String message, Object data) {
+    @Builder
+    public AjaxResult(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;

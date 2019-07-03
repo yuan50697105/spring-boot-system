@@ -1,5 +1,6 @@
 package com.yuan.springbootwebjpa.commons.entity.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -18,12 +19,13 @@ public final class MapQuery {
 
     }
 
-    private MapQuery(String sql) {
+    public MapQuery(String sql) {
         this.sql = sql;
         this.map = new HashMap<>(1);
     }
 
-    private MapQuery(String sql, Map<String, Object> map) {
+    @Builder
+    public MapQuery(String sql, Map<String, Object> map) {
         this.sql = sql;
         this.map = map;
     }

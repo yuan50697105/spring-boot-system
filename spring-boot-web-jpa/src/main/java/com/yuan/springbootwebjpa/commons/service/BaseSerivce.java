@@ -1,7 +1,6 @@
 package com.yuan.springbootwebjpa.commons.service;
 
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
-import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,8 +15,6 @@ import java.util.Optional;
  * @date 2019/6/15 19:07
  **/
 public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
-
-    BaseRepository getRepository();
 
     void save(T t);
 

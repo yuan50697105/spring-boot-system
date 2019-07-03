@@ -1,25 +1,50 @@
 package com.yuan.springbootwebmapper.commons.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.yuan.springbootwebmapper.commons.entity.vo.AjaxResult;
+import lombok.Builder;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/6/21 20:59
+ * @date 2019/6/20 19:24
  **/
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public final class Result<T> {
-    private String code;
+public final class Result implements Serializable {
+    private Status status;
     private String message;
-    private T data;
+    private Object data;
 
-
-    private Result(String code, String message, T data) {
-        this.code = code;
+    @Builder
+    public Result(Status status, String message, Object data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    private static <T> Result<T> of(String code, String message, T data) {
-        return new Result<>(code, message, data);
+
+    public static Result of(Status status, String message, Object data) {
+        return new Result(status, message, data);
+    }
+
+    public AjaxResult toAjax() {
+        return AjaxResult.of(status.code, message, data);
+    }
+
+    public enum Status {
+        SUCCESS("success"), WARN("warn"), INFO("info"), ERROR("error"), FAILURE("failure"), DATA("data");
+
+        private String code;
+
+        Status(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
     }
 }

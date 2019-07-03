@@ -1,4 +1,4 @@
-package com.yuan.springbootwebjpa.commons.entity.vo;
+package com.yuan.springbootwebmapper.commons.entity.vo;
 
 import lombok.Builder;
 import lombok.Data;

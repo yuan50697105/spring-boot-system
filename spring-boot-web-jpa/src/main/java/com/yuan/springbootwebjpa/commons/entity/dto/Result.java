@@ -2,6 +2,7 @@ package com.yuan.springbootwebjpa.commons.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.yuan.springbootwebjpa.commons.entity.vo.AjaxResult;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ public final class Result implements Serializable {
     private String message;
     private Object data;
 
-    private Result(Status status, String message, Object data) {
+    @Builder
+    public Result(Status status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;

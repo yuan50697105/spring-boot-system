@@ -29,6 +29,7 @@
         <module>spring-boot-web-security</module>
         <module>spring-boot-web-flux</module>
         <module>spring-boot-base</module>
+        <module>spring-boot-utils</module>
         <module>spring-boot-base-chinese2pinyin</module>
     </modules>
     <properties>

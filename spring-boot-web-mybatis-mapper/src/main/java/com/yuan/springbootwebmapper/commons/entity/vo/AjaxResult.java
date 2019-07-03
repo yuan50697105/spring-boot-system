@@ -1,25 +1,30 @@
 package com.yuan.springbootwebmapper.commons.entity.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/6/21 20:58
+ * @date 2019/6/20 19:24
  **/
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public final class AjaxResult<T> {
+public final class AjaxResult implements Serializable {
     private String code;
     private String message;
-    private T data;
+    private Object data;
 
-    private AjaxResult(String code, String message, T data) {
+    @Builder
+    public AjaxResult(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public static <T> AjaxResult<T> of(String code, String message, T data) {
-        return new AjaxResult<>(code, message, data);
+    public static AjaxResult of(String code, String message, Object data) {
+        return new AjaxResult(code, message, data);
     }
-
 }
