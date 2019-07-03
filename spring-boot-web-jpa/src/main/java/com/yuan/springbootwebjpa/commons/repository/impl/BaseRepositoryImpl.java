@@ -739,11 +739,11 @@ public class BaseRepositoryImpl<T extends BasePo, ID extends Serializable> exten
     }
 
     private String getCountSQL(String sql) {
-        return "select count(1) from (" + sql + ") count_table";
+        return "select count(*) from (" + sql + ") count_table";
     }
 
     private String getCountQuery(String query) {
-        return "select count(1) from (" + query + ") count_table";
+        return "select count(*) from (" + query + ") count_table";
     }
 
 }
