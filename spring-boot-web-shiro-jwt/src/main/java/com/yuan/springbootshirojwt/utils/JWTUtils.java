@@ -17,8 +17,8 @@ import java.util.UUID;
 public class JWTUtils {
     private static final String SECRET = UUID.randomUUID().toString();
 
-    public static String sign(String username, String passowrd) {
-        return JWT.create().withExpiresAt(DateUtils.addDays(new Date(), 10)).withClaim("username", username).sign(Algorithm.HMAC256(passowrd));
+    public static String createToken(String username, String passowrd) {
+        return JWT.create().withExpiresAt(DateUtils.addDays(new Date(), 10)).withClaim("username", username).sign(Algorithm.HMAC256(SECRET));
     }
 
     public static boolean verify(String token, String username) {
