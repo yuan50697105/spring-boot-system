@@ -2,7 +2,6 @@ package com.yuan.springbootwebmapper.commons.service;
 
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageInfo;
-import com.yuan.springbootwebmapper.commons.mapper.BaseMapper;
 import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
@@ -14,7 +13,6 @@ import java.util.List;
  * @date 2019/6/15 23:09
  **/
 public interface BaseService<T> {
-    BaseMapper getMapper();
 
     int insert(T t);
 

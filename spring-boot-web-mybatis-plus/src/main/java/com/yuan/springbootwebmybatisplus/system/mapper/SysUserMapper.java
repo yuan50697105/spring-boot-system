@@ -23,4 +23,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     Page<Map<String, Object>> findPageByQueryParams(Page<Map<String, Object>> mapPage, @Param("queryParams") SysUserQueryParams queryParams);
 
     List<Map<String, Object>> findListByQueryParams(@Param("queryParams") SysUserQueryParams queryParams);
+
 }

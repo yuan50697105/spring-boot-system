@@ -45,6 +45,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Override
     public List findList(SysUserQueryParams queryParams) {
-        return getBaseMapper().selectList(queryParams);
+        return getBaseMapper().findListByQueryParams(queryParams);
     }
+
 }

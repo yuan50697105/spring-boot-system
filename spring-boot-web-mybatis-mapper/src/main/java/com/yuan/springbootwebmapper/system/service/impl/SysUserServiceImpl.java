@@ -21,51 +21,49 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     }
 
     @Override
-    protected SysUserMapper getMapper() {
+    public SysUserMapper getMapper() {
         return sysUserMapper;
     }
 
     @Override
-    protected SysUser beforeInsert(SysUser sysUser) throws RuntimeException {
+    protected void beforeInsert(SysUser sysUser) throws RuntimeException {
         int count = count(SysUser.builder().username(sysUser.getUsername()).build());
         if (count > 0) {
             throw new RuntimeException(sysUser.getUsername() + "已存在");
         } else {
             sysUser.setCreateDate(new Date());
-            return sysUser;
         }
     }
 
     @Override
-    protected SysUser beforeInsertSelective(SysUser sysUser) throws RuntimeException {
+    protected void beforeInsertSelective(SysUser sysUser) throws RuntimeException {
         int count = count(SysUser.builder().username(sysUser.getUsername()).build());
         if (count > 0) {
             throw new RuntimeException("此用户已存在");
         } else {
             sysUser.setCreateDate(new Date());
-            return sysUser;
         }
     }
 
     @Override
-    protected SysUser beforeUpdate(SysUser sysUser) throws RuntimeException {
+    protected void beforeUpdate(SysUser sysUser) throws RuntimeException {
         SysUser user = findById(sysUser.getId());
         if (user != null) {
             sysUser.setUpdateDate(new Date());
             user.copyFrom(sysUser);
-            return user;
+            sysUser = user;
         } else {
             throw new RuntimeException("此用户已被删除");
         }
     }
 
     @Override
-    protected SysUser beforeUpdateSelective(SysUser sysUser) throws RuntimeException {
+    protected void beforeUpdateSelective(SysUser sysUser) throws RuntimeException {
         SysUser user = findById(sysUser.getId());
         if (user != null) {
             sysUser.setUpdateDate(new Date());
             user.copyFrom(sysUser);
-            return user;
+            sysUser = user;
         } else {
             throw new RuntimeException("此用户已被删除");
         }
