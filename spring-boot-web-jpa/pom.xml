@@ -23,6 +23,12 @@
             <artifactId>spring-boot-utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.wenhao</groupId>
+            <artifactId>jpa-spec</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>org.apache.lucene</groupId>-->
         <!--            <artifactId>lucene-analyzers-smartcn</artifactId>-->
