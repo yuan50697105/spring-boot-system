@@ -9,7 +9,7 @@
         <relativePath>./pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-freemarker</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>spring-boot-web-freemarker</name>
     <description>Demo project for Spring Boot</description>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

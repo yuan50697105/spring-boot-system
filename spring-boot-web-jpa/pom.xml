@@ -9,7 +9,7 @@
         <relativePath>./pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-jpa</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>spring-boot-web-jpa</name>
     <description>Demo project for Spring Boot</description>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.wenhao</groupId>
