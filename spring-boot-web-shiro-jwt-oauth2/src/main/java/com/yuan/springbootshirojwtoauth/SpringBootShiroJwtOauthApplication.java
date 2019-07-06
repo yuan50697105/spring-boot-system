@@ -1,13 +1,13 @@
-package com.yuan.springbootshirojwt;
+package com.yuan.springbootshirojwtoauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootShiroJwtApplication {
+public class SpringBootShiroJwtOauthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootShiroJwtApplication.class, args);
+        SpringApplication.run(SpringBootShiroJwtOauthApplication.class, args);
     }
 
 }

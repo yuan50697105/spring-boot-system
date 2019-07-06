@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-security</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <name>spring-boot-web-security</name>
     <description>Demo project for Spring Boot</description>
 
@@ -26,7 +26,8 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
 
 

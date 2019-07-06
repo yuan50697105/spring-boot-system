@@ -1,12 +1,9 @@
 package com.yuan.springbootwebmybatisplus.commons.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuan.springbootwebmybatisplus.commons.entity.po.BasePo;
 import com.yuan.springbootwebmybatisplus.commons.mapper.BaseMapper;
 import com.yuan.springbootwebmybatisplus.commons.service.BaseService;
-import com.yuan.springbootwebmybatisplus.system.entity.po.SysUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -143,11 +140,5 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo>
         return entity;
     }
 
-    void test() {
-        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
-        LambdaQueryWrapper<SysUser> lambda = queryWrapper.lambda();
-        lambda.like(SysUser::getUsername, "aaa");
-        lambda.eq(SysUser::getId, "111");
-    }
 
 }

@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-shiro-jwt-oauth2</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <name>spring-boot-shiro-jwt-oauth</name>
     <description>shiro with jwt and oauth</description>
 
@@ -21,13 +21,13 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>

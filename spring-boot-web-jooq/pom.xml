@@ -6,10 +6,10 @@
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
         <version>1.0.0</version>
-        <relativePath>./pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-jooq</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <name>spring-boot-web-jooq</name>
     <description>Demo project for Spring Boot</description>
 
@@ -30,18 +30,8 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

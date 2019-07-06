@@ -40,6 +40,7 @@
         <mybatis-plus>3.1.1</mybatis-plus>
         <shiro>1.4.1</shiro>
         <java-jwt>3.8.1</java-jwt>
+        <!--        <project.parent.version>1.0.0</project.parent.version>-->
     </properties>
 
     <dependencies>

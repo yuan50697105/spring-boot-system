@@ -6,10 +6,10 @@
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
         <version>1.0.0</version>
-        <relativePath>./pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-freemarker</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <name>spring-boot-web-freemarker</name>
     <description>Demo project for Spring Boot</description>
 
@@ -21,7 +21,8 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
+            <!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
