@@ -1,35 +1,44 @@
 package com.yuan.springbootweb.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.yuan.springbootweb.entity.Status;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * @author yuane
- * @date 2019/6/8 14:36
+ * @date 2019/7/3 22:28
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AjaxResult {
-    private Status status;
+    private String code;
     private String message;
     private Object data;
 
-    private AjaxResult(Status status, String message, Object data) {
-        this.status = status;
+    public AjaxResult() {
+    }
+
+    @Builder
+    public AjaxResult(String code, String message, Object data) {
+        this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public static AjaxResult getInstance(Status status, String message, Object data) {
-        return new AjaxResult(status, message, data);
+    public static AjaxResult getInstance(String code, String message, Object data) {
+        return new AjaxResult(code, message, data);
     }
 
-    public static AjaxResult getInstance(Status status, String message) {
-        return new AjaxResult(status, message, null);
+    public static AjaxResult getInstance() {
+        return new AjaxResult();
     }
 
-    public static AjaxResult getInstance(Status status, Object data) {
-        return new AjaxResult(status, null, data);
+    public static AjaxResult data(String code, Object data) {
+        return getInstance(code, null, data);
     }
+
+    public static AjaxResult message(String code, String message) {
+        return getInstance(code, message, null);
+    }
+
 }

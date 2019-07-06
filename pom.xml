@@ -23,14 +23,12 @@
         <module>spring-boot-web-jooq</module>
         <module>spring-boot-web-mybatis-plus</module>
         <module>spring-boot-web-mybatis-mapper</module>
-        <module>spring-boot-web-socket</module>
         <module>spring-boot-web-shiro</module>
         <module>spring-boot-web-shiro-jwt</module>
         <module>spring-boot-web-security</module>
         <module>spring-boot-web-flux</module>
         <module>spring-boot-base</module>
         <module>spring-boot-utils</module>
-        <module>spring-boot-base-chinese2pinyin</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
