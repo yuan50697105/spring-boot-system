@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-demo</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>spring-boot-system</artifactId>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-shiro-jwt-oauth2</artifactId>

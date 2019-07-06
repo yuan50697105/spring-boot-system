@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yuan</groupId>
-    <artifactId>spring-boot-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>spring-boot-system</artifactId>
+    <version>1.0.0</version>
     <name>spring-boot-demo</name>
     <packaging>pom</packaging>
     <description>个人测试项目</description>
