@@ -6,7 +6,7 @@
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
         <version>1.0.0</version>
-        <relativePath>./pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-thymeleaf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
