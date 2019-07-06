@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
+        <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yuan</groupId>
@@ -25,13 +25,21 @@
         <module>spring-boot-web-mybatis-mapper</module>
         <module>spring-boot-web-shiro</module>
         <module>spring-boot-web-shiro-jwt</module>
+        <module>spring-boot-web-shiro-oauth2</module>
+        <module>spring-boot-web-shiro-jwt-oauth2</module>
         <module>spring-boot-web-security</module>
         <module>spring-boot-web-flux</module>
-        <module>spring-boot-base</module>
+        <module>spring-boot-commons</module>
         <module>spring-boot-utils</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
+        <mapper>2.1.5</mapper>
+        <pagehelper>1.2.12</pagehelper>
+        <mybatis>2.0.1</mybatis>
+        <mybatis-plus>3.1.1</mybatis-plus>
+        <shiro>1.4.1</shiro>
+        <java-jwt>3.8.1</java-jwt>
     </properties>
 
     <dependencies>

@@ -1,14 +1,13 @@
-package com.yuan.springbootutils;
+package com.yuan.springboocommons;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootUtilsApplication {
+public class SpringBootCommonsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootUtilsApplication.class, args);
-
+        SpringApplication.run(SpringBootCommonsApplication.class, args);
     }
 
 }

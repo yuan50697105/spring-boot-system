@@ -13,11 +13,11 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseVo {
+public abstract class BaseVo {
     private String id;
     private String createUser;
     private String updateUser;
-    private Date createDate = new Date();
-    private Date updateDate = new Date();
+    private Date createDate;
+    private Date updateDate;
 
 }
