@@ -1,4 +1,4 @@
-package com.yuan.springbootkafak;
+package com.yuan.springbootkafka;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

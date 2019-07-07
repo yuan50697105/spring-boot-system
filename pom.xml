@@ -32,7 +32,8 @@
         <module>spring-boot-commons</module>
         <module>spring-boot-utils</module>
         <module>spring-boot-web-rabbitmq</module>
-        <module>spring-boot-web-kafak</module>
+        <module>spring-boot-web-kafka</module>
+        <module>spring-boot-quartz-with-batch</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
