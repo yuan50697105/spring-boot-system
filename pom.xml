@@ -31,6 +31,7 @@
         <module>spring-boot-web-flux</module>
         <module>spring-boot-commons</module>
         <module>spring-boot-utils</module>
+        <module>spring-boot-web-rabbitmq</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
