@@ -14,6 +14,14 @@ import java.util.List;
  **/
 public interface BaseService<T> {
 
+    void checkInsert(T t) throws RuntimeException;
+
+    void checkInsertSelective(T t) throws RuntimeException;
+
+    void checkUpdate(T t) throws RuntimeException;
+
+    void checkUpdateSelective(T t) throws RuntimeException;
+
     int insert(T t);
 
     int insertSelective(T t);

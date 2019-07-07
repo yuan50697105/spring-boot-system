@@ -17,11 +17,6 @@ import java.util.stream.Collectors;
  **/
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo> extends ServiceImpl<M, T> implements BaseService<T> {
-    protected abstract void checkSave(T t) throws RuntimeException;
-
-    protected abstract void checkUpdate(T t) throws RuntimeException;
-
-    protected abstract void checkSaveOrUpdate(T t) throws RuntimeException;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

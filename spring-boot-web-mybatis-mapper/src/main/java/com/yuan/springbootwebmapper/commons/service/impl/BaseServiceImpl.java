@@ -24,25 +24,17 @@ import java.util.stream.Collectors;
 public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>> implements BaseService<T> {
     public abstract S getMapper();
 
-    protected abstract void beforeInsert(T t) throws RuntimeException;
-
-    protected abstract void beforeInsertSelective(T t) throws RuntimeException;
-
-    protected abstract void beforeUpdate(T t) throws RuntimeException;
-
-    protected abstract void beforeUpdateSelective(T t) throws RuntimeException;
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(T t) {
-        beforeInsert(t);
+        checkInsert(t);
         return getMapper().insert(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertSelective(T t) {
-        beforeInsertSelective(t);
+        checkInsertSelective(t);
         return getMapper().insertSelective(t);
     }
 
@@ -50,7 +42,7 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(T[] arrays) {
-        Arrays.stream(arrays).forEach(this::beforeInsert);
+        Arrays.stream(arrays).forEach(this::checkInsert);
         List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
         return insertAll(collect);
     }
@@ -58,7 +50,7 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(List<T> list) {
-        list.forEach(this::beforeInsert);
+        list.forEach(this::checkInsert);
         list = list.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return getMapper().insertList(list);
     }
@@ -66,14 +58,14 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int update(T t) {
-        beforeUpdate(t);
+        checkUpdate(t);
         return getMapper().updateByPrimaryKey(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateSelective(T t) {
-        beforeUpdateSelective(t);
+        checkUpdateSelective(t);
         return getMapper().updateByPrimaryKeySelective(t);
     }
 
