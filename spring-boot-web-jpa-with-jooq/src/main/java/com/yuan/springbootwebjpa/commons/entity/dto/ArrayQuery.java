@@ -17,7 +17,7 @@ public final class ArrayQuery {
         this.objects = objects;
     }
 
-    public ArrayQuery of(String sql, Object... objects) {
+    public static ArrayQuery of(String sql, Object... objects) {
         return new ArrayQuery(sql, objects);
     }
 }

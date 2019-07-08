@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-kafak</artifactId>
+    <artifactId>spring-boot-web-kafka</artifactId>
     <version>${project.parent.version}</version>
     <name>spring-boot-kafak</name>
     <description>Demo project for Spring Boot</description>
@@ -26,10 +26,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.kafka</groupId>-->
+<!--            <artifactId>kafka-streams</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
