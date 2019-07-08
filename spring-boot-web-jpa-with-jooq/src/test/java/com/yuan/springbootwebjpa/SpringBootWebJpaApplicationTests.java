@@ -3,6 +3,7 @@ package com.yuan.springbootwebjpa;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
 import com.yuan.springbootwebjpa.commons.entity.dto.ArrayQuery;
+import com.yuan.springbootwebjpa.commons.entity.dto.MapQuery;
 import com.yuan.springbootwebjpa.commons.entity.po.BasePo;
 import com.yuan.springbootwebjpa.commons.repository.BaseRepository;
 import com.yuan.springbootwebjpa.commons.repository.impl.BaseRepositoryImpl;
@@ -28,6 +29,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.Entity;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +76,20 @@ public class SpringBootWebJpaApplicationTests {
         Page<SysUser> userPage4 = sysUserDao.findAll(DSL.selectFrom(DSL.table("sys_user")).where(DSL.field("id").eq("")).and(DSL.field("username").eq("aaa")).getQuery(), request);
         Page<SysUser> userPage5 = sysUserDao.findAllBySQLQuery(ArrayQuery.of("select * from sys_user where id=? and username = ?", "", "aaa"), request);
         Page<SysUser> userPage6 = sysUserDao.findAllByQuery(ArrayQuery.of("from SysUser u where u.id = ? and u.username = ?", "", "aaa"), request);
+    }
+
+    @Test
+    public void test3() {
+        SysUserDao sysUserDao = context.getBean(SysUserDao.class);
+        List<SysUser> users = sysUserDao.findAll();
+        List<SysUser> users1 = sysUserDao.findAll(Specifications.<SysUser>and().build());
+        List<SysUser> users2 = sysUserDao.findAll(DSL.selectFrom(DSL.table("sys_user")).getQuery());
+        List<SysUser> users3 = sysUserDao.findAllByQuery(ArrayQuery.of("from SysUser"));
+        List<SysUser> users4 = sysUserDao.findAllByQuery(MapQuery.of("from SysUser", new HashMap<>()));
+        List<SysUser> users5 = sysUserDao.findAllBySQLQuery(ArrayQuery.of("select * from sys_user"));
+        List<SysUser> users6 = sysUserDao.findAllBySQLQuery(MapQuery.of("select * from sys_user", new HashMap<>()));
+
+
     }
 
     @Test
