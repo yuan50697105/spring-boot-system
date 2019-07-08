@@ -1,8 +1,6 @@
 package com.yuan.springbootwebjooq;
 
-import com.xphsc.easyjdbc.page.PageInfo;
 import org.jooq.DSLContext;
-import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
@@ -14,9 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,14 +45,6 @@ public class SpringBootWebJooqApplicationTests {
         System.out.println(record1s);
     }
 
-    public PageInfo<Map<String, Object>> findAll(Query query, PageInfo<Map<String, Object>> pageInfo) {
-        DSLContext dslContext = context.getBean(DSLContext.class);
-        Integer integer = dslContext.select(DSL.count()).from(DSL.sql(query.getSQL(), query.getBindValues())).fetchOne(DSL.count());
-        List<Map<String, Object>> records = dslContext.selectFrom(DSL.sql(query.getSQL(), query.getBindValues())).offset(pageInfo.getOffset()).limit(pageInfo.getLimit()).fetchMaps();
-        pageInfo.setList(records);
-        pageInfo.setTotal(integer);
-        return pageInfo;
-    }
 
 
 }
