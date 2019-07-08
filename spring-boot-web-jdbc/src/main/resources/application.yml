@@ -1,9 +1,15 @@
-#spring:
-#  datasource:
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/webjpa?serverTimezone=Asia/Shanghai
+spring:
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/webdemo?serverTimezone=Asia/Shanghai
+    #spring:
+    #  datasource:
+    #    url: jdbc:postgresql://127.0.0.1:5432/demo
+    #    driver-class-name: org.postgresql.Driver
+    #    username: postgres
+    #    password: root
 logging:
   level:
     sql: debug
@@ -11,9 +17,3 @@ logging:
 easyjdbc:
   use-local-cache: true
   show-sql: true
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/demo
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: root

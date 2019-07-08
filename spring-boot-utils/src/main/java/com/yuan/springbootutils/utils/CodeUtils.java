@@ -9,8 +9,8 @@ import java.util.Date;
  * @author yuane
  * @date 2019/6/15 15:02
  **/
-public class IdUtils {
-    public static String getTimeId(int count) {
+public class CodeUtils {
+    public static String getTimeCode(int count) {
         Date date = new Date();
         String dateTimeStr = DateFormatUtils.format(date, "yyyyMMddHHmmss");
         String randomNumeric = RandomStringUtils.randomNumeric(count);
