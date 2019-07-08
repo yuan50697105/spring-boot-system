@@ -2,6 +2,7 @@ package com.yuan.springbootwebmapper.commons.service;
 
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageInfo;
+import com.yuan.springbootwebmapper.commons.entity.po.BasePo;
 import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/6/15 23:09
  **/
-public interface BaseService<T> {
+public interface BaseService<T extends BasePo, ID extends Serializable> {
 
     void checkInsert(T t) throws RuntimeException;
 
@@ -34,15 +35,19 @@ public interface BaseService<T> {
 
     int updateSelective(T t);
 
-    int delete(Serializable id);
+    int delete(ID id);
 
-    int delete(Serializable[] ids);
+    int delete(ID[] ids);
 
-    int delete(Collection<Serializable> ids);
+    int delete(Collection<ID> ids);
 
-    T findById(Serializable id);
+    T findById(ID id);
 
     List<T> findAll(T t);
+
+    List<T> findAllById(ID[] ids);
+
+    List<T> findAllById(Collection<ID> collection);
 
     T findOne(T t);
 

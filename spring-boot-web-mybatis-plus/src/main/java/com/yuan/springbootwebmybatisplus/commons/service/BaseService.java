@@ -1,12 +1,13 @@
 package com.yuan.springbootwebmybatisplus.commons.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuan.springbootwebmybatisplus.commons.entity.po.BasePo;
 
 /**
  * @author yuane
  * @date 2019/6/15 23:27
  **/
-public interface BaseService<T> extends IService<T> {
+public interface BaseService<T extends BasePo> extends IService<T> {
     void checkSave(T t) throws RuntimeException;
 
     void checkUpdate(T t) throws RuntimeException;

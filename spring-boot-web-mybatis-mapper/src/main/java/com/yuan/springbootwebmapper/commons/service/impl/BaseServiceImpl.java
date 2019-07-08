@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @date 2019/6/15 23:10
  **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>> implements BaseService<T> {
+public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T>> implements BaseService<T, ID> {
     public abstract S getMapper();
 
     @Override
@@ -71,25 +71,35 @@ public abstract class BaseServiceImpl<T extends BasePo, S extends BaseMapper<T>>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int delete(Serializable id) {
+    public int delete(ID id) {
         return getMapper().deleteByPrimaryKey(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int delete(Serializable[] ids) {
+    public int delete(ID[] ids) {
         return delete(Arrays.asList(ids));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int delete(Collection<Serializable> ids) {
+    public int delete(Collection<ID> ids) {
         return ids.stream().map(getMapper()::deleteByPrimaryKey).reduce(Integer::sum).orElse(0);
     }
 
     @Override
-    public T findById(Serializable id) {
+    public T findById(ID id) {
         return getMapper().selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<T> findAllById(ID[] ids) {
+        return Arrays.stream(ids).map(this::findById).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<T> findAllById(Collection<ID> collection) {
+        return collection.stream().map(this::findById).collect(Collectors.toList());
     }
 
     @Override

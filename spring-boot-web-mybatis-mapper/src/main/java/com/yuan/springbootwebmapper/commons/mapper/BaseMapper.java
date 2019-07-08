@@ -1,5 +1,6 @@
 package com.yuan.springbootwebmapper.commons.mapper;
 
+import com.yuan.springbootwebmapper.commons.entity.po.BasePo;
 import tk.mybatis.mapper.additional.dialect.oracle.OracleMapper;
 import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.common.Mapper;
@@ -11,5 +12,5 @@ import tk.mybatis.mapper.common.SqlServerMapper;
  * @date 2019/6/15 22:48
  **/
 @RegisterMapper
-public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T>, OracleMapper<T>, SqlServerMapper<T> {
+public interface BaseMapper<T extends BasePo> extends Mapper<T>, MySqlMapper<T>, OracleMapper<T>, SqlServerMapper<T> {
 }

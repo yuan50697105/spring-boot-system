@@ -15,24 +15,33 @@
     <packaging>pom</packaging>
     <description>个人测试项目</description>
     <modules>
+        <!--        MVC 部分-->
         <module>spring-boot-web</module>
+        <!--        视图部分-->
         <module>spring-boot-web-freemarker</module>
         <module>spring-boot-web-thymeleaf</module>
+        <!--        Dao with Service-->
         <module>spring-boot-web-jpa-with-jooq</module>
         <module>spring-boot-web-jdbc</module>
         <module>spring-boot-web-jooq</module>
         <module>spring-boot-web-mybatis-plus</module>
         <module>spring-boot-web-mybatis-mapper</module>
+        <module>spring-boot-web-mybatis-enhance</module>
+        <!--        Authority-->
         <module>spring-boot-web-shiro</module>
         <module>spring-boot-web-shiro-jwt</module>
         <module>spring-boot-web-shiro-oauth2</module>
         <module>spring-boot-web-shiro-jwt-oauth2</module>
         <module>spring-boot-web-security</module>
         <module>spring-boot-web-flux</module>
+        <!--        Commons-->
         <module>spring-boot-commons</module>
+        <!--        utils-->
         <module>spring-boot-utils</module>
+        <!--        MQ-->
         <module>spring-boot-web-rabbitmq</module>
         <module>spring-boot-web-kafka</module>
+        <!--        Time Task with Batch Tast-->
         <module>spring-boot-quartz-with-batch</module>
     </modules>
     <properties>
@@ -53,26 +62,13 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
 
