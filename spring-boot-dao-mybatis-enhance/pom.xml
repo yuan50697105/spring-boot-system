@@ -6,11 +6,10 @@
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-kafka</artifactId>
+    <artifactId>spring-boot-dao-mybatis-enhance</artifactId>
     <version>${project.parent.version}</version>
-    <name>spring-boot-kafak</name>
+    <name>spring-boot-web-mybatis-enhance</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -19,30 +18,39 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-integration</artifactId>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-mvc</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-utils</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.kafka</groupId>-->
-<!--            <artifactId>kafka-streams</artifactId>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gitee.hengboy</groupId>
+            <artifactId>spring-boot-starter-mybatis-enhance</artifactId>
+            <version>1.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gitee.hengboy</groupId>
+            <artifactId>spring-boot-starter-mybatis-pageable</artifactId>
+            <version>1.0.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

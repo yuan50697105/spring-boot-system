@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-rabbitmq</artifactId>
+    <artifactId>spring-boot-dao-jdbc</artifactId>
     <version>${project.parent.version}</version>
-    <name>spring-boot-web-rabbitmq</name>
+    <name>spring-boot-web-jdbc</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -18,37 +18,34 @@
     </properties>
 
     <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.xphsc</groupId>-->
+        <!--            <artifactId>easyjdbc-spring-boot-starter</artifactId>-->
+        <!--            <version>2.0.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-integration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-mvc</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

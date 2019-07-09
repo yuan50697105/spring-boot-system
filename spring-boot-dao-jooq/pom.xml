@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-jdbc</artifactId>
+    <artifactId>spring-boot-dao-jooq</artifactId>
     <version>${project.parent.version}</version>
-    <name>spring-boot-web-jdbc</name>
+    <name>spring-boot-web-jooq</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -22,30 +22,17 @@
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
         <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.github.xphsc</groupId>-->
-        <!--            <artifactId>easyjdbc-spring-boot-starter</artifactId>-->
-        <!--            <version>2.0.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
-        <!--        </dependency>-->
         <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-utils</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-web</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-mvc</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,6 +40,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

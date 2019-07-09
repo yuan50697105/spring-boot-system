@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-jpa-with-jooq</artifactId>
+    <artifactId>spring-boot-dao-jpa</artifactId>
     <version>${project.parent.version}</version>
     <name>spring-boot-web-jpa</name>
     <description>Demo project for Spring Boot</description>
@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-mvc</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>
@@ -64,21 +69,7 @@
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
-        </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
     <build>

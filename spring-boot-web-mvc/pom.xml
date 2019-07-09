@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web</artifactId>
+    <artifactId>spring-boot-web-mvc</artifactId>
     <version>${project.parent.version}</version>
     <name>spring-boot-web</name>
     <packaging>jar</packaging>

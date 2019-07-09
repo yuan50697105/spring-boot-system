@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-web-mybatis-mapper</artifactId>
+    <artifactId>spring-boot-dao-mybatis-plus</artifactId>
     <version>${project.parent.version}</version>
-    <name>spring-boot-web-mapper</name>
+    <name>spring-boot-web-mybatis-plus</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -27,14 +27,12 @@
             <artifactId>spring-boot-utils</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-utils</artifactId>
+            <artifactId>spring-boot-web-mvc</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -42,21 +40,10 @@
             <version>${mybatis}</version>
         </dependency>
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>${mapper}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus}</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper}</version>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.gitee.hengboy</groupId>-->
-        <!--            <artifactId>spring-boot-starter-mybatis-enhance</artifactId>-->
-        <!--            <version>1.1.1.RELEASE</version>-->
-        <!--        </dependency>-->
-
 
     </dependencies>
 
@@ -65,6 +52,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -16,17 +16,17 @@
     <description>个人测试项目</description>
     <modules>
         <!--        MVC 部分-->
-        <module>spring-boot-web</module>
+        <module>spring-boot-web-mvc</module>
         <!--        视图部分-->
         <module>spring-boot-web-freemarker</module>
         <module>spring-boot-web-thymeleaf</module>
         <!--        Dao with Service-->
-        <module>spring-boot-web-jpa-with-jooq</module>
-        <module>spring-boot-web-jdbc</module>
-        <module>spring-boot-web-jooq</module>
-        <module>spring-boot-web-mybatis-plus</module>
-        <module>spring-boot-web-mybatis-mapper</module>
-        <module>spring-boot-web-mybatis-enhance</module>
+        <module>spring-boot-dao-jpa</module>
+        <module>spring-boot-dao-jdbc</module>
+        <module>spring-boot-dao-jooq</module>
+        <module>spring-boot-dao-mybatis-plus</module>
+        <module>spring-boot-dao-mybatis-mapper</module>
+        <module>spring-boot-dao-mybatis-enhance</module>
         <!--        Authority-->
         <module>spring-boot-web-shiro</module>
         <module>spring-boot-web-shiro-jwt</module>
@@ -39,10 +39,10 @@
         <!--        utils-->
         <module>spring-boot-utils</module>
         <!--        MQ-->
-        <module>spring-boot-web-rabbitmq</module>
-        <module>spring-boot-web-kafka</module>
+        <module>spring-boot-mq-rabbitmq</module>
+        <module>spring-boot-mq-kafka</module>
         <!--        Time Task with Batch Tast-->
-        <module>spring-boot-quartz-with-batch</module>
+        <module>spring-boot-task-quartz-with-batch</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
