@@ -2,8 +2,8 @@ package com.yuan.springbootweb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuan.springbootweb.entity.dto.Result;
-import com.yuan.springbootweb.entity.vo.AjaxResult;
+import com.yuan.spring.boot.web.mvc.entity.dto.Result;
+import com.yuan.spring.boot.web.mvc.entity.vo.AjaxResult;
 
 /**
  * @author yuane

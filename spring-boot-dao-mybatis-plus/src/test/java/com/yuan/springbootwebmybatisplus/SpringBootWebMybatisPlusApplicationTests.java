@@ -1,10 +1,10 @@
 package com.yuan.springbootwebmybatisplus;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yuan.springbootwebmybatisplus.commons.entity.po.BasePo;
-import com.yuan.springbootwebmybatisplus.commons.mapper.BaseMapper;
-import com.yuan.springbootwebmybatisplus.commons.service.BaseService;
-import com.yuan.springbootwebmybatisplus.commons.service.impl.BaseServiceImpl;
+import com.yuan.spring.boot.mybatis.plus.commons.entity.po.BasePo;
+import com.yuan.spring.boot.mybatis.plus.commons.mapper.BaseMapper;
+import com.yuan.spring.boot.mybatis.plus.commons.service.BaseService;
+import com.yuan.spring.boot.mybatis.plus.commons.service.impl.BaseServiceImpl;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

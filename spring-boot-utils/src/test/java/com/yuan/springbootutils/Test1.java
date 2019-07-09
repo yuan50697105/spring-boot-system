@@ -1,6 +1,6 @@
 package com.yuan.springbootutils;
 
-import com.yuan.springbootutils.utils.DateUtils;
+import com.yuan.spring.boot.utils.DateUtils;
 import org.junit.Test;
 
 import java.util.Date;
