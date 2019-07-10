@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-quartz-with-batch</artifactId>
+    <artifactId>spring-boot-task-quartz-with-batch</artifactId>
     <version>${project.parent.version}</version>
     <name>spring-boot-quartz-with-batch</name>
     <description>Demo project for Spring Boot</description>

@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-web</artifactId>
+            <artifactId>spring-boot-web-mvc</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
