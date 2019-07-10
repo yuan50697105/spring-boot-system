@@ -36,6 +36,7 @@
         <module>spring-boot-utils</module>
         <!--        MQ-->
         <module>spring-boot-mq-rabbitmq</module>
+        <module>spring-boot-mq-rocketmq</module>
         <module>spring-boot-mq-kafka</module>
         <!--        Time Task with Batch Tast-->
         <module>spring-boot-task-quartz-with-batch</module>
@@ -70,17 +71,10 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 

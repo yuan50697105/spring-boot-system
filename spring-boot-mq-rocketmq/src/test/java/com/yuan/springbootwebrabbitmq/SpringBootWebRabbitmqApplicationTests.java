@@ -1,4 +1,4 @@
-package com.yuan.springbootweb;
+package com.yuan.springbootwebrabbitmq;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootWebApplicationTests {
+public class SpringBootWebRabbitmqApplicationTests {
 
     @Test
     public void contextLoads() {
