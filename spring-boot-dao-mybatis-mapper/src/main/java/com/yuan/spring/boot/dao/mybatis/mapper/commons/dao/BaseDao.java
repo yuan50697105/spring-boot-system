@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.mybatis.mapper.commons.mapper;
+package com.yuan.spring.boot.dao.mybatis.mapper.commons.dao;
 
 import com.yuan.spring.boot.dao.mybatis.mapper.commons.entity.po.BasePo;
 import tk.mybatis.mapper.additional.dialect.oracle.OracleMapper;
@@ -12,5 +12,5 @@ import tk.mybatis.mapper.common.SqlServerMapper;
  * @date 2019/6/15 22:48
  **/
 @RegisterMapper
-public interface BaseMapper<T extends BasePo> extends Mapper<T>, MySqlMapper<T>, OracleMapper<T>, SqlServerMapper<T> {
+public interface BaseDao<T extends BasePo<ID>, ID> extends Mapper<T>, MySqlMapper<T>, OracleMapper<T>, SqlServerMapper<T> {
 }

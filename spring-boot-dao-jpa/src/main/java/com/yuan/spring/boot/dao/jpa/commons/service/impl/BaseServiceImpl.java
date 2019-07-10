@@ -1,7 +1,7 @@
 package com.yuan.spring.boot.dao.jpa.commons.service.impl;
 
+import com.yuan.spring.boot.dao.jpa.commons.dao.BaseDao;
 import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.jpa.commons.repository.BaseRepository;
 import com.yuan.spring.boot.dao.jpa.commons.service.BaseSerivce;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseRepository<T, ID>> implements BaseSerivce<T, ID> {
+public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseSerivce<T, ID> {
     public abstract S getRepository();
 
     protected boolean isNotEmpty(Object object) {
         return !StringUtils.isEmpty(object);
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(T t) {
@@ -175,7 +175,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         t.setUpdateUser("");
         return t;
     }
-
 
 
 }

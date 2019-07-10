@@ -1,10 +1,14 @@
 package com.yuan.spring.boot.dao.mybatis.commons.service;
 
+import com.yuan.spring.boot.dao.mybatis.commons.entity.po.BasePo;
+
+import java.io.Serializable;
+
 /**
  * @author yuane
  * @date 2019/7/10 21:47
  **/
-public interface BaseService<T, ID> {
+public interface BaseService<T extends BasePo<ID>, ID extends Serializable> {
     void checkSave(T t);
 
     void checkInsert(T t);

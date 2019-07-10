@@ -2,11 +2,11 @@ package com.yuan.spring.boot.dao.jpa;
 
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
+import com.yuan.spring.boot.dao.jpa.commons.dao.BaseDao;
+import com.yuan.spring.boot.dao.jpa.commons.dao.impl.BaseDaoImpl;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.MapQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.jpa.commons.repository.BaseRepository;
-import com.yuan.spring.boot.dao.jpa.commons.repository.impl.BaseRepositoryImpl;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,7 +36,7 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @EnableTransactionManagement
-@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
+@EnableJpaRepositories(repositoryBaseClass = BaseDaoImpl.class)
 public class SpringBootWebJpaApplicationTests {
     @Autowired
     ApplicationContext context;
@@ -134,7 +134,7 @@ public class SpringBootWebJpaApplicationTests {
     }
 
     @Repository
-    public interface SysUserDao extends BaseRepository<SysUser, String> {
+    public interface SysUserDao extends BaseDao<SysUser, String> {
         Optional<SysUser> findByIdAndUsername(String id, String username);
 
         List<SysUser> findAllByIdAndUsername(String id, String username);

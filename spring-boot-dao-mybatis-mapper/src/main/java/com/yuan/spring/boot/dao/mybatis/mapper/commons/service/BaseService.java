@@ -13,7 +13,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/6/15 23:09
  **/
-public interface BaseService<T extends BasePo, ID extends Serializable> {
+public interface BaseService<T extends BasePo<ID>, ID extends Serializable> {
 
     void checkInsert(T t) throws RuntimeException;
 

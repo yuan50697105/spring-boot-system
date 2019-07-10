@@ -12,9 +12,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BasePo implements Serializable {
-    @Id(generatorType = KeyGeneratorTypeEnum.UUID)
-    private String id;
+public abstract class BasePo<ID> implements Serializable {
+    @Id(generatorType = KeyGeneratorTypeEnum.DIY)
+    private ID id;
     private String createUser;
     private String updateUser;
     private Date createDate;

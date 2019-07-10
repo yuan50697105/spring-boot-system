@@ -2,11 +2,11 @@ package com.yuan.spring.boot.dao.jpa;
 
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
+import com.yuan.spring.boot.dao.jpa.commons.dao.BaseRepository;
+import com.yuan.spring.boot.dao.jpa.commons.dao.impl.BaseRepositoryImpl;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.MapQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.jpa.commons.repository.BaseRepository;
-import com.yuan.spring.boot.dao.jpa.commons.repository.impl.BaseRepositoryImpl;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

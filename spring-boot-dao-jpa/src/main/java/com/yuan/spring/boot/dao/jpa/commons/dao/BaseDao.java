@@ -1,7 +1,8 @@
-package com.yuan.spring.boot.dao.jpa.commons.repository;
+package com.yuan.spring.boot.dao.jpa.commons.dao;
 
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.MapQuery;
+import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * ToMap 是结果集为map，ToBean是用于VO实体，其他的都是针对持久类实体与基础类型
  **/
 @NoRepositoryBean
-public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface BaseDao<T extends BasePo<ID>, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
     EntityManager getEntityManager();
 

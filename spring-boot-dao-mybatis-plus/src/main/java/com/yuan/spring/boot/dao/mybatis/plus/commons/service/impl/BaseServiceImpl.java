@@ -1,8 +1,8 @@
 package com.yuan.spring.boot.dao.mybatis.plus.commons.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuan.spring.boot.dao.mybatis.plus.commons.dao.BaseDao;
 import com.yuan.spring.boot.dao.mybatis.plus.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.mybatis.plus.commons.mapper.BaseMapper;
 import com.yuan.spring.boot.dao.mybatis.plus.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @date 2019/6/15 23:30
  **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<M extends BaseMapper<T>, T extends BasePo> extends ServiceImpl<M, T> implements BaseService<T> {
+public abstract class BaseServiceImpl<M extends BaseDao<T, ID>, T extends BasePo<ID>, ID> extends ServiceImpl<M, T> implements BaseService<T, ID> {
 
     @Override
     @Transactional(rollbackFor = Exception.class)

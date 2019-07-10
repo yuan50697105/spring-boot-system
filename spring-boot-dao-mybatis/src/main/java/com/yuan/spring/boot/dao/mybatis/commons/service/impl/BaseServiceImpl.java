@@ -1,9 +1,11 @@
 package com.yuan.spring.boot.dao.mybatis.commons.service.impl;
 
-import com.yuan.spring.boot.dao.mybatis.commons.repository.BaseRepositoy;
+import com.yuan.spring.boot.dao.mybatis.commons.dao.BaseDao;
+import com.yuan.spring.boot.dao.mybatis.commons.entity.po.BasePo;
 import com.yuan.spring.boot.dao.mybatis.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Arrays;
  **/
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T, ID, S extends BaseRepositoy<T, ID>> implements BaseService<T, ID> {
+public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseService<T, ID> {
     protected abstract S getBaseRepositoy();
 
     @Override

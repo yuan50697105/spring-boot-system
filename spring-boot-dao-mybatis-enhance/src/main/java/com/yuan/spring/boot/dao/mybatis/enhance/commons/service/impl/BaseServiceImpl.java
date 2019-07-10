@@ -2,8 +2,8 @@ package com.yuan.spring.boot.dao.mybatis.enhance.commons.service.impl;
 
 import com.gitee.hengboy.mybatis.pageable.Page;
 import com.gitee.hengboy.mybatis.pageable.request.Pageable;
+import com.yuan.spring.boot.dao.mybatis.enhance.commons.dao.BaseDao;
 import com.yuan.spring.boot.dao.mybatis.enhance.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.mybatis.enhance.commons.mapper.BaseMapper;
 import com.yuan.spring.boot.dao.mybatis.enhance.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T, ID>> implements BaseService<T, ID> {
+public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseService<T, ID> {
     protected abstract S getBaseMapper();
 
     @Override

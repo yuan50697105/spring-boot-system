@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.mybatis.mapper.commons.entity.bo;
+package com.yuan.spring.boot.dao.mybatis.commons.entity.bo;
 
 import lombok.Data;
 import org.springframework.beans.BeanWrapperImpl;
@@ -11,10 +11,10 @@ import java.util.Map;
 
 /**
  * @author yuane
- * @date 2019/6/21 21:15
+ * @date 2019/6/20 19:23
  **/
 @Data
-public abstract class BaseQueryParams<ID> implements Serializable {
+public abstract class BaseQueryParam<ID> implements Serializable {
     private ID id;
     private ID[] ids;
     private String createUser;
@@ -26,10 +26,10 @@ public abstract class BaseQueryParams<ID> implements Serializable {
     private Date updateDateStart;
     private Date updateDateEnd;
 
-    public BaseQueryParams() {
+    public BaseQueryParam() {
     }
 
-    public BaseQueryParams(ID id, ID[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParam(ID id, ID[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
         this.createUser = createUser;
@@ -54,7 +54,5 @@ public abstract class BaseQueryParams<ID> implements Serializable {
         }
         return map;
     }
-
-
 
 }

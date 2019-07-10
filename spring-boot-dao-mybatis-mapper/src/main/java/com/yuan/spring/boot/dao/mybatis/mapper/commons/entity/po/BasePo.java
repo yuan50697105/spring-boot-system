@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.util.StringUtils;
-import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.genid.GenId;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -13,7 +11,6 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * @author yuane
@@ -21,10 +18,9 @@ import java.util.UUID;
  **/
 @Data
 @MappedSuperclass
-public abstract class BasePo implements Serializable, GenId<String> {
+public abstract class BasePo<ID> implements Serializable {
     @Id
-    @KeySql(genId = BasePo.class)
-    private String id;
+    private ID id;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -33,7 +29,7 @@ public abstract class BasePo implements Serializable, GenId<String> {
     public BasePo() {
     }
 
-    public BasePo(String id, String createUser, String updateUser, Date createDate, Date updateDate) {
+    public BasePo(ID id, String createUser, String updateUser, Date createDate, Date updateDate) {
         this.id = id;
         this.createUser = createUser;
         this.updateUser = updateUser;
@@ -41,10 +37,6 @@ public abstract class BasePo implements Serializable, GenId<String> {
         this.updateDate = updateDate;
     }
 
-    @Override
-    public String genId(String table, String column) {
-        return UUID.randomUUID().toString();
-    }
 
     @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
     public void copyFrom(BasePo basePo) {

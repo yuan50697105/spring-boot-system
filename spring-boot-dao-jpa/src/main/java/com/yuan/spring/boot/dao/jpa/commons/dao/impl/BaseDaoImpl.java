@@ -1,9 +1,9 @@
-package com.yuan.spring.boot.dao.jpa.commons.repository.impl;
+package com.yuan.spring.boot.dao.jpa.commons.dao.impl;
 
+import com.yuan.spring.boot.dao.jpa.commons.dao.BaseDao;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.MapQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.jpa.commons.repository.BaseRepository;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.query.internal.QueryImpl;
 import org.hibernate.transform.AliasToBeanResultTransformer;
@@ -34,13 +34,13 @@ import java.util.Optional;
  **/
 @SuppressWarnings({"Duplicates", "unchecked"})
 @NoRepositoryBean
-public class BaseRepositoryImpl<T extends BasePo, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
+public class BaseDaoImpl<T extends BasePo<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseDao<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
     private final DSLContext dslContext;
 
 
-    public BaseRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, DSLContext dslContext) {
+    public BaseDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, DSLContext dslContext) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
         this.entityInformation = entityInformation;

@@ -17,9 +17,9 @@ import java.util.HashSet;
  * @date 2019/6/15 23:28
  **/
 @Data
-public abstract class BasePo implements Serializable, Cloneable {
-    @TableId(type = IdType.UUID)
-    private String id;
+public abstract class BasePo<ID> implements Serializable, Cloneable {
+    @TableId(type = IdType.NONE)
+    private ID id;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -28,7 +28,7 @@ public abstract class BasePo implements Serializable, Cloneable {
     public BasePo() {
     }
 
-    public BasePo(String id, String createUser, String updateUser, Date createDate, Date updateDate) {
+    public BasePo(ID id, String createUser, String updateUser, Date createDate, Date updateDate) {
         this.id = id;
         this.createUser = createUser;
         this.updateUser = updateUser;

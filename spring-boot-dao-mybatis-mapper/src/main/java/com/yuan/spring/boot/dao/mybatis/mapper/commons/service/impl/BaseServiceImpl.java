@@ -3,8 +3,8 @@ package com.yuan.spring.boot.dao.mybatis.mapper.commons.service.impl;
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuan.spring.boot.dao.mybatis.mapper.commons.dao.BaseDao;
 import com.yuan.spring.boot.dao.mybatis.mapper.commons.entity.po.BasePo;
-import com.yuan.spring.boot.dao.mybatis.mapper.commons.mapper.BaseMapper;
 import com.yuan.spring.boot.dao.mybatis.mapper.commons.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @date 2019/6/15 23:10
  **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable, S extends BaseMapper<T>> implements BaseService<T, ID> {
+public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseService<T, ID> {
     public abstract S getMapper();
 
     @Override
@@ -129,7 +129,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     public List<T> findAll(T t) {
         return getMapper().select(t);
     }
-
 
 
     private T setCommonsParameters(T t) {

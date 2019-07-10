@@ -1,12 +1,11 @@
 package com.yuan.spring.boot.dao.jpa.commons.entity.po;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.beans.PropertyDescriptor;
@@ -20,11 +19,9 @@ import java.util.HashSet;
  **/
 @Data
 @MappedSuperclass
-public abstract class BasePo implements Serializable {
+public abstract class BasePo<T> implements Serializable {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(strategy = "uuid2", name = "uuid2")
-    private String id;
+    private ID id;
     private Date createDate;
     private Date updateDate;
     private String createUser;
@@ -33,7 +30,7 @@ public abstract class BasePo implements Serializable {
     public BasePo() {
     }
 
-    public BasePo(String id, Date createDate, Date updateDate, String createUser, String updateUser) {
+    public BasePo(ID id, Date createDate, Date updateDate, String createUser, String updateUser) {
         this.id = id;
         this.createDate = createDate;
         this.updateDate = updateDate;

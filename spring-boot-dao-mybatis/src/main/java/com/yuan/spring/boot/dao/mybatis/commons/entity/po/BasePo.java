@@ -1,24 +1,27 @@
-package com.yuan.spring.boot.dao.mybatis.enhance.commons.entity.dto;
+package com.yuan.spring.boot.dao.mybatis.commons.entity.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author yuane
+ * @date 2019/7/10 22:33
+ **/
+@MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseQueryParams<ID> implements Serializable {
+public abstract class BasePo<ID> implements Serializable {
+    @Id
     private ID id;
-    private ID[] ids;
     private String createUser;
     private String updateUser;
     private Date createDate;
     private Date updateDate;
-    private Date createDateStart;
-    private Date createDateEnd;
-    private Date updateDateStart;
-    private Date updateDateEnd;
 }

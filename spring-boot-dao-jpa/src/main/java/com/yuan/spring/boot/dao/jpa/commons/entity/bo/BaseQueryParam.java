@@ -14,9 +14,9 @@ import java.util.Map;
  * @date 2019/6/20 19:23
  **/
 @Data
-public abstract class BaseQueryParam implements Serializable {
-    private String id;
-    private String[] ids;
+public abstract class BaseQueryParam<ID> implements Serializable {
+    private ID id;
+    private ID[] ids;
     private String createUser;
     private String updateUser;
     private Date createDate;
@@ -29,7 +29,7 @@ public abstract class BaseQueryParam implements Serializable {
     public BaseQueryParam() {
     }
 
-    public BaseQueryParam(String id, String[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParam(ID id, ID[] ids, String createUser, String updateUser, Date createDate, Date createDateStart, Date createDateEnd, Date updateDate, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
         this.createUser = createUser;
@@ -54,6 +54,5 @@ public abstract class BaseQueryParam implements Serializable {
         }
         return map;
     }
-
 
 }

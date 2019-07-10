@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/6/15 19:07
  **/
-public interface BaseSerivce<T extends BasePo, ID extends Serializable> {
+public interface BaseSerivce<T extends BasePo<ID>, ID extends Serializable> {
 
     void checkSave(T t) throws RuntimeException;
 
