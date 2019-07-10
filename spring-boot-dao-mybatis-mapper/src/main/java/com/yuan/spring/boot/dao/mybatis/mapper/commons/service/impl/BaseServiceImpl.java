@@ -27,14 +27,12 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(T t) {
-        checkInsert(t);
         return getMapper().insert(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertSelective(T t) {
-        checkInsertSelective(t);
         return getMapper().insertSelective(t);
     }
 
@@ -42,7 +40,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(T[] arrays) {
-        Arrays.stream(arrays).forEach(this::checkInsert);
         List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
         return insertAll(collect);
     }
@@ -50,7 +47,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAll(List<T> list) {
-        list.forEach(this::checkInsert);
         list = list.parallelStream().map(this::setCommonsParameters).collect(Collectors.toList());
         return getMapper().insertList(list);
     }
@@ -58,14 +54,12 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int update(T t) {
-        checkUpdate(t);
         return getMapper().updateByPrimaryKey(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateSelective(T t) {
-        checkUpdateSelective(t);
         return getMapper().updateByPrimaryKeySelective(t);
     }
 
@@ -107,11 +101,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getMapper().selectOne(t);
     }
 
-    @Override
-    public T findByExample(Example example) {
-        return getMapper().selectOneByExample(example);
-    }
-
 
     @Override
     public PageInfo<T> findAll(IPage page) {
@@ -141,20 +130,7 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
         return getMapper().select(t);
     }
 
-    @Override
-    public List<T> findAllByExmaple(Example example) {
-        return getMapper().selectByExample(example);
-    }
 
-    @Override
-    public int count(T t) {
-        return getMapper().selectCount(t);
-    }
-
-    @Override
-    public int countByExample(Example example) {
-        return getMapper().selectCountByExample(example);
-    }
 
     private T setCommonsParameters(T t) {
         t.setCreateDate(new Date());

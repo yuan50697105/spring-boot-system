@@ -22,8 +22,10 @@
         <module>spring-boot-web-thymeleaf</module>
         <!--        Dao with Service-->
         <module>spring-boot-dao-jpa</module>
+        <module>spring-boot-dao-ebean</module>
         <module>spring-boot-dao-jdbc</module>
         <module>spring-boot-dao-jooq</module>
+        <module>spring-boot-dao-mybatis</module>
         <module>spring-boot-dao-mybatis-plus</module>
         <module>spring-boot-dao-mybatis-mapper</module>
         <module>spring-boot-dao-mybatis-enhance</module>

@@ -21,7 +21,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
-        checkInsert(t);
         setCommonsParmas(t);
         getBaseMapper().insert(t);
     }
@@ -29,7 +28,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(T[] arrays) {
-        Arrays.stream(arrays).forEach(this::checkInsert);
         List<T> collect = Arrays.stream(arrays).map(this::setCommonsParmas).collect(Collectors.toList());
         getBaseMapper().insertCollection(collect);
     }
@@ -37,7 +35,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertAll(Collection<T> collection) {
-        collection.forEach(this::checkInsert);
         collection = collection.stream().map(this::setCommonsParmas).collect(Collectors.toList());
         getBaseMapper().insertCollection(collection);
     }
@@ -45,7 +42,6 @@ public abstract class BaseServiceImpl<T extends BasePo, ID extends Serializable,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
-        checkUpdate(t);
         setCommonsParmas(t);
         getBaseMapper().update(t);
     }

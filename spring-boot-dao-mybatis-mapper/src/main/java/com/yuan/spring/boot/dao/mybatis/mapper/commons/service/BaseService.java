@@ -51,8 +51,6 @@ public interface BaseService<T extends BasePo, ID extends Serializable> {
 
     T findOne(T t);
 
-    T findByExample(Example example);
-
     PageInfo<T> findAll(IPage page);
 
     PageInfo<T> findAll(T t, IPage page);
@@ -61,9 +59,5 @@ public interface BaseService<T extends BasePo, ID extends Serializable> {
 
     List<T> findAll();
 
-    List<T> findAllByExmaple(Example example);
 
-    int count(T t);
-
-    int countByExample(Example example);
 }
