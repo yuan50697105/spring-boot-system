@@ -28,12 +28,8 @@
         <module>spring-boot-dao-mybatis-mapper</module>
         <module>spring-boot-dao-mybatis-enhance</module>
         <!--        Authority-->
-        <module>spring-boot-web-shiro</module>
-        <module>spring-boot-web-shiro-jwt</module>
-        <module>spring-boot-web-shiro-oauth2</module>
-        <module>spring-boot-web-shiro-jwt-oauth2</module>
+        <module>spring-boot-web-mvc-shiro</module>
         <module>spring-boot-web-mvc-security</module>
-        <module>spring-boot-web-flux</module>
         <!--        Commons-->
         <module>spring-boot-commons</module>
         <!--        utils-->
