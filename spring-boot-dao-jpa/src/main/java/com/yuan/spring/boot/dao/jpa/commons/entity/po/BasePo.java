@@ -1,6 +1,5 @@
 package com.yuan.spring.boot.dao.jpa.commons.entity.po;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
@@ -19,7 +18,7 @@ import java.util.HashSet;
  **/
 @Data
 @MappedSuperclass
-public abstract class BasePo<T> implements Serializable {
+public abstract class BasePo<ID> implements Serializable {
     @Id
     private ID id;
     private Date createDate;
