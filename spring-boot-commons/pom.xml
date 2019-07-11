@@ -10,7 +10,7 @@
     </parent>
     <artifactId>spring-boot-commons</artifactId>
     <version>${project.parent.version}</version>
-    <name>spring-boot-base-test1</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

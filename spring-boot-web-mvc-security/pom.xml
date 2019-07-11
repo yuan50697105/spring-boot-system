@@ -9,8 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-mvc-security</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-web-security</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

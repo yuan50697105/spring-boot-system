@@ -9,8 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-mq-kafka</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-kafak</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -18,15 +17,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-integration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-web-mvc</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.kafka</groupId>-->
 <!--            <artifactId>kafka-streams</artifactId>-->

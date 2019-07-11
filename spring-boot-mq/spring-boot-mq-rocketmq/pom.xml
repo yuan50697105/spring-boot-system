@@ -6,11 +6,10 @@
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-mq</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-mq-rocketmq</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-web-rabbitmq</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

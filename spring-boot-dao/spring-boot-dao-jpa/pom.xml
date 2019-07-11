@@ -9,8 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-dao-jpa</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-web-jpa</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

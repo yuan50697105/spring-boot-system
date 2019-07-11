@@ -9,10 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-task</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-task</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
-
+    <packaging>pom</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -21,7 +20,7 @@
         <module>spring-boot-task-batch</module>
     </modules>
     <dependencies>
-        
+
     </dependencies>
 
     <build>

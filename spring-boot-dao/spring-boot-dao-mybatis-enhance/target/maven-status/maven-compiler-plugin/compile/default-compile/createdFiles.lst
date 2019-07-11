@@ -1,7 +1,0 @@
-com\yuan\spring\boot\dao\mybatis\enhance\commons\service\impl\BaseServiceImpl.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\entity\dto\BaseQueryParams.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\entity\vo\PageVo.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\exception\CommonsCheckException.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\entity\po\BasePo.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\service\BaseService.class
-com\yuan\spring\boot\dao\mybatis\enhance\commons\dao\BaseDao.class

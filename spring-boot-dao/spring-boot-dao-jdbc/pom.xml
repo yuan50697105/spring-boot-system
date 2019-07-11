@@ -9,8 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-dao-jdbc</artifactId>
-    <version>${project.parent.version}</version>
-    <name>spring-boot-web-jdbc</name>
+    <name>${artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -18,24 +17,19 @@
     </properties>
 
     <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-freemarker</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-jdbc</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>com.github.xphsc</groupId>
-                    <artifactId>easyjdbc-spring-boot-starter</artifactId>
-                    <version>2.0.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jdbc</artifactId>
-                </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xphsc</groupId>
+            <artifactId>easyjdbc-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

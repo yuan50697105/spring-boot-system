@@ -1,6 +1,5 @@
 package com.yuan.spring.boot.dao.ebean.commons.service;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.yuan.spring.boot.dao.ebean.commons.entity.po.BasePo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
