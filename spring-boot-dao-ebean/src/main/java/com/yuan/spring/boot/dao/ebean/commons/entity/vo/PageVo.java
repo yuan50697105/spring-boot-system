@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.mybatis.plus.commons.entity.vo;
+package com.yuan.spring.boot.dao.ebean.commons.entity.vo;
 
 import lombok.Builder;
 import lombok.Data;

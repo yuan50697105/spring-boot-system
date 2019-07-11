@@ -21,7 +21,7 @@ public final class PageVo implements Serializable {
         this.list = list;
     }
 
-    public static PageVo of(Long total, List list) {
+    public static PageVo build(Long total, List list) {
         return new PageVo(total, list);
     }
 }

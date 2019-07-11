@@ -1,21 +1,27 @@
 package com.yuan.spring.boot.dao.mybatis.enhance.commons.entity.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author yuane
+ * @date 2019/6/21 20:55
+ **/
 @Data
-public class PageVo implements Serializable {
+public final class PageVo implements Serializable {
     private Long total;
-    private List data;
+    private List list;
 
-    private PageVo(Long total, List data) {
+    @Builder
+    public PageVo(Long total, List list) {
         this.total = total;
-        this.data = data;
+        this.list = list;
     }
 
-    public static PageVo of(Long total, List data) {
-        return new PageVo(total, data);
+    public static PageVo build(Long total, List list) {
+        return new PageVo(total, list);
     }
 }

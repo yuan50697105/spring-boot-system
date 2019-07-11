@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseSerivce<T, ID> {
-    public abstract S getRepository();
+    public abstract S getBaseDao();
 
     protected boolean isNotEmpty(Object object) {
         return !StringUtils.isEmpty(object);
@@ -33,56 +33,7 @@ public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializa
     @Override
     public void save(T t) {
         checkSave(t);
-        getRepository().save(t);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void insert(T t) {
-        log.info("执行插入方法");
-        checkInsert(t);
-        getRepository().persist(t);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void insertAll(T[] arrays) {
-        log.info("执行批量插入方法");
-        insertAll(Arrays.asList(arrays));
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void insertAll(Collection<T> collection) {
-        log.info("执行批量插入方法");
-        collection.forEach(this::checkInsert);
-        collection.stream().map(this::setCommonsParameters).forEach(this::insert);
-
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void update(T t) {
-        log.info("执行更新方法");
-        checkUpdate(t);
-        getRepository().refresh(t);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void updateAll(T[] arrays) {
-        log.info("执行批量更新方法");
-        Arrays.stream(arrays).forEach(this::checkUpdate);
-        List<T> collect = Arrays.stream(arrays).map(this::setCommonsParameters).collect(Collectors.toList());
-        updateAll(collect);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void updateAll(Collection<T> collection) {
-        log.info("执行批量更新方法");
-        collection.forEach(this::checkUpdate);
-        collection.stream().map(this::setCommonsParameters).forEach(this::update);
+        getBaseDao().save(t);
     }
 
 
@@ -108,7 +59,7 @@ public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializa
     @Transactional(rollbackFor = Exception.class)
     public void delete(ID id) {
         log.info("删除ID为" + id + "数据");
-        getRepository().deleteById(id);
+        getBaseDao().deleteById(id);
     }
 
     @Override
@@ -120,12 +71,12 @@ public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializa
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Collection<ID> collection) {
-        getRepository().findAllById(collection).forEach(getRepository()::delete);
+        getBaseDao().findAllById(collection).forEach(getBaseDao()::delete);
     }
 
     @Override
     public Optional<T> findById(ID id) {
-        return getRepository().findById(id);
+        return getBaseDao().findById(id);
     }
 
     @Override
@@ -135,37 +86,37 @@ public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializa
 
     @Override
     public List<T> findAllById(Collection<ID> collection) {
-        return getRepository().findAllById(collection);
+        return getBaseDao().findAllById(collection);
     }
 
     @Override
     public Optional<T> findOne(T t) {
-        return getRepository().findOne(Example.of(t));
+        return getBaseDao().findOne(Example.of(t));
     }
 
     @Override
     public List<T> findAll() {
-        return getRepository().findAll();
+        return getBaseDao().findAll();
     }
 
     @Override
     public List<T> findAll(T t) {
-        return getRepository().findAll(Example.of(t));
+        return getBaseDao().findAll(Example.of(t));
     }
 
     @Override
     public List<T> findAll(T t, Sort sort) {
-        return getRepository().findAll(Example.of(t), sort);
+        return getBaseDao().findAll(Example.of(t), sort);
     }
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        return getRepository().findAll(pageable);
+        return getBaseDao().findAll(pageable);
     }
 
     @Override
     public Page<T> findAll(T t, Pageable pageable) {
-        return getRepository().findAll(Example.of(t), pageable);
+        return getBaseDao().findAll(Example.of(t), pageable);
     }
 
     private T setCommonsParameters(T t) {
@@ -174,6 +125,10 @@ public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializa
         t.setCreateUser("");
         t.setUpdateUser("");
         return t;
+    }
+
+    protected boolean isNew(T t) {
+        return findById(t.getId()).isPresent();
     }
 
 

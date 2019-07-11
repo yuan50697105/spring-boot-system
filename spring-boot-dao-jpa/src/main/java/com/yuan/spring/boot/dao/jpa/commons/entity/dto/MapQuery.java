@@ -11,9 +11,9 @@ import java.util.Map;
  * @date 2019/6/20 19:27
  **/
 @Data
-public final class MapQuery {
+public final class MapQuery implements BaseQuery<Map<String, Object>> {
     private String sql;
-    private Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> params = new HashMap<>();
 
     public MapQuery() {
 
@@ -21,20 +21,21 @@ public final class MapQuery {
 
     public MapQuery(String sql) {
         this.sql = sql;
-        this.map = new HashMap<>(1);
+        this.params = new HashMap<>(1);
     }
 
     @Builder
-    public MapQuery(String sql, Map<String, Object> map) {
+    public MapQuery(String sql, Map<String, Object> params) {
         this.sql = sql;
-        this.map = map;
+        this.params = params;
     }
 
-    public static MapQuery of(String sql, Map<String, Object> map) {
-        return new MapQuery(sql, map);
+    public static MapQuery build(String sql, Map<String, Object> params) {
+        return new MapQuery(sql, params);
     }
 
-    public static MapQuery of(String sql) {
+    public static MapQuery build(String sql) {
         return new MapQuery(sql);
     }
+
 }

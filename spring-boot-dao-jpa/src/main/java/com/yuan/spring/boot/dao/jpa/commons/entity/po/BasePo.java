@@ -1,6 +1,8 @@
 package com.yuan.spring.boot.dao.jpa.commons.entity.po;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.util.StringUtils;
@@ -18,6 +20,8 @@ import java.util.HashSet;
  **/
 @Data
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class BasePo<ID> implements Serializable {
     @Id
     private ID id;
@@ -26,19 +30,10 @@ public abstract class BasePo<ID> implements Serializable {
     private String createUser;
     private String updateUser;
 
-    public BasePo() {
-    }
 
-    public BasePo(ID id, Date createDate, Date updateDate, String createUser, String updateUser) {
-        this.id = id;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.createUser = createUser;
-        this.updateUser = updateUser;
-    }
 
     @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
-    public void copyFrom(BasePo basePo) {
+    public BasePo<ID> copyFrom(BasePo<ID> basePo) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(basePo);
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
         HashSet<String> set = new HashSet<>(propertyDescriptors.length);
@@ -50,6 +45,7 @@ public abstract class BasePo<ID> implements Serializable {
             }
         }
         BeanUtils.copyProperties(basePo, this, set.toArray(new String[set.size()]));
+        return this;
     }
 
 }

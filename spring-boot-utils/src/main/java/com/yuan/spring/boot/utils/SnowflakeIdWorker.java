@@ -154,13 +154,11 @@ public class SnowflakeIdWorker {
         return System.currentTimeMillis();
     }
 
-    private static SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker(0L,0L);
 
-    private static SnowflakeIdWorker getInstance() {
-        return snowflakeIdWorker;
+    public static SnowflakeIdWorker build(long workerId, long datacenterId) {
+        return new SnowflakeIdWorker(workerId, datacenterId);
     }
 
-    public synchronized static Long nextId(Long workerId, Long datacenterId) {
-        return getInstance().nextId();
-    }
+
+
 }

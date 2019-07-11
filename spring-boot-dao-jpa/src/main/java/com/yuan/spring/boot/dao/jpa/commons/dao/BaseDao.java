@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.jpa.commons.dao;
 
+import com.querydsl.jpa.JPQLQueryFactory;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.dto.MapQuery;
 import com.yuan.spring.boot.dao.jpa.commons.entity.po.BasePo;
@@ -25,13 +26,13 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface BaseDao<T extends BasePo<ID>, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
+    JPQLQueryFactory getJpqlQueryFactory();
+
     EntityManager getEntityManager();
 
     DSLContext getDslContext();
 
-    void persist(T t);
-
-    void refresh(T t);
+    boolean isNew(T t);
 
     Optional<T> findOne(SelectQuery<Record> selectQuery);
 

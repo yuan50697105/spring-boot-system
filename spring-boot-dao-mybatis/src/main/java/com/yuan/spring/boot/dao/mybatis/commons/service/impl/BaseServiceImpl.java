@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yuane
@@ -15,66 +17,85 @@ import java.util.Arrays;
 
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BasePo<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements BaseService<T, ID> {
-    protected abstract S getBaseRepositoy();
+    protected abstract S getBaseDao();
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(T t) {
-        getBaseRepositoy().save(t);
+        getBaseDao().save(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveIgnoreNull(T t) {
-        getBaseRepositoy().saveIgnoreNull(t);
+        getBaseDao().saveIgnoreNull(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(T[] arrays) {
-        getBaseRepositoy().saveAll(Arrays.asList(arrays));
+        getBaseDao().saveAll(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveAll(Iterable<T> iterable) {
-        getBaseRepositoy().saveAll(iterable);
+        getBaseDao().saveAll(iterable);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(T t) {
-        getBaseRepositoy().insert(t);
+        getBaseDao().insert(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(T t) {
-        getBaseRepositoy().update(t);
+        getBaseDao().update(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateIgnoreNull(T t) {
-        getBaseRepositoy().updateIgnoreNull(t);
+        getBaseDao().updateIgnoreNull(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(ID id) {
-        getBaseRepositoy().deleteById(id);
+        getBaseDao().deleteById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(ID[] ids) {
-        getBaseRepositoy().findAllById(Arrays.asList(ids)).forEach(getBaseRepositoy()::delete);
+        getBaseDao().findAllById(Arrays.asList(ids)).forEach(getBaseDao()::delete);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Iterable<ID> iterable) {
-        getBaseRepositoy().findAllById(iterable).forEach(getBaseRepositoy()::delete);
+        getBaseDao().findAllById(iterable).forEach(getBaseDao()::delete);
+    }
+
+    @Override
+    public Optional<T> findById(ID id){
+        return getBaseDao().findById(id);
+    }
+
+    @Override
+    public List<T> findAllById(ID[] ids){
+        return getBaseDao().findAllById(Arrays.asList(ids));
+    }
+
+    @Override
+    public List<T> findAllById(Iterable<ID> iterable){
+        return getBaseDao().findAllById(iterable);
+    }
+
+    protected boolean isNew(T t){
+        return findById(t.getId()).isPresent();
     }
 }
 

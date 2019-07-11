@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.mybatis.plus.commons.entity.vo;
+package com.yuan.spring.boot.dao.ebean.commons.entity.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,17 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-/**
- * @author yuane
- * @date 2019/7/1 22:31
- **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseVo {
-    private String id;
+public class BasePo<ID> {
+    private ID id;
     private String createUser;
-    private String updateUser;
+    private String udpateUser;
     private Date createDate;
     private Date updateDate;
 

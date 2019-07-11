@@ -2,22 +2,25 @@ package com.yuan.spring.boot.dao.jpa.commons.entity.dto;
 
 import lombok.Data;
 
+import java.util.Arrays;
+
 /**
  * @author yuane
  * @date 2019/6/20 19:28
  **/
 @Data
-public final class ArrayQuery {
+public final class ArrayQuery implements BaseQuery<Object[]> {
     private String sql;
-    private Object[] objects;
+    private Object[] params;
 
 
-    private ArrayQuery(String sql, Object... objects) {
+    private ArrayQuery(String sql, Object... params) {
         this.sql = sql;
-        this.objects = objects;
+        this.params = params;
     }
 
-    public static ArrayQuery of(String sql, Object... objects) {
-        return new ArrayQuery(sql, objects);
+    public static ArrayQuery build(String sql, Object... params) {
+        return new ArrayQuery(sql, params);
     }
+
 }

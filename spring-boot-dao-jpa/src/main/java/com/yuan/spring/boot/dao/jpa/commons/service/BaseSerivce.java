@@ -18,23 +18,7 @@ public interface BaseSerivce<T extends BasePo<ID>, ID extends Serializable> {
 
     void checkSave(T t) throws RuntimeException;
 
-    void checkInsert(T t) throws RuntimeException;
-
-    void checkUpdate(T t) throws RuntimeException;
-
     void save(T t);
-
-    void insert(T t);
-
-    void insertAll(T[] arrays);
-
-    void insertAll(Collection<T> collection);
-
-    void update(T t);
-
-    void updateAll(T[] arrays);
-
-    void updateAll(Collection<T> collection);
 
     void saveAll(T[] ts);
 

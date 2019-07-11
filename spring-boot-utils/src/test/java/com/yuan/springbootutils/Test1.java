@@ -29,11 +29,20 @@ public class Test1 {
 
     @Test
     public void test2() throws InterruptedException {
+        SnowflakeIdWorker idWorker = SnowflakeIdWorker.build(0L, 0L);
         int i = 10;
         while (i >= 0) {
 
-                Long nextId = SnowflakeIdWorker.nextId(0L, 0L);
+                Long nextId =idWorker.nextId();
                 System.out.println(nextId);
+            i--;
+        }
+        idWorker = SnowflakeIdWorker.build(0L, 1L);
+        i=10;
+        while (i >= 0) {
+
+            Long nextId =idWorker.nextId();
+            System.out.println(nextId);
             i--;
         }
     }

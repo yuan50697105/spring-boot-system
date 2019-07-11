@@ -3,6 +3,8 @@ package com.yuan.spring.boot.dao.mybatis.commons.service;
 import com.yuan.spring.boot.dao.mybatis.commons.entity.po.BasePo;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yuane
@@ -34,4 +36,10 @@ public interface BaseService<T extends BasePo<ID>, ID extends Serializable> {
     void delete(ID[] ids);
 
     void delete(Iterable<ID> iterable);
+
+    Optional<T> findById(ID id);
+
+    List<T> findAllById(ID[] ids);
+
+    List<T> findAllById(Iterable<ID> iterable);
 }

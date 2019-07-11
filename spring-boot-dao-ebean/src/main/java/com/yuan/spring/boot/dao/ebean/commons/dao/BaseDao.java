@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.ebean.commons.dao;
 
+import com.yuan.spring.boot.dao.ebean.commons.entity.po.BasePo;
 import org.springframework.data.ebean.repository.EbeanRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -8,5 +9,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @date 2019/7/10 23:37
  **/
 @NoRepositoryBean
-public interface BaseDao<T,ID> extends EbeanRepository<T,ID> {
+public interface BaseDao<T extends BasePo<ID>, ID> extends EbeanRepository<T, ID> {
 }
