@@ -1,6 +1,7 @@
 package com.yuan.springbootutils;
 
 import com.yuan.spring.boot.utils.DateUtils;
+import com.yuan.spring.boot.utils.SnowflakeIdWorker;
 import org.junit.Test;
 
 import java.util.Date;
@@ -24,5 +25,16 @@ public class Test1 {
         System.out.println(format2);
         Date parse1 = DateUtils.DATE_TIME_STR.parse("20190101102022");
         System.out.println(parse1);
+    }
+
+    @Test
+    public void test2() throws InterruptedException {
+        int i = 10;
+        while (i >= 0) {
+
+                Long nextId = SnowflakeIdWorker.nextId(0L, 0L);
+                System.out.println(nextId);
+            i--;
+        }
     }
 }
