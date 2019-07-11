@@ -1,0 +1,10 @@
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\vo\BaseVo.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\bo\BaseQueryParams.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\service\impl\BaseServiceImpl.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\vo\AjaxResult$AjaxResultBuilder.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\vo\PageVo$PageVoBuilder.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\vo\PageVo.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\dao\BaseDao.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\vo\AjaxResult.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\service\BaseService.class
+com\yuan\spring\boot\dao\mybatis\mapper\commons\entity\po\BasePo.class

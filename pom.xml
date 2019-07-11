@@ -15,40 +15,19 @@
     <packaging>pom</packaging>
     <description>个人测试项目</description>
     <modules>
-        <!--        MVC 部分-->
         <module>spring-boot-web-mvc</module>
-        <!--        视图部分-->
-        <module>spring-boot-web-freemarker</module>
-        <module>spring-boot-web-thymeleaf</module>
-        <!--        Dao with Service-->
-        <module>spring-boot-dao-jpa</module>
-        <module>spring-boot-dao-ebean</module>
-        <module>spring-boot-dao-jdbc</module>
-        <module>spring-boot-dao-jooq</module>
-        <module>spring-boot-dao-mybatis</module>
-        <module>spring-boot-dao-mybatis-plus</module>
-        <module>spring-boot-dao-mybatis-mapper</module>
-        <module>spring-boot-dao-mybatis-enhance</module>
-        <!--        Authority-->
+        <module>spring-boot-web-views</module>
+        <module>spring-boot-dao</module>
         <module>spring-boot-web-mvc-shiro</module>
         <module>spring-boot-web-mvc-security</module>
-        <!--        Commons-->
         <module>spring-boot-commons</module>
-        <!--        utils-->
         <module>spring-boot-utils</module>
-        <!--        MQ-->
-        <module>spring-boot-mq-rabbitmq</module>
-        <module>spring-boot-mq-rocketmq</module>
-        <module>spring-boot-mq-kafka</module>
-        <!--        Time Task with Batch Tast-->
-        <module>spring-boot-task-quartz-with-batch</module>
+        <module>spring-boot-mq</module>
+        <module>spring-boot-task</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
-        <mapper>2.1.5</mapper>
-        <pagehelper>1.2.12</pagehelper>
-        <mybatis>2.0.1</mybatis>
-        <mybatis-plus>3.1.1</mybatis-plus>
+
         <shiro>1.4.1</shiro>
         <java-jwt>3.8.1</java-jwt>
         <!--        <project.parent.version>1.0.0</project.parent.version>-->
@@ -66,8 +45,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -80,10 +60,13 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
