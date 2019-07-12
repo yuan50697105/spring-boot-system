@@ -8,15 +8,15 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-system-module</artifactId>
-    <name>${artifactId}</name>
+    <artifactId>spring-boot-system-apps</artifactId>
+    <name>${project.artifactId}</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>spring-boot-system-module1</module>
+        <module>spring-boot-system-app1</module>
     </modules>
     <dependencies>
 

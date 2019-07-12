@@ -8,8 +8,8 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-system-module1</artifactId>
-    <name>${artifactId}</name>
+    <artifactId>spring-boot-system-app1</artifactId>
+    <name>${project.artifactId}</name>
     <description>一个测试demo,使用shiro,mvc,mybatis-plus</description>
     <packaging>pom</packaging>
     <properties>

@@ -23,7 +23,7 @@
         <module>spring-boot-commons</module>
         <module>spring-boot-mq</module>
         <module>spring-boot-task</module>
-        <module>spring-boot-system-module</module>
+        <module>spring-boot-system-apps</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
