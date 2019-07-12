@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-views-freemarker</artifactId>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

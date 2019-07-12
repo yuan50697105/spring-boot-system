@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-dao-jdbc</artifactId>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
