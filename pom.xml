@@ -21,7 +21,6 @@
         <module>spring-boot-web-mvc-shiro</module>
         <module>spring-boot-web-mvc-security</module>
         <module>spring-boot-commons</module>
-        <module>spring-boot-utils</module>
         <module>spring-boot-mq</module>
         <module>spring-boot-task</module>
     </modules>
