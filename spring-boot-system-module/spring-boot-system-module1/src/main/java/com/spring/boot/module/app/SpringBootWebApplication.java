@@ -1,15 +1,11 @@
-package com.yuan.spring.web.mvc;
+package com.spring.boot.module.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author yuane
- * @date 2019/7/10 19:45
- **/
 @SpringBootApplication
-public class SpringBootWebMvcApp {
+public class SpringBootWebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringApplication.class, args);
+        SpringApplication.run(SpringBootWebApplication.class, args);
     }
 }

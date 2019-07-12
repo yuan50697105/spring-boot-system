@@ -1,6 +1,8 @@
 package com.yuan.spring.boot.dao.mybatis.plus.commons.entity.po;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,9 +26,13 @@ import java.util.HashSet;
 public abstract class BasePo<ID> implements Serializable, Cloneable {
     @TableId(type = IdType.NONE)
     private ID id;
+    @TableField(fill = FieldFill.INSERT, value = "create_user")
     private String createUser;
+    @TableField(fill = FieldFill.UPDATE, value = "update_user")
     private String updateUser;
+    @TableField(fill = FieldFill.INSERT, value = "create_data")
     private Date createDate;
+    @TableField(fill = FieldFill.UPDATE, value = "update_date")
     private Date updateDate;
 
 
