@@ -11,7 +11,7 @@
     <groupId>com.yuan</groupId>
     <artifactId>spring-boot-system</artifactId>
     <version>1.0.0</version>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <description>个人测试项目</description>
     <modules>
