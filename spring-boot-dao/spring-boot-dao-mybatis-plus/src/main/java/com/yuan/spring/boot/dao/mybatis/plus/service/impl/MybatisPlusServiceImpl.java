@@ -1,8 +1,8 @@
 package com.yuan.spring.boot.dao.mybatis.plus.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.yuan.spring.boot.dao.commons.entity.dto.DtoResult;
-import com.yuan.spring.boot.dao.commons.utils.DtoResultUtils;
+import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.plus.dao.MybatisPlusDao;
 import com.yuan.spring.boot.dao.mybatis.plus.entity.domain.MybatisPlusDomain;
 import com.yuan.spring.boot.dao.mybatis.plus.service.MybatisPlusService;
@@ -29,45 +29,45 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     }
 
     @Override
-    public DtoResult save(T t) {
+    public ServiceResult save(T t) {
         setCommonsParameters(t);
         getBaseDao().insert(t);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult saveBatch(T[] arrays) {
+    public ServiceResult saveBatch(T[] arrays) {
         return saveBatch(Arrays.asList(arrays));
     }
 
     @Override
-    public DtoResult saveBatch(Collection<T> collection) {
+    public ServiceResult saveBatch(Collection<T> collection) {
         collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::save);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult update(T t) {
+    public ServiceResult update(T t) {
         T db = getBaseDao().selectById(t.getId());
         db.copyFrom(t);
         setCommonsParameters(db);
         getBaseDao().updateById(db);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult updateBatch(T[] arrays) {
+    public ServiceResult updateBatch(T[] arrays) {
         return updateBatch(Arrays.asList(arrays));
     }
 
     @Override
-    public DtoResult updateBatch(Collection<T> collection) {
+    public ServiceResult updateBatch(Collection<T> collection) {
         collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::update);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult saveOrUpdate(T t) {
+    public ServiceResult saveOrUpdate(T t) {
         if (isNew(t)) {
             return save(t);
         } else {
@@ -76,48 +76,48 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     }
 
     @Override
-    public DtoResult saveOrUpdateBatch(T[] arrays) {
+    public ServiceResult saveOrUpdateBatch(T[] arrays) {
         return saveOrUpdateBatch(Arrays.asList(arrays));
     }
 
     @Override
-    public DtoResult saveOrUpdateBatch(Collection<T> collection) {
+    public ServiceResult saveOrUpdateBatch(Collection<T> collection) {
         collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::saveOrUpdate);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult deleteById(ID id) {
+    public ServiceResult deleteById(ID id) {
         getBaseDao().deleteById(id);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult deleteById(ID[] ids) {
+    public ServiceResult deleteById(ID[] ids) {
         return deleteById(Arrays.asList(ids));
     }
 
     @Override
-    public DtoResult deleteById(Collection<ID> collection) {
+    public ServiceResult deleteById(Collection<ID> collection) {
         collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::deleteById);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult delete(T t) {
+    public ServiceResult delete(T t) {
         getBaseDao().deleteByMap(t.toParamsMap());
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult delete(T[] arrays) {
+    public ServiceResult delete(T[] arrays) {
         return delete(Arrays.asList(arrays));
     }
 
     @Override
-    public DtoResult delete(Collection<T> collection) {
+    public ServiceResult delete(Collection<T> collection) {
         collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::delete);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override

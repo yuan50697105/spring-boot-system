@@ -1,7 +1,7 @@
 package com.yuan.spring.boot.dao.commons.service;
 
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
-import com.yuan.spring.boot.dao.commons.entity.dto.DtoResult;
+import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,43 +11,43 @@ import java.util.Collection;
  * @date 2019/7/13 12:38
  **/
 public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> {
-    DtoResult checkSaveOrUpdate(T t);
+    ServiceResult checkSaveOrUpdate(T t);
 
-    DtoResult saveOrUpdate(T t);
+    ServiceResult saveOrUpdate(T t);
 
-    DtoResult saveOrUpdateBatch(T[] arrays);
+    ServiceResult saveOrUpdateBatch(T[] arrays);
 
-    DtoResult saveOrUpdateBatch(Collection<T> collection);
+    ServiceResult saveOrUpdateBatch(Collection<T> collection);
 
-    DtoResult checkSave(T t);
+    ServiceResult checkSave(T t);
 
-    DtoResult save(T t);
+    ServiceResult save(T t);
 
-    DtoResult saveBatch(T[] arrays);
+    ServiceResult saveBatch(T[] arrays);
 
-    DtoResult saveBatch(Collection<T> collection);
+    ServiceResult saveBatch(Collection<T> collection);
 
-    DtoResult checkUpdate(T t);
+    ServiceResult checkUpdate(T t);
 
-    DtoResult update(T t);
+    ServiceResult update(T t);
 
-    DtoResult updateBatch(T[] arrays);
+    ServiceResult updateBatch(T[] arrays);
 
-    DtoResult updateBatch(Collection<T> collection);
+    ServiceResult updateBatch(Collection<T> collection);
 
-    DtoResult deleteById(ID id);
+    ServiceResult deleteById(ID id);
 
-    DtoResult deleteById(ID[] ids);
+    ServiceResult deleteById(ID[] ids);
 
-    DtoResult deleteById(Collection<ID> collection);
+    ServiceResult deleteById(Collection<ID> collection);
 
-    DtoResult checkDelete(T t);
+    ServiceResult checkDelete(T t);
 
-    DtoResult delete(T t);
+    ServiceResult delete(T t);
 
-    DtoResult delete(T[] arrays);
+    ServiceResult delete(T[] arrays);
 
-    DtoResult delete(Collection<T> collection);
+    ServiceResult delete(Collection<T> collection);
 
     T get(ID id);
 

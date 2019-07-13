@@ -20,6 +20,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-dao-commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis}</version>

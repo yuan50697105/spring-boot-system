@@ -19,11 +19,11 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-dao-commons</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.yuan</groupId>-->
+        <!--            <artifactId>spring-boot-dao-commons</artifactId>-->
+        <!--            <version>${project.parent.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>

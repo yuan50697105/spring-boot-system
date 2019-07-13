@@ -1,7 +1,7 @@
 package com.yuan.spring.boot.dao.ebean.service.impl;
 
-import com.yuan.spring.boot.dao.commons.entity.dto.DtoResult;
-import com.yuan.spring.boot.dao.commons.utils.DtoResultUtils;
+import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.ebean.dao.EbeanDao;
 import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
 import com.yuan.spring.boot.dao.ebean.service.EbeanService;
@@ -24,111 +24,111 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     protected abstract T setCommonsParams(T t);
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult saveOrUpdate(T t) {
+    public ServiceResult saveOrUpdate(T t) {
         setCommonsParams(t);
         getBaseDao().save(t);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult saveOrUpdateBatch(T[] arrays) {
+    public ServiceResult saveOrUpdateBatch(T[] arrays) {
         return saveOrUpdateBatch(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult saveOrUpdateBatch(Collection<T> collection) {
+    public ServiceResult saveOrUpdateBatch(Collection<T> collection) {
         collection.forEach(this::saveOrUpdate);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult save(T t) {
+    public ServiceResult save(T t) {
         setCommonsParams(t);
         getBaseDao().save(t);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult saveBatch(T[] arrays) {
+    public ServiceResult saveBatch(T[] arrays) {
         return saveBatch(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult saveBatch(Collection<T> collection) {
+    public ServiceResult saveBatch(Collection<T> collection) {
         collection.forEach(this::save);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult update(T t) {
+    public ServiceResult update(T t) {
         T db = getBaseDao().findById(t.getId()).orElse(null);
         if (db!=null) {
             db.copyFrom(t);
             setCommonsParams(db);
             getBaseDao().save(db);
         }
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult updateBatch(T[] arrays) {
+    public ServiceResult updateBatch(T[] arrays) {
         return updateBatch(Arrays.asList(arrays));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult updateBatch(Collection<T> collection) {
+    public ServiceResult updateBatch(Collection<T> collection) {
        collection.forEach(this::update);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult deleteById(ID id) {
+    public ServiceResult deleteById(ID id) {
         getBaseDao().deleteById(id);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult deleteById(ID[] ids) {
+    public ServiceResult deleteById(ID[] ids) {
         Arrays.stream(ids).forEach(this::deleteById);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult deleteById(Collection<ID> collection) {
+    public ServiceResult deleteById(Collection<ID> collection) {
         collection.stream().forEach(this::deleteById);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult delete(T t) {
+    public ServiceResult delete(T t) {
         getBaseDao().delete(t);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DtoResult delete(T[] arrays) {
+    public ServiceResult delete(T[] arrays) {
         Arrays.stream(arrays).forEach(this::delete);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
-    public DtoResult delete(Collection<T> collection) {
+    public ServiceResult delete(Collection<T> collection) {
         collection.forEach(this::delete);
-        return DtoResultUtils.ok();
+        return ServiceResultUtils.ok();
     }
 
     @Override
