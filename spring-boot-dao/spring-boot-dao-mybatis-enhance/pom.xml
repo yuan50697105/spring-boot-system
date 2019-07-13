@@ -10,6 +10,8 @@
     </parent>
     <artifactId>spring-boot-dao-mybatis-enhance</artifactId>
     <name>${project.artifactId}</name>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>

@@ -10,6 +10,7 @@
     </parent>
     <artifactId>spring-boot-web-views</artifactId>
     <name>${project.artifactId}</name>
+    <version>1.0.0</version>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>
@@ -31,6 +32,7 @@
 
     <build>
         <plugins>
+
         </plugins>
     </build>
 

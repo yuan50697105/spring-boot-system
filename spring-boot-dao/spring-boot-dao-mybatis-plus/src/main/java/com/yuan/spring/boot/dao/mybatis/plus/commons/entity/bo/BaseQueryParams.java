@@ -2,6 +2,7 @@ package com.yuan.spring.boot.dao.mybatis.plus.commons.entity.bo;
 
 import lombok.Data;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -17,8 +18,8 @@ import java.util.Map;
 public abstract class BaseQueryParams<ID> implements Serializable {
     private ID id;
     private ID[] ids;
-    private String createUser;
-    private String updateUser;
+    private ID createUser;
+    private ID updateUser;
     private Date createDate;
     private Date updateDate;
     private Date createDateStart;
@@ -29,7 +30,7 @@ public abstract class BaseQueryParams<ID> implements Serializable {
     public BaseQueryParams() {
     }
 
-    public BaseQueryParams(ID id, ID[] ids, String createUser, String updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParams(ID id, ID[] ids, ID createUser, ID updateUser, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
         this.id = id;
         this.ids = ids;
         this.createUser = createUser;
@@ -42,15 +43,17 @@ public abstract class BaseQueryParams<ID> implements Serializable {
         this.updateDateEnd = updateDateEnd;
     }
 
+    @SuppressWarnings("Duplicates")
     public Map<String, Object> toParamsMap() {
-
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(this);
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
         Map<String, Object> map = new HashMap<>(propertyDescriptors.length);
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             String name = propertyDescriptor.getName();
             Object value = beanWrapper.getPropertyValue(name);
-            map.put(name, value);
+            if (!StringUtils.isEmpty(value)) {
+                map.put(name, value);
+            }
         }
         return map;
     }

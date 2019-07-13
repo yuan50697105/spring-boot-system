@@ -46,12 +46,12 @@ public class DtoResult implements Serializable {
     }
 
     public AjaxResult convert() {
-        return AjaxResult.build(code, message, data);
+        return AjaxResult.build(AjaxResult.Status.valueOf(code), message, data);
     }
 
 
     public enum Status {
-        OK("ok"), ERROR("error"), WARN("warn"), DATA("data"), MESSAGE("message");
+        OK("ok"), ERROR("error"), WARN("warn"), DATA("data"), MESSAGE("build");
         private String code;
 
         Status(String code) {

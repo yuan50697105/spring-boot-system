@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.mybatis.plus.commons.entity.vo;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,5 +24,9 @@ public final class PageVo implements Serializable {
 
     public static PageVo build(Long total, List list) {
         return new PageVo(total, list);
+    }
+
+    public static <T extends IPage> PageVo build(T page) {
+        return build(page.getTotal(), page.getRecords());
     }
 }

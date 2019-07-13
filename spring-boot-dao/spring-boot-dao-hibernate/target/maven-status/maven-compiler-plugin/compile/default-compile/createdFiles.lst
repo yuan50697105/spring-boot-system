@@ -1,0 +1,12 @@
+com\yuan\spring\boot\dao\jpa\commons\entity\po\BasePo.class
+com\yuan\spring\boot\dao\jpa\commons\dao\impl\BaseDaoImpl.class
+com\yuan\spring\boot\dao\jpa\commons\service\BaseSerivce.class
+com\yuan\spring\boot\dao\jpa\commons\dao\BaseDao.class
+com\yuan\spring\boot\dao\jpa\commons\entity\vo\PageVo.class
+com\yuan\spring\boot\dao\jpa\commons\entity\vo\PageVo$PageVoBuilder.class
+com\yuan\spring\boot\dao\jpa\commons\entity\dto\MapQuery$MapQueryBuilder.class
+com\yuan\spring\boot\dao\jpa\commons\entity\dto\ArrayQuery.class
+com\yuan\spring\boot\dao\jpa\commons\entity\dto\BaseQuery.class
+com\yuan\spring\boot\dao\jpa\commons\service\impl\BaseServiceImpl.class
+com\yuan\spring\boot\dao\jpa\commons\entity\dto\MapQuery.class
+com\yuan\spring\boot\dao\jpa\commons\entity\bo\BaseQueryParam.class

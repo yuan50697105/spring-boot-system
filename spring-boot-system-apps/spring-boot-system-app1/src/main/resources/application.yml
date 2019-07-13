@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
+    driver-class-name: org.postgresql.Driver
+    username: postgres
     password: root
-    url:
+    url: jdbc:postgresql://127.0.0.1:5432/spring_boot_system

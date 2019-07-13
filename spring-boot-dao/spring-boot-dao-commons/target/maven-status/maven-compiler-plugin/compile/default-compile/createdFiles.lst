@@ -1,0 +1,7 @@
+com\yuan\spring\boot\dao\ebean\commons\entity\vo\PageVo$PageVoBuilder.class
+com\yuan\spring\boot\dao\ebean\commons\entity\po\BasePo.class
+com\yuan\spring\boot\dao\ebean\commons\entity\vo\PageVo.class
+com\yuan\spring\boot\dao\ebean\commons\service\impl\BaseServiceImpl.class
+com\yuan\spring\boot\dao\ebean\commons\dao\BaseDao.class
+com\yuan\spring\boot\dao\ebean\commons\entity\bo\BaseQueryParam.class
+com\yuan\spring\boot\dao\ebean\commons\service\BaseService.class

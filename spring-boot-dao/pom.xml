@@ -10,6 +10,7 @@
     </parent>
     <artifactId>spring-boot-dao</artifactId>
     <name>${project.artifactId}</name>
+    <version>1.0.0</version>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>
@@ -25,9 +26,9 @@
         <sharding>3.1.0</sharding>
     </properties>
     <modules>
+        <module>spring-boot-dao-commons</module>
         <module>spring-boot-dao-jdbc</module>
-        <module>spring-boot-dao-jooq</module>
-        <module>spring-boot-dao-jpa</module>
+        <module>spring-boot-dao-hibernate</module>
         <module>spring-boot-dao-ebean</module>
         <module>spring-boot-dao-mybatis</module>
         <module>spring-boot-dao-mybatis-enhance</module>
@@ -35,6 +36,11 @@
         <module>spring-boot-dao-mybatis-plus</module>
     </modules>
     <dependencies>
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-dao-commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-utils</artifactId>
