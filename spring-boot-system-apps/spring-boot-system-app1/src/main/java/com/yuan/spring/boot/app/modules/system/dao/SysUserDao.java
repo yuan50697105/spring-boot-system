@@ -1,7 +1,7 @@
 package com.yuan.spring.boot.app.modules.system.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuan.spring.boot.app.modules.commons.dao.BaseDao;
+import com.yuan.spring.boot.app.modules.commons.dao.MybatisPlusDao;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysUser;
 import com.yuan.spring.boot.app.modules.system.entity.dto.SysUserQueryParams;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,7 +16,7 @@ import java.util.Optional;
  **/
 @Repository
 @Mapper
-public interface SysUserDao extends BaseDao<SysUser> {
+public interface SysUserDao extends MybatisPlusDao<SysUser> {
 
     Page<SysUser> selectPageByParams(Page<SysUser> objectPage, SysUserQueryParams queryParams);
 

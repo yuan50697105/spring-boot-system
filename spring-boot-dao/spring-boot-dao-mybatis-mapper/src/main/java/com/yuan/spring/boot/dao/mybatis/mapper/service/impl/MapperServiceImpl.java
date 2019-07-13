@@ -1,15 +1,14 @@
-package com.yuan.spring.boot.dao.hibernate.service.impl;
+package com.yuan.spring.boot.dao.mybatis.mapper.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.github.pagehelper.IPage;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yuan.spring.boot.dao.commons.entity.dto.DtoResult;
 import com.yuan.spring.boot.dao.commons.utils.DtoResultUtils;
-import com.yuan.spring.boot.dao.hibernate.dao.HibernateDao;
-import com.yuan.spring.boot.dao.hibernate.entity.domain.HibernateDomain;
-import com.yuan.spring.boot.dao.hibernate.service.HibernateService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import com.yuan.spring.boot.dao.mybatis.mapper.dao.MapperDao;
+import com.yuan.spring.boot.dao.mybatis.mapper.entity.domain.MapperDomain;
+import com.yuan.spring.boot.dao.mybatis.mapper.service.MapperService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -21,30 +20,25 @@ import java.util.stream.Collectors;
 
 /**
  * @author yuane
- * @date 2019/6/15 19:07
+ * @date 2019/6/15 23:10
  **/
-
-@Slf4j
 @Transactional(rollbackFor = Exception.class)
-public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID extends Serializable, S extends HibernateDao<T, ID>> implements HibernateService<T, ID> {
+public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends Serializable, S extends MapperDao<T, ID>> implements MapperService<T, ID> {
     public abstract S getBaseDao();
 
     protected abstract T setCommonsParameters(T t);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
-    }
-
-    protected boolean isNotEmpty(Object object) {
-        return !StringUtils.isEmpty(object);
+        return StringUtils.isEmpty(t.getId()) && get(t.getId()) == null;
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public DtoResult saveOrUpdate(T t) {
-        setCommonsParameters(t);
-        getBaseDao().save(t);
-        return DtoResultUtils.ok();
+        if (isNew(t)) {
+            return save(t);
+        } else {
+            return update(t);
+        }
     }
 
     @Override
@@ -64,9 +58,10 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Transactional(rollbackFor = Exception.class)
     public DtoResult save(T t) {
         setCommonsParameters(t);
-        getBaseDao().save(t);
+        getBaseDao().insert(t);
         return DtoResultUtils.ok();
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -85,11 +80,7 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Transactional(rollbackFor = Exception.class)
     public DtoResult update(T t) {
         setCommonsParameters(t);
-        T db = getBaseDao().findById(t.getId()).orElse(null);
-        if (db != null) {
-            db.copyFrom(t);
-            getBaseDao().save(db);
-        }
+        getBaseDao().updateByPrimaryKeySelective(t);
         return DtoResultUtils.ok();
     }
 
@@ -109,14 +100,7 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult deleteById(ID id) {
-        getBaseDao().deleteById(id);
-        return DtoResultUtils.ok();
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public DtoResult delete(T t) {
-        getBaseDao().delete(t);
+        getBaseDao().deleteByPrimaryKey(id);
         return DtoResultUtils.ok();
     }
 
@@ -127,9 +111,17 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
 
     @Override
     public DtoResult deleteById(Collection<ID> collection) {
-        collection.forEach(this::deleteById);
+        collection.stream().forEach(this::deleteById);
         return DtoResultUtils.ok();
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public DtoResult delete(T t) {
+        getBaseDao().delete(t);
+        return DtoResultUtils.ok();
+    }
+
 
     @Override
     public DtoResult delete(T[] arrays) {
@@ -144,48 +136,37 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
 
     @Override
     public T get(ID id) {
-        return getBaseDao().findById(id).orElse(null);
-    }
-
-    @Override
-    public List<T> findAllById(ID[] ids) {
-        return findAllById(Arrays.asList(ids));
-    }
-
-    @Override
-    public List<T> findAllById(Collection<ID> collection) {
-        return getBaseDao().findAllById(collection);
+        return getBaseDao().selectByPrimaryKey(id);
     }
 
     @Override
     public T findOne(T t) {
-        return getBaseDao().findOne(Example.of(t)).orElse(null);
+        return getBaseDao().selectOne(t);
+    }
+
+
+    @Override
+    public PageInfo<T> findAll(IPage page) {
+        PageHelper.startPage(page);
+        return PageInfo.of(getBaseDao().selectAll());
+    }
+
+    @Override
+    public PageInfo<T> findAll(T t, IPage page) {
+        PageHelper.startPage(page);
+        return PageInfo.of(getBaseDao().select(t));
     }
 
     @Override
     public List<T> findAll() {
-        return getBaseDao().findAll();
+        return getBaseDao().selectAll();
     }
 
     @Override
     public List<T> findAll(T t) {
-        return getBaseDao().findAll(Example.of(t));
-    }
-
-    @Override
-    public List<T> findAll(T t, Sort sort) {
-        return getBaseDao().findAll(Example.of(t), sort);
-    }
-
-    @Override
-    public Page<T> findAll(Pageable pageable) {
-        return getBaseDao().findAll(pageable);
-    }
-
-    @Override
-    public Page<T> findAll(T t, Pageable pageable) {
-        return getBaseDao().findAll(Example.of(t), pageable);
+        return getBaseDao().select(t);
     }
 
 
 }
+

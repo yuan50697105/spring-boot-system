@@ -3,12 +3,12 @@ package com.yuan.spring.boot.app.modules.system.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuan.spring.boot.app.modules.commons.service.impl.BaseServiceImpl;
+import com.yuan.spring.boot.app.modules.commons.service.impl.MybatisPlusServiceImpl;
 import com.yuan.spring.boot.app.modules.system.dao.SysUserDao;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysUser;
 import com.yuan.spring.boot.app.modules.system.entity.dto.SysUserQueryParams;
 import com.yuan.spring.boot.app.modules.system.service.SysUserService;
-import com.yuan.spring.boot.dao.mybatis.plus.commons.exception.CheckNotPassException;
+import com.yuan.spring.boot.dao.mybatis.plus.exception.CheckNotPassException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.StringJoiner;
  * @date 2019/7/13 8:40
  **/
 @Service
-public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends MybatisPlusServiceImpl<SysUserDao, SysUser> implements SysUserService {
     @Override
     public void checkSave(SysUser sysUser) throws CheckNotPassException {
         checkSysUser(sysUser);

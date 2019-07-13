@@ -2,6 +2,7 @@ package com.yuan.spring.boot.app.modules.commons.entity.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.yuan.spring.boot.dao.mybatis.plus.entity.domain.MybatisPlusDomain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseDomain extends com.yuan.spring.boot.dao.mybatis.plus.commons.entity.po.BaseDomain<String> {
+public abstract class BaseDomain extends MybatisPlusDomain<String> {
     @TableId(type = IdType.UUID)
     private String id;
 

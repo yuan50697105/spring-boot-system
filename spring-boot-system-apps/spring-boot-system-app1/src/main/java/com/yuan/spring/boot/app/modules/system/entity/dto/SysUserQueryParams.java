@@ -1,6 +1,6 @@
 package com.yuan.spring.boot.app.modules.system.entity.dto;
 
-import com.yuan.spring.boot.app.modules.commons.entity.dto.BaseQueryParams;
+import com.yuan.spring.boot.app.modules.commons.entity.dto.MybatisPlusQueryParams;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import java.util.Date;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUserQueryParams extends BaseQueryParams {
+public class SysUserQueryParams extends MybatisPlusQueryParams {
     private String name;
 
     public SysUserQueryParams() {

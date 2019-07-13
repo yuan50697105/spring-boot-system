@@ -47,11 +47,7 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public DtoResult saveOrUpdateBatch(Collection<T> collection) {
-        List<T> collect = collection.stream().filter(ObjectUtil::isNotEmpty).collect(Collectors.toList());
-        List<T> newList = collect.stream().filter(this::isNew).collect(Collectors.toList());
-        saveBatch(collection);
-        collect.removeAll(newList);
-        updateBatch(collect);
+        collection.forEach(this::saveOrUpdate);
         return DtoResultUtils.ok();
     }
 
@@ -69,7 +65,7 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public DtoResult saveBatch(Collection<T> collection) {
-        getBaseDao().insertCollection(collection);
+        collection.forEach(this::save);
         return DtoResultUtils.ok();
     }
 
@@ -88,7 +84,7 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public DtoResult updateBatch(Collection<T> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::update);
+        collection.forEach(this::update);
         return DtoResultUtils.ok();
     }
 

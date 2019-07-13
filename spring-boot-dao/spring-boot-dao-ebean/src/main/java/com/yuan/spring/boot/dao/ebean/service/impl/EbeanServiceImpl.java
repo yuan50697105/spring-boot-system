@@ -21,9 +21,11 @@ import java.util.List;
 public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends EbeanDomain<ID>, ID extends Serializable> extends EbeanQueryChannelService implements EbeanService<T, ID> {
     protected abstract S getBaseDao();
 
+    protected abstract T setCommonsParams(T t);
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult saveOrUpdate(T t) {
+        setCommonsParams(t);
         getBaseDao().save(t);
         return DtoResultUtils.ok();
     }
@@ -37,13 +39,14 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult saveOrUpdateBatch(Collection<T> collection) {
-        getBaseDao().saveAll(collection);
+        collection.forEach(this::saveOrUpdate);
         return DtoResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult save(T t) {
+        setCommonsParams(t);
         getBaseDao().save(t);
         return DtoResultUtils.ok();
     }
@@ -57,14 +60,19 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult saveBatch(Collection<T> collection) {
-        getBaseDao().saveAll(collection);
+        collection.forEach(this::save);
         return DtoResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult update(T t) {
-        getBaseDao().save(t);
+        T db = getBaseDao().findById(t.getId()).orElse(null);
+        if (db!=null) {
+            db.copyFrom(t);
+            setCommonsParams(db);
+            getBaseDao().save(db);
+        }
         return DtoResultUtils.ok();
     }
 
@@ -77,7 +85,7 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DtoResult updateBatch(Collection<T> collection) {
-        getBaseDao().saveAll(collection);
+       collection.forEach(this::update);
         return DtoResultUtils.ok();
     }
 
