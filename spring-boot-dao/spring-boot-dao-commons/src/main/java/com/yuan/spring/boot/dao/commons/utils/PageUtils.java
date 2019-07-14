@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2019/7/13 12:33
  **/
 public abstract class PageUtils {
-    public PageVo build(Long total, List data) {
+    public static PageVo build(Long total, List data) {
         return new PageVo(total, data);
     }
 }

@@ -6,6 +6,7 @@ import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.dao.MybatisDao;
 import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
 import com.yuan.spring.boot.dao.mybatis.service.MybatisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -21,7 +22,14 @@ import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
 public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends Serializable, S extends MybatisDao<T, ID>> implements MybatisService<T, ID> {
-    protected abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    protected S getBaseDao() {
+        return baseDao;
+    }
+
+    protected abstract T setId(T t);
 
     protected abstract T setCommonsParameters(T entity);
 
@@ -31,8 +39,11 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult saveOrUpdate(T t) {
-        getBaseDao().save(t);
-        return ServiceResultUtils.ok();
+        if (isNew(t)) {
+            return save(t);
+        } else {
+            return update(t);
+        }
     }
 
     @Override
@@ -48,6 +59,8 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult save(T t) {
+        setId(t);
+        setCommonsParameters(t);
         getBaseDao().insert(t);
         return ServiceResultUtils.ok();
     }
@@ -65,6 +78,7 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult update(T t) {
+        setCommonsParameters(t);
         getBaseDao().updateIgnoreNull(t);
         return ServiceResultUtils.ok();
     }
@@ -88,7 +102,7 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult deleteById(ID[] ids) {
-        return null;
+        return deleteById(Arrays.asList(ids));
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.mapper.dao.MapperDao;
 import com.yuan.spring.boot.dao.mybatis.mapper.entity.domain.MapperDomain;
 import com.yuan.spring.boot.dao.mybatis.mapper.service.MapperService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -22,7 +23,14 @@ import java.util.List;
  **/
 @Transactional(rollbackFor = Exception.class)
 public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends Serializable, S extends MapperDao<T, ID>> implements MapperService<T, ID> {
-    public abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    public S getBaseDao() {
+        return baseDao;
+    }
+
+    protected abstract T setId(T t);
 
     protected abstract T setCommonsParameters(T t);
 
@@ -55,6 +63,7 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
+        setId(t);
         setCommonsParameters(t);
         getBaseDao().insert(t);
         return ServiceResultUtils.ok();

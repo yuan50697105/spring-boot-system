@@ -8,6 +8,7 @@ import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.enhance.dao.BaseDao;
 import com.yuan.spring.boot.dao.mybatis.enhance.entity.domain.EnhanceDomain;
 import com.yuan.spring.boot.dao.mybatis.enhance.service.EnhanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -19,7 +20,12 @@ import java.util.stream.Collectors;
 
 @Transactional(rollbackFor = Exception.class)
 public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements EnhanceService<T, ID> {
-    protected abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    protected S getBaseDao() {
+        return baseDao;
+    }
 
     protected abstract T setCommonsParmas(T t);
 
@@ -30,13 +36,10 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
     @Override
     public ServiceResult saveOrUpdate(T t) {
         if (isNew(t)) {
-            save(t);
+            return save(t);
         } else {
-            T db = get(t.getId());
-            db.copyFrom(t);
-            update(db);
+            return update(t);
         }
-        return ServiceResultUtils.ok();
     }
 
     @Override

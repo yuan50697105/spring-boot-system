@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-dao-jpa</artifactId>
+    <artifactId>spring-boot-dao-hibernate</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.0</version>
     <packaging>jar</packaging>

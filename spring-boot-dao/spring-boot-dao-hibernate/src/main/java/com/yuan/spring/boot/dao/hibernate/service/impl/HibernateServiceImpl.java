@@ -6,6 +6,7 @@ import com.yuan.spring.boot.dao.hibernate.dao.HibernateDao;
 import com.yuan.spring.boot.dao.hibernate.entity.domain.HibernateDomain;
 import com.yuan.spring.boot.dao.hibernate.service.HibernateService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +27,16 @@ import java.util.List;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID extends Serializable, S extends HibernateDao<T, ID>> implements HibernateService<T, ID> {
-    public abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    public S getBaseDao() {
+        return baseDao;
+    }
 
     protected abstract T setCommonsParameters(T t);
+
+    protected abstract T setId(T t);
 
     protected boolean isNew(T t) {
         return StringUtils.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
@@ -41,9 +49,11 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdate(T t) {
-        setCommonsParameters(t);
-        getBaseDao().save(t);
-        return ServiceResultUtils.ok();
+        if (isNew(t)) {
+            return save(t);
+        } else {
+            return update(t);
+        }
     }
 
     @Override
@@ -62,6 +72,7 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
+        setId(t);
         setCommonsParameters(t);
         getBaseDao().save(t);
         return ServiceResultUtils.ok();

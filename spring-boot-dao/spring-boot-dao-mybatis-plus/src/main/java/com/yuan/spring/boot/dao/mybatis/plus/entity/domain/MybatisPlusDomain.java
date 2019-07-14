@@ -1,10 +1,8 @@
 package com.yuan.spring.boot.dao.mybatis.plus.entity.domain;
 
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,7 +13,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public abstract class MybatisPlusDomain<ID extends Serializable> extends BaseDomain<ID> implements Serializable, Cloneable {
-
-
-
+    public MybatisPlusDomain() {
+    }
 }

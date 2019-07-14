@@ -1,17 +1,19 @@
 package com.yuan.spring.boot.dao.mybatis.plus.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.plus.dao.MybatisPlusDao;
 import com.yuan.spring.boot.dao.mybatis.plus.entity.domain.MybatisPlusDomain;
 import com.yuan.spring.boot.dao.mybatis.plus.service.MybatisPlusService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author yuane
@@ -20,16 +22,27 @@ import java.util.Collection;
 @Transactional(rollbackFor = Exception.class)
 public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T extends MybatisPlusDomain<ID>, ID extends Serializable> implements MybatisPlusService<T, ID> {
 
-    protected abstract M getBaseDao();
+    protected M baseDao;
+
+    protected M getBaseDao() {
+        return baseDao;
+    }
+
+    protected abstract T setId(T t);
 
     protected abstract T setCommonsParameters(T entity);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && getBaseDao().selectById(t.getId()) == null;
+        return ObjectUtil.isEmpty(t.getId()) && getBaseDao().selectById(t.getId()) == null;
+    }
+
+    protected boolean isNotEmpty(Object object) {
+        return ObjectUtil.isNotEmpty(object);
     }
 
     @Override
     public ServiceResult save(T t) {
+        setId(t);
         setCommonsParameters(t);
         getBaseDao().insert(t);
         return ServiceResultUtils.ok();
@@ -88,6 +101,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult deleteById(ID id) {
+        checkDelete(get(id));
         getBaseDao().deleteById(id);
         return ServiceResultUtils.ok();
     }
@@ -105,6 +119,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult delete(T t) {
+        checkDelete(t);
         getBaseDao().deleteByMap(t.toParamsMap());
         return ServiceResultUtils.ok();
     }
@@ -123,5 +138,25 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     @Override
     public T get(ID id) {
         return getBaseDao().selectById(id);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return baseDao.selectList(null);
+    }
+
+    @Override
+    public List<T> findAll(T t) {
+        return baseDao.selectList(new QueryWrapper<>(t));
+    }
+
+    @Override
+    public IPage<T> findAll(IPage<T> page) {
+        return baseDao.selectPage(page, null);
+    }
+
+    @Override
+    public IPage<T> findAll(T t, IPage<T> page) {
+        return baseDao.selectPage(page, new QueryWrapper<>(t));
     }
 }

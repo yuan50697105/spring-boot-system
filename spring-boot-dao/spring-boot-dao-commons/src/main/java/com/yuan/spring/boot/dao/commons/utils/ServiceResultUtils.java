@@ -1,6 +1,7 @@
 package com.yuan.spring.boot.dao.commons.utils;
 
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 
 /**
  * @author yuane
@@ -11,6 +12,10 @@ public abstract class ServiceResultUtils {
     private static final String FAILURE = "操作失败";
     private static final String ERROR = "操作异常";
     private static final String WARN = "操作警告";
+
+    public static AjaxResult convert(ServiceResult result) {
+        return AjaxResult.build(result.getCode(), result.getMessage(), result.getData());
+    }
 
     public static ServiceResult build(ServiceResult.Status status, String message, Object data) {
         return new ServiceResult(status, message, data);

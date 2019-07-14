@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.commons.entity.dto;
 
+import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 import lombok.Data;
 
 /**
@@ -22,6 +23,10 @@ public class ServiceResult {
         this.code = code;
         this.message = message;
         this.data = data;
+    }
+
+    public AjaxResult convert() {
+        return AjaxResult.build(code, message, data);
     }
 
     public enum Status {

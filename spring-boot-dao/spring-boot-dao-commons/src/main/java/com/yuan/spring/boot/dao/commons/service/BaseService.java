@@ -2,6 +2,7 @@ package com.yuan.spring.boot.dao.commons.service;
 
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.Collection;
  * @date 2019/7/13 12:38
  **/
 public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> {
-    ServiceResult checkSaveOrUpdate(T t);
+    ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException;
 
     ServiceResult saveOrUpdate(T t);
 
@@ -19,7 +20,7 @@ public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> 
 
     ServiceResult saveOrUpdateBatch(Collection<T> collection);
 
-    ServiceResult checkSave(T t);
+    ServiceResult checkSave(T t) throws CheckNotPassException;
 
     ServiceResult save(T t);
 
@@ -27,7 +28,7 @@ public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> 
 
     ServiceResult saveBatch(Collection<T> collection);
 
-    ServiceResult checkUpdate(T t);
+    ServiceResult checkUpdate(T t) throws CheckNotPassException;
 
     ServiceResult update(T t);
 
@@ -41,7 +42,7 @@ public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> 
 
     ServiceResult deleteById(Collection<ID> collection);
 
-    ServiceResult checkDelete(T t);
+    ServiceResult checkDelete(T t) throws CheckNotPassException;
 
     ServiceResult delete(T t);
 

@@ -7,6 +7,7 @@ import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.jdbc.dao.JdbcDao;
 import com.yuan.spring.boot.dao.jdbc.entity.domain.JdbcDomain;
 import com.yuan.spring.boot.dao.jdbc.service.JdbcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -20,7 +21,14 @@ import java.util.List;
  **/
 
 public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDomain<ID>, ID extends Serializable> implements JdbcService<T, ID> {
-    protected abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    protected S getBaseDao() {
+        return baseDao;
+    }
+
+    protected abstract T setId(T t);
 
     protected abstract T setCommonsParams(T t);
 
@@ -39,6 +47,7 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult save(T t) {
+        setId(t);
         setCommonsParams(t);
         getBaseDao().insert(t);
         return ServiceResultUtils.ok();

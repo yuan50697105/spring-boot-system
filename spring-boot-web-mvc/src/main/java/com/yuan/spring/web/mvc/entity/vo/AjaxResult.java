@@ -18,6 +18,16 @@ public class AjaxResult implements Serializable {
         this.data = data;
     }
 
+    private AjaxResult(String code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public static AjaxResult build(String code, String message, Object data) {
+        return new AjaxResult(code, message, data);
+    }
+
     public static AjaxResult build(Status status, String message, Object data) {
         return new AjaxResult(status, message, data);
     }

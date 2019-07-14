@@ -46,7 +46,7 @@ public class BaseController {
         return new ModelAndView(display(view));
     }
 
-    protected ModelAndView displayModelAndView(String view, Map<String, Object> model) {
+    protected ModelAndView displayModelAndView(String view, Map<String, ?> model) {
         return new ModelAndView(display(view), model);
     }
 }

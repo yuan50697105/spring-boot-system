@@ -19,7 +19,12 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-mvc</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

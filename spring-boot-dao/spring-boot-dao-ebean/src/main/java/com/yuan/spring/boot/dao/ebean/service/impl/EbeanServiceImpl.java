@@ -5,9 +5,11 @@ import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.ebean.dao.EbeanDao;
 import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
 import com.yuan.spring.boot.dao.ebean.service.EbeanService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.ebean.querychannel.EbeanQueryChannelService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,15 +21,29 @@ import java.util.List;
  * @date 2019/7/13 12:37
  **/
 public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends EbeanDomain<ID>, ID extends Serializable> extends EbeanQueryChannelService implements EbeanService<T, ID> {
-    protected abstract S getBaseDao();
+    @Autowired
+    protected S baseDao;
+
+    protected S getBaseDao() {
+        return baseDao;
+    }
 
     protected abstract T setCommonsParams(T t);
+
+    protected abstract T setId(T t);
+
+    protected boolean isNew(T t) {
+        return StringUtils.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdate(T t) {
-        setCommonsParams(t);
-        getBaseDao().save(t);
-        return ServiceResultUtils.ok();
+        if (isNew(t)) {
+            return save(t);
+        } else {
+            return update(t);
+        }
     }
 
     @Override
@@ -46,6 +62,7 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
+        setId(t);
         setCommonsParams(t);
         getBaseDao().save(t);
         return ServiceResultUtils.ok();
@@ -68,7 +85,7 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
         T db = getBaseDao().findById(t.getId()).orElse(null);
-        if (db!=null) {
+        if (db != null) {
             db.copyFrom(t);
             setCommonsParams(db);
             getBaseDao().save(db);
@@ -85,7 +102,7 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult updateBatch(Collection<T> collection) {
-       collection.forEach(this::update);
+        collection.forEach(this::update);
         return ServiceResultUtils.ok();
     }
 
@@ -106,7 +123,7 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(Collection<ID> collection) {
-        collection.stream().forEach(this::deleteById);
+        collection.forEach(this::deleteById);
         return ServiceResultUtils.ok();
     }
 

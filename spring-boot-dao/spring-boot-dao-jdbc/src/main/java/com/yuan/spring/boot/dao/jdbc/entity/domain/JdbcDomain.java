@@ -13,4 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public abstract class JdbcDomain<ID extends Serializable> extends BaseDomain<ID> {
+    public JdbcDomain() {
+
+    }
 }
