@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-dao</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>
@@ -51,17 +51,17 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba</groupId>-->
-        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-        <!--            <version>${druid}</version>-->
-        <!--        </dependency>-->
         <dependency>
-            <groupId>io.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <version>${sharding}</version>
-            <!--            <scope>provided</scope>-->
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid}</version>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.shardingsphere</groupId>-->
+        <!--            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>-->
+        <!--            <version>${sharding}</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

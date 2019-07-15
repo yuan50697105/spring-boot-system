@@ -3,15 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-apps</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+        <relativePath/>
     </parent>
     <artifactId>spring-boot-app1</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
+    <!--    <packaging>war</packaging>-->
     <description>一个测试demo,使用shiro,mvc,mybatis-plus</description>
     <properties>
 
@@ -39,14 +40,20 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+            <!--            <scope>provided</scope>-->
+        </dependency>
+
+        <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-mvc</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-dao-mybatis-plus</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.yuan</groupId>-->
