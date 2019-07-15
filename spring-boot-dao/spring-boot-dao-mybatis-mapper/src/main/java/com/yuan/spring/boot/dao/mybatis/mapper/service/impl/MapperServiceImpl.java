@@ -63,10 +63,16 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
 
@@ -86,9 +92,15 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        setCommonsParameters(t);
-        getBaseDao().updateByPrimaryKeySelective(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setCommonsParameters(t);
+            getBaseDao().updateByPrimaryKeySelective(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -107,8 +119,14 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteByPrimaryKey(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteByPrimaryKey(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -125,8 +143,14 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
 

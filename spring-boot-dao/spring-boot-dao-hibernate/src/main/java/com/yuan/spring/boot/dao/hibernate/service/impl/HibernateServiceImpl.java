@@ -72,10 +72,16 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().save(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().save(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -94,13 +100,19 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        setCommonsParameters(t);
-        T db = getBaseDao().findById(t.getId()).orElse(null);
-        if (db != null) {
-            db.copyFrom(t);
-            getBaseDao().save(db);
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setCommonsParameters(t);
+            T db = getBaseDao().findById(t.getId()).orElse(null);
+            if (db != null) {
+                db.copyFrom(t);
+                getBaseDao().save(db);
+            }
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
         }
-        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -119,15 +131,27 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteById(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteById(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

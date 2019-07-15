@@ -59,10 +59,16 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -78,9 +84,15 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult update(T t) {
-        setCommonsParameters(t);
-        getBaseDao().updateIgnoreNull(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setCommonsParameters(t);
+            getBaseDao().updateIgnoreNull(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -96,8 +108,14 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteById(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteById(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -113,8 +131,14 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

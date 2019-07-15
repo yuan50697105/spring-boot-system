@@ -42,10 +42,16 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -61,11 +67,17 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult update(T t) {
-        T db = getBaseDao().selectById(t.getId());
-        db.copyFrom(t);
-        setCommonsParameters(db);
-        getBaseDao().updateById(db);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            T db = getBaseDao().selectById(t.getId());
+            db.copyFrom(t);
+            setCommonsParameters(db);
+            getBaseDao().updateById(db);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -101,9 +113,15 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult deleteById(ID id) {
-        checkDelete(get(id));
-        getBaseDao().deleteById(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            checkDelete(get(id));
+            getBaseDao().deleteById(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -119,9 +137,15 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult delete(T t) {
-        checkDelete(t);
-        getBaseDao().deleteByMap(t.toParamsMap());
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            checkDelete(t);
+            getBaseDao().deleteByMap(t.toParamsMap());
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

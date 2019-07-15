@@ -47,21 +47,33 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParams(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParams(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
     public ServiceResult update(T t) {
-        T db = getBaseDao().getById(t.getId()).orElse(null);
-        if (db != null) {
-            db.copyFrom(t);
-            setCommonsParams(db);
-            getBaseDao().update(db);
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            T db = getBaseDao().getById(t.getId()).orElse(null);
+            if (db != null) {
+                db.copyFrom(t);
+                setCommonsParams(db);
+                getBaseDao().update(db);
+            }
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
         }
-        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -99,8 +111,14 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteByPrimaryKey(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteByPrimaryKey(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -116,8 +134,14 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

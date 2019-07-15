@@ -36,7 +36,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
     @Override
     public ServiceResult checkSave(SysPermisson sysPermisson) throws CheckNotPassException {
         boolean passFlag = true;
-        StringJoiner stringJoiner = new StringJoiner(",");
+        StringJoiner stringJoiner = new StringJoiner("", "，", "。");
         String name = sysPermisson.getName();
         if (ObjectUtil.isEmpty(name)) {
             passFlag = false;

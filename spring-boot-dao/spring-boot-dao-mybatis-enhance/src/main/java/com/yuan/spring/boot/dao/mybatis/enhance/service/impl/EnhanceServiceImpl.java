@@ -55,8 +55,14 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public ServiceResult save(T t) {
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -73,10 +79,16 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public ServiceResult update(T t) {
-        T db = get(t.getId());
-        db.copyFrom(t);
-        getBaseDao().update(db);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            T db = get(t.getId());
+            db.copyFrom(t);
+            getBaseDao().update(db);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -92,8 +104,14 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteOne(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteOne(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -110,8 +128,14 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
 
     @Override
     public ServiceResult delete(T t) {
-        getBaseDao().deleteOne(t.getId());
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteOne(t.getId());
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
