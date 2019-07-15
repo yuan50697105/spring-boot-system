@@ -16,8 +16,4 @@ import java.io.Serializable;
 public abstract class HibernateDomain<ID extends Serializable> extends com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain<ID> implements Serializable {
     public HibernateDomain() {
     }
-
-    public HibernateDomain(ID id) {
-        super(id);
-    }
 }

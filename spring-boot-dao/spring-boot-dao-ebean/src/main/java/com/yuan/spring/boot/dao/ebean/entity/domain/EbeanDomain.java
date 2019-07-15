@@ -16,8 +16,4 @@ import java.io.Serializable;
 public abstract class EbeanDomain<ID extends Serializable> extends com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain<ID> {
     public EbeanDomain() {
     }
-
-    public EbeanDomain(ID id) {
-        super(id);
-    }
 }

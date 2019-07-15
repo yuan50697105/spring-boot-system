@@ -13,14 +13,14 @@ import java.util.Map;
 
 @Data
 public abstract class BaseDomain<ID extends Serializable> {
-    private ID id;
+
+    public abstract ID getId();
+
+    public abstract void setId(ID id);
 
     public BaseDomain() {
     }
 
-    public BaseDomain(ID id) {
-        this.id = id;
-    }
 
     @SuppressWarnings({"ToArrayCallWithZeroLengthArrayArgument", "Duplicates"})
     public BaseDomain<ID> copyFrom(BaseDomain<ID> baseDomain) {

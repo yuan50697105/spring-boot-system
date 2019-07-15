@@ -16,8 +16,4 @@ import java.io.Serializable;
 public abstract class MybatisDomain<ID extends Serializable> extends com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain<ID>  {
     public MybatisDomain() {
     }
-
-    public MybatisDomain(ID id) {
-        super(id);
-    }
 }

@@ -14,10 +14,5 @@ import java.io.Serializable;
 @Data
 public abstract class JdbcDomain<ID extends Serializable> extends BaseDomain<ID> {
     public JdbcDomain() {
-
-    }
-
-    public JdbcDomain(ID id) {
-        super(id);
     }
 }

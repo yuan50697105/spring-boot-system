@@ -15,10 +15,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class MapperDomain<ID extends Serializable> extends com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain<ID> implements Serializable {
     public MapperDomain() {
-
-    }
-
-    public MapperDomain(ID id) {
-        super(id);
     }
 }
+
