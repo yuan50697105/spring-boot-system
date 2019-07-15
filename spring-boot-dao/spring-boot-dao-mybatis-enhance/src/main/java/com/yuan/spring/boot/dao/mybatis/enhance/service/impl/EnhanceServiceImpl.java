@@ -1,16 +1,17 @@
 package com.yuan.spring.boot.dao.mybatis.enhance.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.gitee.hengboy.mybatis.pageable.Page;
 import com.gitee.hengboy.mybatis.pageable.request.Pageable;
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.enhance.dao.BaseDao;
 import com.yuan.spring.boot.dao.mybatis.enhance.entity.domain.EnhanceDomain;
 import com.yuan.spring.boot.dao.mybatis.enhance.service.EnhanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends Serializable, S extends BaseDao<T, ID>> implements EnhanceService<T, ID> {
+public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends EnhanceDomain<ID>, ID extends Serializable> implements EnhanceService<T, ID> {
     @Autowired
     protected S baseDao;
 
@@ -27,10 +28,21 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
         return baseDao;
     }
 
+    protected abstract T setId(T t);
+
     protected abstract T setCommonsParmas(T t);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && getBaseDao().selectOne(t.getId()) == null;
+        return ObjectUtil.isEmpty(t.getId()) && getBaseDao().selectOne(t.getId()) == null;
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override
@@ -58,6 +70,8 @@ public abstract class EnhanceServiceImpl<T extends EnhanceDomain<ID>, ID extends
         ServiceResult serviceResult = checkSave(t);
         String code = serviceResult.getCode();
         if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParmas(t);
             getBaseDao().insert(t);
             return ServiceResultUtils.ok();
         } else {

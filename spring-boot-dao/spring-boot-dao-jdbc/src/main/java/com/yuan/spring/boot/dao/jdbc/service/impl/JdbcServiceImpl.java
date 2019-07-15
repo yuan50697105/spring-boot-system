@@ -1,14 +1,15 @@
 package com.yuan.spring.boot.dao.jdbc.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.xphsc.easyjdbc.core.entity.Sorts;
 import com.xphsc.easyjdbc.page.PageInfo;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.jdbc.dao.JdbcDao;
 import com.yuan.spring.boot.dao.jdbc.entity.domain.JdbcDomain;
 import com.yuan.spring.boot.dao.jdbc.service.JdbcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -33,7 +34,16 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     protected abstract T setCommonsParams(T t);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && !getBaseDao().getById(t.getId()).isPresent();
+        return ObjectUtil.isEmpty(t.getId()) && !getBaseDao().getById(t.getId()).isPresent();
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override

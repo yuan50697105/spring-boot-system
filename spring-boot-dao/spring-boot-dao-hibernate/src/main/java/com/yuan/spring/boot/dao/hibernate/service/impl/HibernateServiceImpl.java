@@ -1,6 +1,8 @@
 package com.yuan.spring.boot.dao.hibernate.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.hibernate.dao.HibernateDao;
 import com.yuan.spring.boot.dao.hibernate.entity.domain.HibernateDomain;
@@ -26,7 +28,7 @@ import java.util.List;
 
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID extends Serializable, S extends HibernateDao<T, ID>> implements HibernateService<T, ID> {
+public abstract class HibernateServiceImpl<S extends HibernateDao<T, ID>, T extends HibernateDomain<ID>, ID extends Serializable> implements HibernateService<T, ID> {
     @Autowired
     protected S baseDao;
 
@@ -43,7 +45,16 @@ public abstract class HibernateServiceImpl<T extends HibernateDomain<ID>, ID ext
     }
 
     protected boolean isNotEmpty(Object object) {
-        return !StringUtils.isEmpty(object);
+        return ObjectUtil.isNotEmpty(object);
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override

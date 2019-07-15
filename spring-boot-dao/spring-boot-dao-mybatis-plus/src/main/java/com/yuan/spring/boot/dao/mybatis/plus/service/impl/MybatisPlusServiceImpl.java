@@ -4,10 +4,12 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.plus.dao.MybatisPlusDao;
 import com.yuan.spring.boot.dao.mybatis.plus.entity.domain.MybatisPlusDomain;
 import com.yuan.spring.boot.dao.mybatis.plus.service.MybatisPlusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -22,6 +24,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T extends MybatisPlusDomain<ID>, ID extends Serializable> implements MybatisPlusService<T, ID> {
 
+    @Autowired
     protected M baseDao;
 
     protected M getBaseDao() {
@@ -38,6 +41,15 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     protected boolean isNotEmpty(Object object) {
         return ObjectUtil.isNotEmpty(object);
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override

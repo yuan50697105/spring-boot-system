@@ -1,6 +1,7 @@
 package com.yuan.spring.boot.dao.ebean.service.impl;
 
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.ebean.dao.EbeanDao;
 import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
@@ -34,6 +35,15 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
 
     protected boolean isNew(T t) {
         return StringUtils.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override
