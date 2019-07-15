@@ -30,7 +30,15 @@ public abstract class BaseServiceImpl<M extends BaseDao<T>, T extends BaseDomain
 
     @Override
     protected T setId(T t) {
-        t.setId(IdUtil.fastSimpleUUID());
+//        主键生成策略
+//        objectId
+//        t.setId(IdUtil.objectId());
+//        uuid无-
+//        t.setId(IdUtil.fastSimpleUUID());
+//        uuid有-
+//        t.setId(IdUtil.fastUUID());
+//        雪花算法
+        t.setId(IdUtil.getSnowflake(0L, 0L).nextIdStr());
         return t;
     }
 }

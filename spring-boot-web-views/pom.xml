@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.yuan</groupId>
         <artifactId>spring-boot-system</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-web-views</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>

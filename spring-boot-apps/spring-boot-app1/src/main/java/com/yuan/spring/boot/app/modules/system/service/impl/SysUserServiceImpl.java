@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuan.spring.boot.app.modules.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.app.modules.commons.validator.SaveValidator;
 import com.yuan.spring.boot.app.modules.system.dao.SysUserDao;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysUser;
 import com.yuan.spring.boot.app.modules.system.entity.dto.SysUserQueryParams;
@@ -16,7 +15,6 @@ import com.yuan.spring.boot.dao.commons.utils.CheckMessageUtils;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
@@ -43,27 +41,14 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         return Optional.empty();
     }
 
-    @Override
-    protected SysUser setCommonsParameters(SysUser entity) {
-        return null;
-    }
-
-    @Override
-    public ServiceResult checkSaveOrUpdate(SysUser sysUser) throws CheckNotPassException {
-        if (isNew(sysUser)) {
-            return checkSave(sysUser);
-        } else {
-            return checkUpdate(sysUser);
-        }
-    }
 
     @Override
     public ServiceResult checkSave(SysUser sysUser) throws CheckNotPassException {
         boolean passFlag = true;
         StringJoiner message = new StringJoiner(",");
-        @NotNull(groups = SaveValidator.class, message = "账户不能为空") String username = sysUser.getUsername();
-        @NotNull(groups = SaveValidator.class, message = "密码不能为空") String password = sysUser.getPassword();
-        @NotNull(groups = SaveValidator.class, message = "名称不能为空") String name = sysUser.getName();
+        String username = sysUser.getUsername();
+        String password = sysUser.getPassword();
+        String name = sysUser.getName();
         if (ObjectUtil.isEmpty(username)) {
             passFlag = false;
             message.add("用户名不能为空");

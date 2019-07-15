@@ -1,5 +1,7 @@
 package com.yuan.spring.boot.app.modules.commons.entity.vo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,9 +14,13 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public abstract class BaseVo extends com.yuan.spring.boot.dao.mybatis.plus.entity.vo.MybatisPlusVo<String> {
+    @ExcelIgnore
     private String createBy;
+    @ExcelIgnore
     private String updateBy;
+    @Excel(name = "创建时间", format = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
+    @ExcelIgnore
     private Date updateDate;
 
     public BaseVo() {

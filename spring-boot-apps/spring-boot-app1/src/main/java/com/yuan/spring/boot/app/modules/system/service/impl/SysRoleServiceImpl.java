@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.yuan.spring.boot.app.modules.commons.service.impl.BaseServiceImpl;
 import com.yuan.spring.boot.app.modules.system.dao.SysRoleDao;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysRole;
@@ -24,14 +25,6 @@ import java.util.StringJoiner;
  **/
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
-    @Override
-    public ServiceResult checkSaveOrUpdate(SysRole sysRole) throws CheckNotPassException {
-        if (isNew(sysRole)) {
-            return checkSave(sysRole);
-        } else {
-            return checkUpdate(sysRole);
-        }
-    }
 
     @Override
     public ServiceResult checkSave(SysRole sysRole) throws CheckNotPassException {
@@ -69,17 +62,29 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> imp
     }
 
     @Override
-    public IPage selectPageByParams(SysRoleQueryParams queryParams, Page<Object> objectPage) {
-        return null;
+    public IPage selectPageByParams(SysRoleQueryParams queryParams, Page<SysRole> objectPage) {
+        QueryChainWrapper<SysRole> sysRoleQueryChainWrapper = getSysRoleQueryChainWrapper(queryParams);
+        return sysRoleQueryChainWrapper.page(objectPage);
     }
 
     @Override
     public List selectListByParams(SysRoleQueryParams queryParams) {
-        return null;
+        return getSysRoleQueryChainWrapper(queryParams).list();
     }
 
     @Override
     public Object selectOne(SysRoleQueryParams queryParams) {
-        return null;
+        return getSysRoleQueryChainWrapper(queryParams).one();
+    }
+
+    private QueryChainWrapper<SysRole> getSysRoleQueryChainWrapper(SysRoleQueryParams queryParams) {
+        String id = queryParams.getId();
+        String[] ids = queryParams.getIds();
+        String name = queryParams.getName();
+        QueryChainWrapper<SysRole> sysRoleQueryChainWrapper = new QueryChainWrapper<>(baseDao);
+        sysRoleQueryChainWrapper.eq(isNotEmpty(id), "id", id);
+        sysRoleQueryChainWrapper.in(isNotEmpty(ids), "id", (Object[]) ids);
+        sysRoleQueryChainWrapper.like(isNotEmpty(name), "name", name);
+        return sysRoleQueryChainWrapper;
     }
 }

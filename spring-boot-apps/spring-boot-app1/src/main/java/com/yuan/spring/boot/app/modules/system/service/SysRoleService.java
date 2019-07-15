@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2019/7/14 20:48
  **/
 public interface SysRoleService extends BaseService<SysRole> {
-    IPage selectPageByParams(SysRoleQueryParams queryParams, Page<Object> objectPage);
+    IPage selectPageByParams(SysRoleQueryParams queryParams, Page<SysRole> objectPage);
 
     List selectListByParams(SysRoleQueryParams queryParams);
 

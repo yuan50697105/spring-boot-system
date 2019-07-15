@@ -1,14 +1,15 @@
 package com.yuan.spring.boot.dao.jdbc.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.xphsc.easyjdbc.core.entity.Sorts;
 import com.xphsc.easyjdbc.page.PageInfo;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.jdbc.dao.JdbcDao;
 import com.yuan.spring.boot.dao.jdbc.entity.domain.JdbcDomain;
 import com.yuan.spring.boot.dao.jdbc.service.JdbcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -33,7 +34,16 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     protected abstract T setCommonsParams(T t);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && !getBaseDao().getById(t.getId()).isPresent();
+        return ObjectUtil.isEmpty(t.getId()) && !getBaseDao().getById(t.getId()).isPresent();
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override
@@ -47,21 +57,33 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParams(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParams(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
     public ServiceResult update(T t) {
-        T db = getBaseDao().getById(t.getId()).orElse(null);
-        if (db != null) {
-            db.copyFrom(t);
-            setCommonsParams(db);
-            getBaseDao().update(db);
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            T db = getBaseDao().getById(t.getId()).orElse(null);
+            if (db != null) {
+                db.copyFrom(t);
+                setCommonsParams(db);
+                getBaseDao().update(db);
+            }
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
         }
-        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -99,8 +121,14 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteByPrimaryKey(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteByPrimaryKey(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -116,8 +144,14 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

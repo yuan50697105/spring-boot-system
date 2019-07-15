@@ -12,7 +12,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class BaseController {
-    private String prefix;
+    private final String prefix;
+    private final ModelAndView modelAndView = new ModelAndView();
 
     public BaseController() {
         ViewPrefix annotation = AnnotationUtils.findAnnotation(this.getClass(), ViewPrefix.class);
@@ -47,6 +48,8 @@ public class BaseController {
     }
 
     protected ModelAndView displayModelAndView(String view, Map<String, ?> model) {
-        return new ModelAndView(display(view), model);
+        modelAndView.setViewName(view);
+        modelAndView.addAllObjects(model);
+        return modelAndView;
     }
 }

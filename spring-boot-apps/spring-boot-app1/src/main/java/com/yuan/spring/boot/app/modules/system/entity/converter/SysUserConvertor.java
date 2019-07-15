@@ -1,5 +1,7 @@
 package com.yuan.spring.boot.app.modules.system.entity.converter;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysUser;
 import com.yuan.spring.boot.app.modules.system.entity.vo.SysUserVo;
 import org.mapstruct.InheritConfiguration;
@@ -12,7 +14,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/7/14 13:21
  **/
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", implementationPackage = "<PACKAGE_NAME>.impl")
 public interface SysUserConvertor {
     //    @Mappings({
 //            @Mapping(source = "id", target = "id"),
@@ -30,4 +32,10 @@ public interface SysUserConvertor {
 
     @InheritConfiguration
     List<SysUserVo> domainToVo(List<SysUser> sysUsers);
+
+    @InheritInverseConfiguration
+    Page<SysUserVo> domainToVo(Page<SysUser> userPage);
+
+    @InheritInverseConfiguration
+    Page<SysUserVo> domainToVo(IPage<SysUser> userPage);
 }

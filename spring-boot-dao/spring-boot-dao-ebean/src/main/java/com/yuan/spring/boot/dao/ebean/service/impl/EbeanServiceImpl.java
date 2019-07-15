@@ -1,6 +1,7 @@
 package com.yuan.spring.boot.dao.ebean.service.impl;
 
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.ebean.dao.EbeanDao;
 import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
@@ -37,6 +38,15 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     }
 
     @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdate(T t) {
         if (isNew(t)) {
@@ -62,10 +72,16 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParams(t);
-        getBaseDao().save(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParams(t);
+            getBaseDao().save(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -84,13 +100,19 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        T db = getBaseDao().findById(t.getId()).orElse(null);
-        if (db != null) {
-            db.copyFrom(t);
-            setCommonsParams(db);
-            getBaseDao().save(db);
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            T db = getBaseDao().findById(t.getId()).orElse(null);
+            if (db != null) {
+                db.copyFrom(t);
+                setCommonsParams(db);
+                getBaseDao().save(db);
+            }
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
         }
-        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -109,8 +131,14 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteById(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteById(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -131,8 +159,14 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

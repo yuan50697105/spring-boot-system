@@ -2,13 +2,13 @@ package com.yuan.spring.boot.dao.mybatis.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.dao.MybatisDao;
 import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
 import com.yuan.spring.boot.dao.mybatis.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import java.util.List;
  **/
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends Serializable, S extends MybatisDao<T, ID>> implements MybatisService<T, ID> {
+public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends MybatisDomain<ID>, ID extends Serializable> implements MybatisService<T, ID> {
     @Autowired
     protected S baseDao;
 
@@ -34,7 +34,16 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
     protected abstract T setCommonsParameters(T entity);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
+        return ObjectUtil.isEmpty(t.getId()) && !getBaseDao().findById(t.getId()).isPresent();
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override
@@ -59,10 +68,16 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -78,9 +93,15 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult update(T t) {
-        setCommonsParameters(t);
-        getBaseDao().updateIgnoreNull(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkUpdate(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setCommonsParameters(t);
+            getBaseDao().updateIgnoreNull(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -96,8 +117,14 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteById(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteById(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -113,8 +140,14 @@ public abstract class MybatisServiceImpl<T extends MybatisDomain<ID>, ID extends
 
     @Override
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override

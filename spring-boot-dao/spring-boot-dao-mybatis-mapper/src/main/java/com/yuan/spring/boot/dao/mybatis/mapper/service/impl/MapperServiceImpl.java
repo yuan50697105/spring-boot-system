@@ -1,16 +1,17 @@
 package com.yuan.spring.boot.dao.mybatis.mapper.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.IPage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
+import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.boot.dao.mybatis.mapper.dao.MapperDao;
 import com.yuan.spring.boot.dao.mybatis.mapper.entity.domain.MapperDomain;
 import com.yuan.spring.boot.dao.mybatis.mapper.service.MapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import java.util.List;
  * @date 2019/6/15 23:10
  **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends Serializable, S extends MapperDao<T, ID>> implements MapperService<T, ID> {
+public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends MapperDomain<ID>, ID extends Serializable> implements MapperService<T, ID> {
     @Autowired
     protected S baseDao;
 
@@ -35,7 +36,16 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     protected abstract T setCommonsParameters(T t);
 
     protected boolean isNew(T t) {
-        return StringUtils.isEmpty(t.getId()) && get(t.getId()) == null;
+        return ObjectUtil.isEmpty(t.getId()) && get(t.getId()) == null;
+    }
+
+    @Override
+    public ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException {
+        if (isNew(t)) {
+            return checkSave(t);
+        } else {
+            return checkUpdate(t);
+        }
     }
 
     @Override
@@ -63,10 +73,16 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setId(t);
+            setCommonsParameters(t);
+            getBaseDao().insert(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
 
@@ -86,9 +102,15 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        setCommonsParameters(t);
-        getBaseDao().updateByPrimaryKeySelective(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            setCommonsParameters(t);
+            getBaseDao().updateByPrimaryKeySelective(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -107,8 +129,14 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        getBaseDao().deleteByPrimaryKey(id);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(get(id));
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().deleteByPrimaryKey(id);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
     @Override
@@ -125,8 +153,14 @@ public abstract class MapperServiceImpl<T extends MapperDomain<ID>, ID extends S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        getBaseDao().delete(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkDelete(t);
+        String code = serviceResult.getCode();
+        if ("ok".equals(code)) {
+            getBaseDao().delete(t);
+            return ServiceResultUtils.ok();
+        } else {
+            return serviceResult;
+        }
     }
 
 

@@ -15,7 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public abstract class BaseDomain extends MybatisPlusDomain<String> {
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.NONE)
     private String id;
     private String createBy;
     private String updateBy;

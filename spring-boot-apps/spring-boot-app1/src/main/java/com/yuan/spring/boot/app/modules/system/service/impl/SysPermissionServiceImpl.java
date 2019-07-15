@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryCha
 import com.yuan.spring.boot.app.modules.commons.service.impl.BaseServiceImpl;
 import com.yuan.spring.boot.app.modules.system.dao.SysPermissionDao;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysPermisson;
-import com.yuan.spring.boot.app.modules.system.entity.dto.SysUserQueryParams;
+import com.yuan.spring.boot.app.modules.system.entity.dto.SysPermissionQueryParams;
 import com.yuan.spring.boot.app.modules.system.service.SysPermissionService;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
@@ -16,6 +16,7 @@ import com.yuan.spring.boot.dao.commons.utils.CheckMessageUtils;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -25,18 +26,9 @@ import java.util.StringJoiner;
 @Service
 public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, SysPermisson> implements SysPermissionService {
     @Override
-    public ServiceResult checkSaveOrUpdate(SysPermisson sysPermisson) throws CheckNotPassException {
-        if (isNew(sysPermisson)) {
-            return checkSave(sysPermisson);
-        } else {
-            return checkUpdate(sysPermisson);
-        }
-    }
-
-    @Override
     public ServiceResult checkSave(SysPermisson sysPermisson) throws CheckNotPassException {
         boolean passFlag = true;
-        StringJoiner stringJoiner = new StringJoiner(",");
+        StringJoiner stringJoiner = new StringJoiner("", "，", "。");
         String name = sysPermisson.getName();
         if (ObjectUtil.isEmpty(name)) {
             passFlag = false;
@@ -69,7 +61,22 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
     }
 
     @Override
-    public IPage selectPageByParams(Page<SysPermisson> objectPage, SysUserQueryParams queryParams) {
+    public IPage selectPageByParams(Page<SysPermisson> objectPage, SysPermissionQueryParams queryParams) {
+        QueryChainWrapper<SysPermisson> queryChainWrapper = getSysPermissonQueryChainWrapper(queryParams);
+        return queryChainWrapper.page(objectPage);
+    }
+
+    @Override
+    public List selectListByParams(SysPermissionQueryParams queryParams) {
+        return getSysPermissonQueryChainWrapper(queryParams).list();
+    }
+
+    @Override
+    public Object selectOneByParams(SysPermissionQueryParams queryParams) {
+        return getSysPermissonQueryChainWrapper(queryParams).one();
+    }
+
+    private QueryChainWrapper<SysPermisson> getSysPermissonQueryChainWrapper(SysPermissionQueryParams queryParams) {
         String id = queryParams.getId();
         String[] ids = queryParams.getIds();
         String name = queryParams.getName();
@@ -79,6 +86,6 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
         queryChainWrapper.in(isNotEmpty(ids), "id", (Object[]) ids);
         queryChainWrapper.like(isNotEmpty(name), "name", name);
         queryChainWrapper.eq(isNotEmpty(enabled), "enabled", enabled);
-        return queryChainWrapper.page(objectPage);
+        return queryChainWrapper;
     }
 }
