@@ -1,5 +1,7 @@
 package com.yuan.spring.boot.app.modules.system.controller;
 
+import cn.hutool.core.map.MapBuilder;
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuan.spring.boot.app.modules.commons.controller.BaseController;
 import com.yuan.spring.boot.app.modules.system.entity.converter.SysRoleConverter;
@@ -13,6 +15,7 @@ import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author yuane
@@ -51,6 +54,20 @@ public class SysRoleController extends BaseController {
     @ResponseBody
     public AjaxResult dataOne(SysRoleQueryParams queryParams) {
         return AjaxResult.data(sysRoleService.selectOne(queryParams));
+    }
+
+    @RequestMapping("add")
+    @ResponseBody
+    public String add() {
+        return display("add");
+    }
+
+    @RequestMapping("edit")
+    @ResponseBody
+    public ModelAndView edit(String id) {
+        SysRole sysRole = sysRoleService.get(id);
+        MapBuilder<String, SysRole> data = MapUtil.builder("data", sysRole);
+        return displayModelAndView("edit", data.build());
     }
 
     @RequestMapping("save")
