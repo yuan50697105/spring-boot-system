@@ -17,4 +17,8 @@ public abstract class MapperDomain<ID extends Serializable> extends com.yuan.spr
     public MapperDomain() {
 
     }
+
+    public MapperDomain(ID id) {
+        super(id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.commons.entity.domain;
 
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.util.StringUtils;
@@ -10,10 +11,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+@Data
 public abstract class BaseDomain<ID extends Serializable> {
-    public abstract ID getId();
+    private ID id;
 
-    public abstract void setId(ID id);
+    public BaseDomain() {
+    }
+
+    public BaseDomain(ID id) {
+        this.id = id;
+    }
 
     @SuppressWarnings({"ToArrayCallWithZeroLengthArrayArgument", "Duplicates"})
     public BaseDomain<ID> copyFrom(BaseDomain<ID> baseDomain) {

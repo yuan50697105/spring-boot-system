@@ -11,4 +11,8 @@ import java.io.Serializable;
 public abstract class EnhanceDomain<ID extends Serializable> extends BaseDomain<ID> {
     public EnhanceDomain() {
     }
+
+    public EnhanceDomain(ID id) {
+        super(id);
+    }
 }

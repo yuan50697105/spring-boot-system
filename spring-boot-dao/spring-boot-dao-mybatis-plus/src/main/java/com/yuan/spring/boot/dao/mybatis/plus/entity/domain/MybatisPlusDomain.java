@@ -15,4 +15,8 @@ import java.io.Serializable;
 public abstract class MybatisPlusDomain<ID extends Serializable> extends BaseDomain<ID> implements Serializable, Cloneable {
     public MybatisPlusDomain() {
     }
+
+    public MybatisPlusDomain(ID id) {
+        super(id);
+    }
 }
