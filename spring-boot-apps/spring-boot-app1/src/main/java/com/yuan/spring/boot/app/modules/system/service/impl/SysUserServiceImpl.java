@@ -43,19 +43,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         return Optional.empty();
     }
 
-    @Override
-    protected SysUser setCommonsParameters(SysUser entity) {
-        return null;
-    }
-
-    @Override
-    public ServiceResult checkSaveOrUpdate(SysUser sysUser) throws CheckNotPassException {
-        if (isNew(sysUser)) {
-            return checkSave(sysUser);
-        } else {
-            return checkUpdate(sysUser);
-        }
-    }
 
     @Override
     public ServiceResult checkSave(SysUser sysUser) throws CheckNotPassException {

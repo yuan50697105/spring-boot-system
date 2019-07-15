@@ -26,15 +26,6 @@ import java.util.StringJoiner;
 @Service
 public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, SysPermisson> implements SysPermissionService {
     @Override
-    public ServiceResult checkSaveOrUpdate(SysPermisson sysPermisson) throws CheckNotPassException {
-        if (isNew(sysPermisson)) {
-            return checkSave(sysPermisson);
-        } else {
-            return checkUpdate(sysPermisson);
-        }
-    }
-
-    @Override
     public ServiceResult checkSave(SysPermisson sysPermisson) throws CheckNotPassException {
         boolean passFlag = true;
         StringJoiner stringJoiner = new StringJoiner("", "，", "。");
