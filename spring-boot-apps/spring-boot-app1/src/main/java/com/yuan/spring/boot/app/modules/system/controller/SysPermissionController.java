@@ -76,4 +76,24 @@ public class SysPermissionController extends BaseController {
         return sysPermissionService.checkSaveOrUpdate(sysPermisson).convert();
     }
 
+    @RequestMapping("save")
+    @ResponseBody
+    public AjaxResult save(SysPermissionVo sysPermissionVo) {
+        SysPermisson sysPermisson = sysPermissionConvertor.voToDomain(sysPermissionVo);
+        return sysPermissionService.save(sysPermisson).convert();
+    }
+
+    @RequestMapping("update")
+    @ResponseBody
+    public AjaxResult update(SysPermissionVo sysPermissionVo) {
+        SysPermisson sysPermisson = sysPermissionConvertor.voToDomain(sysPermissionVo);
+        return sysPermissionService.update(sysPermisson).convert();
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public AjaxResult delete(String[] id) {
+        return sysPermissionService.deleteById(id).convert();
+    }
+
 }

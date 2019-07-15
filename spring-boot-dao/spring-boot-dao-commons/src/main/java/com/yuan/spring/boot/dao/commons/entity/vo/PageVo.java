@@ -11,18 +11,18 @@ import java.util.List;
  * @date 2019/6/21 20:55
  **/
 @Data
-public class PageVo implements Serializable {
+public class PageVo<T> implements Serializable {
     private Long total;
-    private List list;
+    private List<T> data;
 
     @Builder
-    public PageVo(Long total, List list) {
+    public PageVo(Long total, List<T> data) {
         this.total = total;
-        this.list = list;
+        this.data = data;
     }
 
-    public static PageVo build(Long total, List list) {
-        return new PageVo(total, list);
+    public static <T> PageVo build(Long total, List<T> data) {
+        return new PageVo<T>(total, data);
     }
 
 }

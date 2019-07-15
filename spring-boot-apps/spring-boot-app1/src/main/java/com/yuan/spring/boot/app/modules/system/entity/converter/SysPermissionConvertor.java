@@ -10,7 +10,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/7/14 23:24
  **/
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", implementationPackage = "<PACKAGE_NAME>.impl")
 public interface SysPermissionConvertor {
     SysPermisson voToDomain(SysPermissionVo sysPermissionVo);
 

@@ -12,7 +12,7 @@ import java.util.List;
  * @author yuane
  * @date 2019/7/14 20:19
  **/
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", implementationPackage = "<PACKAGE_NAME>.impl")
 public interface SysRoleConverter {
 
     SysRole voToDomain(SysRoleVo roleVo);
