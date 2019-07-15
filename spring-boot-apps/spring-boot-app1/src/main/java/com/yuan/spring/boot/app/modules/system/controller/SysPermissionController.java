@@ -4,7 +4,7 @@ import cn.hutool.core.map.MapBuilder;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuan.spring.boot.app.modules.commons.controller.BaseController;
-import com.yuan.spring.boot.app.modules.system.entity.converter.SysPermissionConvertor;
+import com.yuan.spring.boot.app.modules.system.entity.converter.SysPermissionConverter;
 import com.yuan.spring.boot.app.modules.system.entity.domain.SysPermisson;
 import com.yuan.spring.boot.app.modules.system.entity.dto.SysPermissionQueryParams;
 import com.yuan.spring.boot.app.modules.system.entity.vo.SysPermissionVo;
@@ -26,9 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 @ViewPrefix("system/permission")
 public class SysPermissionController extends BaseController {
     private SysPermissionService sysPermissionService;
-    private SysPermissionConvertor sysPermissionConvertor;
+    private SysPermissionConverter sysPermissionConvertor;
 
-    public SysPermissionController(SysPermissionService sysPermissionService, SysPermissionConvertor sysPermissionConvertor) {
+    public SysPermissionController(SysPermissionService sysPermissionService, SysPermissionConverter sysPermissionConvertor) {
         this.sysPermissionService = sysPermissionService;
         this.sysPermissionConvertor = sysPermissionConvertor;
     }

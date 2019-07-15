@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2019/7/14 23:24
  **/
 @Mapper(componentModel = "spring", implementationPackage = "<PACKAGE_NAME>.impl")
-public interface SysPermissionConvertor {
+public interface SysPermissionConverter {
     SysPermisson voToDomain(SysPermissionVo sysPermissionVo);
 
     List<SysPermisson> voToDomain(List<SysPermissionVo> sysPermissionVos);
