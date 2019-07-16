@@ -36,6 +36,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-system-dependencies</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -48,12 +55,10 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-mvc</artifactId>
-            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-dao-mybatis-plus</artifactId>
-            <version>1.0.1</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.yuan</groupId>-->
