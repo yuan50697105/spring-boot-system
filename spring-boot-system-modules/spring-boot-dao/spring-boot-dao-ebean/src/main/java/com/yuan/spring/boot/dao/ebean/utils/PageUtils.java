@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
  * @date 2019/7/13 12:35
  **/
 public class PageUtils extends com.yuan.spring.boot.dao.commons.utils.PageUtils {
-    public PageVo build(Page page) {
+    public static <T> PageVo<T> build(Page<T> page) {
         return build(page.getTotalElements(), page.getContent());
     }
 }

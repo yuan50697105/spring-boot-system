@@ -8,7 +8,7 @@ import com.yuan.spring.boot.dao.commons.entity.vo.PageVo;
  * @date 2019/7/13 12:35
  **/
 public class PageUtils extends com.yuan.spring.boot.dao.commons.utils.PageUtils {
-    public static PageVo builde(Page page) {
-        return PageVo.build(page.getTotalElements(), page.getData());
+    public static <T> PageVo<T> build(Page<T> page) {
+        return build(page.getTotalElements(), page.getData());
     }
 }

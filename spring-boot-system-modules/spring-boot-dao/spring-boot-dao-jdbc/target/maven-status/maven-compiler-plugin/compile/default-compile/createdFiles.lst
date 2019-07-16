@@ -1,7 +1,0 @@
-com\yuan\spring\boot\dao\jdbc\entity\domain\JdbcDomain.class
-com\yuan\spring\boot\dao\jdbc\dao\JdbcDao.class
-com\yuan\spring\boot\dao\jdbc\entity\dto\JdbcQueryParams.class
-com\yuan\spring\boot\dao\jdbc\service\impl\JdbcServiceImpl.class
-com\yuan\spring\boot\dao\jdbc\dao\impl\JdbcDaoImpl.class
-com\yuan\spring\boot\dao\jdbc\service\JdbcService.class
-com\yuan\spring\boot\dao\jdbc\entity\vo\JdbcVo.class

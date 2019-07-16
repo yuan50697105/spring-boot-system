@@ -19,6 +19,7 @@
     </properties>
     <modules>
         <module>mybatisplus</module>
+        <module>spring-boot-test-app-nutz</module>
     </modules>
     <dependencies>
 
