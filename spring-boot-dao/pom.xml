@@ -27,6 +27,7 @@
     </properties>
     <modules>
         <module>spring-boot-dao-commons</module>
+        <module>spring-boot-dao-jooq</module>
         <module>spring-boot-dao-jdbc</module>
         <module>spring-boot-dao-hibernate</module>
         <module>spring-boot-dao-ebean</module>

@@ -18,13 +18,13 @@
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>spring-boot-app1</module>
-        <module>spring-boot-app2</module>
-        <module>spring-boot-app3</module>
-        <module>spring-boot-app4</module>
-        <module>spring-boot-app5</module>
-        <module>spring-boot-app6</module>
-        <module>spring-boot-app7</module>
+        <module>ebean</module>
+        <module>hibernate</module>
+        <module>jdbc</module>
+        <module>mybatis</module>
+        <module>mybatisenhance</module>
+        <module>mybatismapper</module>
+        <module>mybatisplus</module>
     </modules>
     <dependencies>
 
