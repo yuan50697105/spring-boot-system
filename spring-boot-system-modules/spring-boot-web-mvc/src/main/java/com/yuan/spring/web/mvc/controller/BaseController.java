@@ -6,11 +6,13 @@ import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
 @ControllerAdvice
+@RestControllerAdvice
 public class BaseController {
     private final String prefix;
     private final ModelAndView modelAndView = new ModelAndView();

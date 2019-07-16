@@ -148,7 +148,7 @@ public class SysUserController extends BaseController {
             ExportParams exportParams = new ExportParams("用户列表" + DateUtil.formatDate(new Date()), "用户列表");
             List<SysUser> sysUsers = sysUserService.selectListByParams(queryParams);
             List<SysUserVo> sysUserVos = sysUserConvertor.domainToVo(sysUsers);
-            Workbook workbook = ExcelExportUtil.exportBigExcel(exportParams, SysUserVo.class, sysUserVos);
+            Workbook workbook = ExcelExportUtil.exportExcel(exportParams, SysUserVo.class, sysUserVos);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
             workbook.write(byteArrayOutputStream);
             HttpHeaders headers = new HttpHeaders();
