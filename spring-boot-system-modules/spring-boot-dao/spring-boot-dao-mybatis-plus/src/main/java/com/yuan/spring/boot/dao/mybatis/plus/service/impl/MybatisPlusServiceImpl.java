@@ -73,7 +73,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult saveBatch(Collection<T> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::save);
+        collection.forEach(this::save);
         return ServiceResultUtils.ok();
     }
 
@@ -99,7 +99,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult updateBatch(Collection<T> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::update);
+        collection.forEach(this::update);
         return ServiceResultUtils.ok();
     }
 

@@ -13,11 +13,11 @@ import java.util.Date;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseVo extends com.yuan.spring.boot.dao.mybatis.plus.entity.vo.MybatisPlusVo<String> {
+public abstract class BaseVo extends com.yuan.spring.boot.dao.mybatis.plus.entity.vo.MybatisPlusVo<Long> {
     @ExcelIgnore
-    private String createBy;
+    private Long createBy;
     @ExcelIgnore
-    private String updateBy;
+    private Long updateBy;
     @Excel(name = "创建时间", format = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     @ExcelIgnore
@@ -26,14 +26,14 @@ public abstract class BaseVo extends com.yuan.spring.boot.dao.mybatis.plus.entit
     public BaseVo() {
     }
 
-    public BaseVo(String createBy, String updateBy, Date createDate, Date updateDate) {
+    public BaseVo(Long createBy, Long updateBy, Date createDate, Date updateDate) {
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
 
-    public BaseVo(String s, String createBy, String updateBy, Date createDate, Date updateDate) {
+    public BaseVo(Long s, Long createBy, Long updateBy, Date createDate, Date updateDate) {
         super(s);
         this.createBy = createBy;
         this.updateBy = updateBy;

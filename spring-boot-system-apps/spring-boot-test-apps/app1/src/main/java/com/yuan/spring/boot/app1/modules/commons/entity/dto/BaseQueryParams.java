@@ -11,9 +11,9 @@ import java.util.Date;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseQueryParams extends com.yuan.spring.boot.dao.mybatis.plus.entity.dto.MybatisPlusQueryParams<String> {
-    private String createBy;
-    private String updateBy;
+public abstract class BaseQueryParams extends com.yuan.spring.boot.dao.mybatis.plus.entity.dto.MybatisPlusQueryParams<Long> {
+    private Long createBy;
+    private Long updateBy;
     private Date createDateStart;
     private Date createDateEnd;
     private Date updateDateStart;
@@ -22,7 +22,7 @@ public abstract class BaseQueryParams extends com.yuan.spring.boot.dao.mybatis.p
     public BaseQueryParams() {
     }
 
-    public BaseQueryParams(String createBy, String updateBy, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParams(Long createBy, Long updateBy, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.createDateStart = createDateStart;
@@ -31,7 +31,7 @@ public abstract class BaseQueryParams extends com.yuan.spring.boot.dao.mybatis.p
         this.updateDateEnd = updateDateEnd;
     }
 
-    public BaseQueryParams(String id, String[] ids, String createBy, String updateBy, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
+    public BaseQueryParams(Long id, Long[] ids, Long createBy, Long updateBy, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd) {
         super(id, ids);
         this.createBy = createBy;
         this.updateBy = updateBy;

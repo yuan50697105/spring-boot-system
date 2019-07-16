@@ -6,7 +6,6 @@ import com.yuan.spring.boot.dao.commons.service.BaseService;
 import com.yuan.spring.boot.dao.mybatis.mapper.entity.domain.MapperDomain;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,10 +15,6 @@ import java.util.List;
 public interface MapperService<T extends MapperDomain<ID>, ID extends Serializable> extends BaseService<T,ID> {
 
     List<T> findAll(T t);
-
-    List<T> findAllById(ID[] ids);
-
-    List<T> findAllById(Collection<ID> collection);
 
     T findOne(T t);
 

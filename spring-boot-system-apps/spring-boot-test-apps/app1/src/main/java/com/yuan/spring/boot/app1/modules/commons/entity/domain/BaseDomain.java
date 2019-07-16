@@ -14,18 +14,18 @@ import java.util.Date;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseDomain extends MybatisPlusDomain<String> {
+public abstract class BaseDomain extends MybatisPlusDomain<Long> {
     @TableId(type = IdType.NONE)
-    private String id;
-    private String createBy;
-    private String updateBy;
+    private Long id;
+    private Long createBy;
+    private Long updateBy;
     private Date createDate;
     private Date updateDate;
 
     public BaseDomain() {
     }
 
-    public BaseDomain(String id, String createBy, String updateBy, Date createDate, Date updateDate) {
+    public BaseDomain(Long id, Long createBy, Long updateBy, Date createDate, Date updateDate) {
         this.id = id;
         this.createBy = createBy;
         this.updateBy = updateBy;

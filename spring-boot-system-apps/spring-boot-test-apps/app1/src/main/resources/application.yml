@@ -1,7 +1,64 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_system?serverTimezone=Asia/Shanghai
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: root
+#    url: jdbc:mysql://127.0.0.1:3306/spring_boot_system?serverTimezone=Asia/Shanghai
+#    druid:
+#      filter:
+#        slf4j:
+#          connection-commit-after-log-enabled: true
+#          statement-executable-sql-log-enable: true
+sharding:
+  jdbc:
+    datasource:
+      names: ds1,ds2,ds3
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/spring_boot_system1?serverTimezone=Asia/Shanghai
+        maximum-pool-size: 20
+      ds2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/spring_boot_system2?serverTimezone=Asia/Shanghai
+        maximum-pool-size: 20
+      ds3:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/spring_boot_system3?serverTimezone=Asia/Shanghai
+        maximum-pool-size: 20
+    config:
+      #      masterslave:
+      #        load-balance-algorithm-type: round_robin
+      #        name: ms1
+      #        master-data-source-name: ds1
+      #        slave-data-source-names: ds2,ds3
+      props:
+        check:
+          table:
+            metadata:
+              enabled: true
+      sharding:
+        binding-tables:
+          actual-data-nodes: ds${0..3}.sys_user
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: sys_user
+        default-data-source-name: ds1

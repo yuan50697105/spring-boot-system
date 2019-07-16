@@ -12,7 +12,7 @@ import java.util.Date;
  * @author yuane
  * @date 2019/7/13 1:18
  **/
-public abstract class BaseServiceImpl<M extends BaseDao<T>, T extends BaseDomain> extends com.yuan.spring.boot.dao.mybatis.plus.service.impl.MybatisPlusServiceImpl<M, T, String> implements BaseService<T> {
+public abstract class BaseServiceImpl<M extends BaseDao<T>, T extends BaseDomain> extends com.yuan.spring.boot.dao.mybatis.plus.service.impl.MybatisPlusServiceImpl<M, T, Long> implements BaseService<T> {
     @Autowired
     protected M baseDao;
 
@@ -38,7 +38,9 @@ public abstract class BaseServiceImpl<M extends BaseDao<T>, T extends BaseDomain
 //        uuid有-
 //        t.setId(IdUtil.fastUUID());
 //        雪花算法
-        t.setId(IdUtil.getSnowflake(0L, 0L).nextIdStr());
+//        t.setId(IdUtil.getSnowflake(0L, 0L).nextIdStr());
+        t.setId(IdUtil.getSnowflake(0, 0).nextId());
+        long a = 1;
         return t;
     }
 }
