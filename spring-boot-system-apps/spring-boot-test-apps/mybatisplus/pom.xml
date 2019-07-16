@@ -20,16 +20,21 @@
     </properties>
     <dependencyManagement>
         <dependencies>
-            <!--            Override Spring Data release train provided by Spring Boot-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.springframework.data</groupId>-->
-            <!--                <artifactId>spring-data-releasetrain</artifactId>-->
-            <!--                <version>Fowler-SR2</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
             <dependency>
-                <!--                Import dependency management from Spring Boot-->
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>0.9.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley SR3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>2.1.6.RELEASE</version>
@@ -60,30 +65,7 @@
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-dao-mybatis-plus</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.yuan</groupId>-->
-        <!--            <artifactId>spring-boot-web-views-freemarker</artifactId>-->
-        <!--            <version>1.0.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.yuan</groupId>-->
-        <!--            <artifactId>spring-boot-web-mvc-shiro</artifactId>-->
-        <!--            <version>1.0.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.yuan</groupId>-->
-        <!--            <artifactId>spring-boot-task-quartz</artifactId>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.yuan</groupId>-->
-        <!--            <artifactId>spring-boot-mq-rabbitmq</artifactId>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
-        <!--        </dependency>-->
+
     </dependencies>
 
     <build>
