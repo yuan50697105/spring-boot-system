@@ -8,10 +8,10 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/>
     </parent>
-    <artifactId>spring-boot-app1</artifactId>
+    <artifactId>spring-boot-app8</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.1</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -46,12 +46,16 @@
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-dao-mybatis</artifactId>
+            <artifactId>spring-boot-dao-nutz</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.18</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-web-views-freemarker</artifactId>
         </dependency>
     </dependencies>
 

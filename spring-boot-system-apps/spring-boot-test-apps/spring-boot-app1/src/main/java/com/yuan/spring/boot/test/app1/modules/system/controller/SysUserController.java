@@ -88,5 +88,8 @@ public class SysUserController extends CommonsController {
     }
 
     public WebAsyncTask<AjaxResult> doSave(SysUser sysUser, BindingResult result) {
+        return new WebAsyncTask<>(() -> {
+            return AjaxResult.ok();
+        });
     }
 }
