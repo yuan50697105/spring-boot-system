@@ -1,0 +1,7 @@
+com\yuan\spring\boot\dao\mybatis\entity\vo\MybatisVo.class
+com\yuan\spring\boot\dao\mybatis\dao\MybatisDao.class
+com\yuan\spring\boot\dao\mybatis\entity\domain\MybatisDomain.class
+com\yuan\spring\boot\dao\mybatis\utils\PageUtils.class
+com\yuan\spring\boot\dao\mybatis\service\impl\MybatisServiceImpl.class
+com\yuan\spring\boot\dao\mybatis\entity\bo\MybatisQueryParam.class
+com\yuan\spring\boot\dao\mybatis\service\MybatisService.class

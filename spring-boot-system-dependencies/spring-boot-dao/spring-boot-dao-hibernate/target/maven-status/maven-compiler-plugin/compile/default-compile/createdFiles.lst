@@ -1,0 +1,12 @@
+com\yuan\spring\boot\dao\hibernate\entity\vo\HibernateVo.class
+com\yuan\spring\boot\dao\hibernate\service\impl\HibernateServiceImpl.class
+com\yuan\spring\boot\dao\hibernate\entity\dto\ArrayQuery.class
+com\yuan\spring\boot\dao\hibernate\service\HibernateService.class
+com\yuan\spring\boot\dao\hibernate\entity\domain\HibernateDomain.class
+com\yuan\spring\boot\dao\hibernate\entity\dto\MapQuery$MapQueryBuilder.class
+com\yuan\spring\boot\dao\hibernate\dao\impl\HibernateDaoImpl.class
+com\yuan\spring\boot\dao\hibernate\entity\dto\BaseQuery.class
+com\yuan\spring\boot\dao\hibernate\entity\dto\MapQuery.class
+com\yuan\spring\boot\dao\hibernate\entity\dto\HibernateQueryParams.class
+com\yuan\spring\boot\dao\hibernate\utils\PageUtils.class
+com\yuan\spring\boot\dao\hibernate\dao\HibernateDao.class

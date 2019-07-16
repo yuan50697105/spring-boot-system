@@ -1,0 +1,7 @@
+com\yuan\spring\boot\dao\mybatis\mapper\entity\dto\MapperQueryParams.class
+com\yuan\spring\boot\dao\mybatis\mapper\utils\PageUtils.class
+com\yuan\spring\boot\dao\mybatis\mapper\entity\domain\MapperDomain.class
+com\yuan\spring\boot\dao\mybatis\mapper\entity\vo\MapperVo.class
+com\yuan\spring\boot\dao\mybatis\mapper\service\impl\MapperServiceImpl.class
+com\yuan\spring\boot\dao\mybatis\mapper\dao\MapperDao.class
+com\yuan\spring\boot\dao\mybatis\mapper\service\MapperService.class
