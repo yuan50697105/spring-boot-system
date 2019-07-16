@@ -3,27 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <groupId>com.yuan</groupId>
+        <artifactId>spring-boot-system</artifactId>
+        <version>1.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.yuan</groupId>
     <artifactId>spring-boot-system-dependencies</artifactId>
     <version>1.0.1</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <description>个人测试项目</description>
-    <modules>
-        <module>spring-boot-web-mvc</module>
-        <module>spring-boot-web-views</module>
-        <module>spring-boot-dao</module>
-        <module>spring-boot-web-mvc-shiro</module>
-        <module>spring-boot-web-mvc-security</module>
-        <module>spring-boot-commons</module>
-        <module>spring-boot-mq</module>
-        <module>spring-boot-task</module>
-    </modules>
     <properties>
         <java.version>1.8</java.version>
 
@@ -31,76 +20,185 @@
         <java-jwt>3.8.1</java-jwt>
         <!--        <project.parent.version>1.0.0</project.parent.version>-->
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-commons</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-utils</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-mvc</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-mvc-shiro</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-mvc-security</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-commons</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-jdbc</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-mybatis</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-mybatis-plus</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-mybatis-mapper</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-mybatis-enhance</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-hibernate</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-ebean</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-extra-sharding</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-extra-sharding-basic</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-extra-sharding-orchestation-zookeeper</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-mq</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-mq-rabbitmq</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-mq-rocketmq</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-mq-kafka</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-task</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-task-quartz</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-task-batch</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views-freemarker</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views-thymeleaf</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views-beetl</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views-mustache</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-web-views-groovy-template</artifactId>
+                <version>1.0.1</version>
+                <type>jar</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
-            <!--            统一版本号插件-->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <!--                    <generateBackupPoms>false</generateBackupPoms>-->
-                    <!--                    <newVersion>1.0.1</newVersion>-->
-                </configuration>
-            </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-deploy-plugin</artifactId>-->
-            <!--                <configuration>-->
-            <!--                    <skip>true</skip>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!--                    <skip>true</skip>-->
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!--                    <skip>true</skip>-->
-                    <skip>true</skip>
-                    <fork>false</fork>
-                    <executable>false</executable>
-                    <attach>true</attach>
-                    <folders>/lib</folders>
-
-                </configuration>
-                <!--                <executions>-->
-                <!--                    <execution>-->
-                <!--                        <goals>-->
-                <!--                            <goal>repackage</goal>-->
-                <!--                        </goals>-->
-                <!--                    </execution>-->
-                <!--                </executions>-->
-            </plugin>
         </plugins>
     </build>
 
