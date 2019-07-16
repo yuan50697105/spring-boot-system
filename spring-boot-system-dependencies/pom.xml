@@ -105,6 +105,13 @@
                 <groupId>com.yuan</groupId>
                 <artifactId>spring-boot-dao-nutz</artifactId>
                 <version>1.0.1</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.yuan</groupId>
+                <artifactId>spring-boot-dao-jooq</artifactId>
+                <version>1.0.1</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>com.yuan</groupId>
