@@ -30,7 +30,7 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
 
     protected abstract T setId(T t);
 
-    protected abstract T setCommonsParmas(T t);
+    protected abstract T setCommonsParams(T t);
 
     protected boolean isNew(T t) {
         return ObjectUtil.isEmpty(t.getId()) && getBaseDao().selectOne(t.getId()) == null;
@@ -71,7 +71,7 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
         String code = serviceResult.getCode();
         if ("ok".equals(code)) {
             setId(t);
-            setCommonsParmas(t);
+            setCommonsParams(t);
             getBaseDao().insert(t);
             return ServiceResultUtils.ok();
         } else {
