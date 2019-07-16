@@ -2,11 +2,17 @@ package com.yuan.spring.boot.test.app.nutz.dao.impl;
 
 import com.yuan.spring.boot.test.app.nutz.dao.SysUserDao;
 import com.yuan.spring.boot.test.app.nutz.entity.SysUser;
+import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
-import org.nutz.dao.sql.Sql;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class SysUserDaoImpl implements SysUserDao {
@@ -27,10 +33,18 @@ public class SysUserDaoImpl implements SysUserDao {
         }
     }
 
-    public void delete(String id) {
-        Sql sql = dao.sqls().create("");
-        sql.setPager(dao.createPager(1, 1));
-        long aLong = sql.getLong(0);
+    public List<SysUser> findAll() {
+        return dao.query(SysUser.class, Cnd.NEW());
     }
 
+    public List<Map<String, Object>> findAllMap() {
+        return dao.query("sys_user", Cnd.NEW()).parallelStream().map(record -> {
+            Set<String> keySet = record.keySet();
+            Map<String, Object> map = new HashMap<>(keySet.size());
+            for (String key : keySet) {
+                map.put(key, record.get(key));
+            }
+            return map;
+        }).collect(Collectors.toList());
+    }
 }

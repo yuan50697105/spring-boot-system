@@ -35,6 +35,7 @@
         <module>spring-boot-dao-mybatis-enhance</module>
         <module>spring-boot-dao-mybatis-mapper</module>
         <module>spring-boot-dao-mybatis-plus</module>
+        <module>spring-boot-dao-nutz</module>
         <module>spring-boot-dao-extra-sharding</module>
     </modules>
     <dependencies>
