@@ -4,9 +4,6 @@ import com.querydsl.jpa.JPQLQueryFactory;
 import com.yuan.spring.boot.dao.hibernate.entity.domain.HibernateDomain;
 import com.yuan.spring.boot.dao.hibernate.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.hibernate.entity.dto.MapQuery;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.SelectQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,33 +28,7 @@ public interface HibernateDao<T extends HibernateDomain<ID>, ID extends Serializ
 
     EntityManager getEntityManager();
 
-    DSLContext getDslContext();
-
     boolean isNew(T t);
-
-    Optional<T> findOne(SelectQuery<Record> selectQuery);
-
-    <R> Optional<R> findOne(Class<R> type, SelectQuery<Record> selectQuery);
-
-    Optional<Map<String, Object>> findOneToMap(SelectQuery<Record> selectQuery);
-
-    <R> Optional<R> findOneToBean(Class<R> type, SelectQuery<Record> selectQuery);
-
-    List<T> findAll(SelectQuery<Record> selectQuery);
-
-    <R> List<R> findAll(Class<R> type, SelectQuery<Record> selectQuery);
-
-    List<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery);
-
-    <R> List<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery);
-
-    Page<T> findAll(SelectQuery<Record> selectQuery, Pageable pageable);
-
-    <R> Page<R> findAll(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable);
-
-    Page<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery, Pageable pageable);
-
-    <R> Page<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable);
 
     Optional<T> findOneByQuery(ArrayQuery query);
 

@@ -10,12 +10,6 @@ import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.query.internal.QueryImpl;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.SelectQuery;
-import org.jooq.impl.DSL;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +34,6 @@ import java.util.Optional;
 public class HibernateDaoImpl<T extends HibernateDomain<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements HibernateDao<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
-    private DSLContext dslContext;
     private JPQLQueryFactory jpqlQueryFactory;
 
     public HibernateDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
@@ -50,10 +43,6 @@ public class HibernateDaoImpl<T extends HibernateDomain<ID>, ID extends Serializ
         jpqlQueryFactory = new JPAQueryFactory(entityManager);
     }
 
-    @Autowired
-    public void setDslContext(DSLContext dslContext) {
-        this.dslContext = dslContext;
-    }
 
     @Override
     public JPQLQueryFactory getJpqlQueryFactory() {
@@ -66,97 +55,8 @@ public class HibernateDaoImpl<T extends HibernateDomain<ID>, ID extends Serializ
     }
 
     @Override
-    public DSLContext getDslContext() {
-        return dslContext;
-    }
-
-    @Override
     public boolean isNew(T t) {
         return entityInformation.isNew(t);
-    }
-
-    @Override
-    public Optional<T> findOne(SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBaseResult(entityInformation.getJavaType(), selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public <R> Optional<R> findOne(Class<R> type, SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBaseResult(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public Optional<Map<String, Object>> findOneToMap(SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryMap(selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public <R> Optional<R> findOneToBean(Class<R> type, SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBean(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public List<T> findAll(SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBaseResultList(entityInformation.getJavaType(), selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public <R> List<R> findAll(Class<R> type, SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBaseResultList(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public List<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryMapList(selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public <R> List<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery) {
-        selectQuery = getDslQuery(selectQuery);
-        return getSQLQueryBeanList(type, selectQuery.getSQL(), selectQuery.getBindValues().toArray());
-    }
-
-    @Override
-    public Page<T> findAll(SelectQuery<Record> selectQuery, Pageable pageable) {
-        selectQuery = getDslQuery(selectQuery);
-        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
-        List<T> list = getSQLQueryBeanList(entityInformation.getJavaType(), pageable, selectQuery.getSQL(), selectQuery.getBindValues());
-        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
-        return new PageImpl<>(list, pageable, result.orElse(0L));
-    }
-
-    @Override
-    public <R> Page<R> findAll(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
-        selectQuery = getDslQuery(selectQuery);
-        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
-        List<R> list = getSQLQueryBeanList(type, pageable, selectQuery.getSQL(), selectQuery.getBindValues());
-        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
-        return new PageImpl<>(list, pageable, result.orElse(0L));
-    }
-
-    @Override
-    public Page<Map<String, Object>> findAllToMap(SelectQuery<Record> selectQuery, Pageable pageable) {
-        selectQuery = getDslQuery(selectQuery);
-        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
-        List<Map<String, Object>> list = getSQLQueryMapList(pageable, selectQuery.getSQL(), selectQuery.getBindValues());
-        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
-        return new PageImpl<>(list, pageable, result.orElse(0L));
-    }
-
-    @Override
-    public <R> Page<R> findAllToBean(Class<R> type, SelectQuery<Record> selectQuery, Pageable pageable) {
-        selectQuery = getDslQuery(selectQuery);
-        SelectQuery<Record1<Integer>> countQuery = getCountQuery(selectQuery);
-        List<R> list = getSQLQueryBeanList(type, pageable, selectQuery.getSQL(), selectQuery.getBindValues());
-        Optional<Long> result = getSQLQueryBaseResult(Long.class, countQuery.getSQL(), countQuery.getBindValues());
-        return new PageImpl<>(list, pageable, result.orElse(0L));
     }
 
     @Override
@@ -738,15 +638,6 @@ public class HibernateDaoImpl<T extends HibernateDomain<ID>, ID extends Serializ
         nativeQuery.setMaxResults(pageable.getPageSize());
         nativeQuery.unwrap(QueryImpl.class).setResultTransformer(new AliasToBeanResultTransformer(type));
         return nativeQuery.getResultList();
-    }
-
-
-    private SelectQuery<Record> getDslQuery(SelectQuery<Record> selectQuery) {
-        return dslContext.select(selectQuery.getSelect()).from(DSL.table(selectQuery).asTable()).getQuery();
-    }
-
-    private SelectQuery<Record1<Integer>> getCountQuery(SelectQuery<Record> selectQuery) {
-        return dslContext.select(DSL.count()).from(DSL.table(selectQuery).asTable()).getQuery();
     }
 
     private String getCountSQL(String sql) {

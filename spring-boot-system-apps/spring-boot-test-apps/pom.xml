@@ -26,6 +26,7 @@
         <module>spring-boot-app6</module>
         <module>spring-boot-app7</module>
         <module>spring-boot-app8</module>
+        <module>spring-boot-app9</module>
     </modules>
     <dependencies>
 
