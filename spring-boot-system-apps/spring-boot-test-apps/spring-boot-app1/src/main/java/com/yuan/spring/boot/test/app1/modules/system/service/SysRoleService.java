@@ -7,6 +7,7 @@ import com.yuan.spring.boot.test.app1.modules.system.entity.domain.SysRole;
 import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleExcelEntity;
 import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleQueryParams;
 import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleQueryResult;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,4 +27,6 @@ public interface SysRoleService extends CommonsService<SysRole> {
     SysRoleQueryResult findOne(SysRoleQueryParams queryParams);
 
     ServiceResult<ExcelImportResult<SysRoleExcelEntity>> upload(MultipartFile file) throws Exception;
+
+    Workbook download(SysRoleQueryParams queryParams);
 }

@@ -1,6 +1,8 @@
 package com.yuan.spring.boot.test.app1.modules.system.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
 import cn.afterturn.easypoi.excel.entity.result.ExcelVerifyHandlerResult;
@@ -19,6 +21,7 @@ import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleQueryPara
 import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleQueryResult;
 import com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysUserExcelEntity;
 import com.yuan.spring.boot.test.app1.modules.system.service.SysRoleService;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -103,6 +106,14 @@ public class SysRoleServiceImpl extends AbstractCommonsServiceImpl<SysRoleDao, S
         } else {
             return saveOrUpdateBatch(sysRoleConverter.excelToDomain(result.getList()));
         }
+    }
+
+    @Override
+    public Workbook download(SysRoleQueryParams queryParams) {
+        ExportParams params = new ExportParams("角色列表", "角色列表");
+        List<SysRoleQueryResult> list = baseDao.findListByParams(queryParams);
+        List<SysRoleExcelEntity> entities = sysRoleConverter.queryResultToExcelEntity(list);
+        return ExcelExportUtil.exportExcel(params, SysRoleExcelEntity.class, entities);
     }
 
     private ExcelVerifyHandlerResult verifyHandler(SysRoleExcelEntity excelEntity) {

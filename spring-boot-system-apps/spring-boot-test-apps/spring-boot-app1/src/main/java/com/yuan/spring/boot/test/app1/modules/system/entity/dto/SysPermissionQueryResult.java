@@ -4,17 +4,20 @@ import com.yuan.spring.boot.test.app1.modules.commons.entity.domain.AbstractEnti
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * @author yuane
+ * @date 2019/7/17 19:01
+ **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysRoleQueryResult extends AbstractEntity {
+public class SysPermissionQueryResult extends AbstractEntity {
     private String name;
     private Integer enabled;
 
-    public SysRoleQueryResult() {
+    public SysPermissionQueryResult() {
     }
 
-    //    @Builder
-    public SysRoleQueryResult(Long id, String name, Integer enabled) {
+    public SysPermissionQueryResult(Long id, String name, Integer enabled) {
         super(id);
         this.name = name;
         this.enabled = enabled;

@@ -1,7 +1,6 @@
 package com.yuan.spring.boot.test.app1.modules.system.entity.dto;
 
 import com.yuan.spring.boot.test.app1.modules.commons.entity.dto.AbstractQueryResult;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,7 +15,7 @@ public class SysUserQueryResult extends AbstractQueryResult {
     public SysUserQueryResult() {
     }
 
-    @Builder
+    //    @Builder
     public SysUserQueryResult(Long id, String username, String name, String password, Integer enabled) {
         super(id);
         this.username = username;

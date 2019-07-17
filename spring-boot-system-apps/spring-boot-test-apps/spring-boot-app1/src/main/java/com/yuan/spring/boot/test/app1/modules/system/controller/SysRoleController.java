@@ -16,6 +16,7 @@ import com.yuan.spring.boot.test.app1.modules.system.entity.vo.SysRoleVo;
 import com.yuan.spring.boot.test.app1.modules.system.service.SysRoleService;
 import com.yuan.spring.web.mvc.annotation.ViewPrefix;
 import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -118,6 +119,13 @@ public class SysRoleController extends AbstractController {
         return new WebAsyncTask<>(() -> {
             ServiceResult<ExcelImportResult<SysRoleExcelEntity>> serviceResult = sysRoleService.upload(file);
             return uploadExcelProcess(serviceResult);
+        });
+    }
+
+    public WebAsyncTask<ResponseEntity<byte[]>> download(SysRoleQueryParams queryParams) {
+        return new WebAsyncTask<>(() -> {
+            Workbook workbook = sysRoleService.download(queryParams);
+            return downloadExcelProcess(workbook);
         });
     }
 
