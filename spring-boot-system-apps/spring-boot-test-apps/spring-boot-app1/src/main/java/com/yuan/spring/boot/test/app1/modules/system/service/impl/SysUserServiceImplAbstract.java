@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.CheckMessageUtils;
-import com.yuan.spring.boot.test.app1.modules.commons.service.impl.CommonsServiceImpl;
+import com.yuan.spring.boot.test.app1.modules.commons.service.impl.AbstractCommonsServiceImpl;
 import com.yuan.spring.boot.test.app1.modules.system.dao.SysUserDao;
 import com.yuan.spring.boot.test.app1.modules.system.entity.domain.SysUser;
 import com.yuan.spring.boot.test.app1.modules.system.service.SysUserService;
@@ -17,7 +17,7 @@ import java.util.StringJoiner;
  * @date 2019/7/17 0:52
  **/
 @Service
-public class SysUserServiceImpl extends CommonsServiceImpl<SysUserDao, SysUser> implements SysUserService {
+public class SysUserServiceImplAbstract extends AbstractCommonsServiceImpl<SysUserDao, SysUser> implements SysUserService {
     @Override
     public ServiceResult checkSave(SysUser sysUser) throws CheckNotPassException {
         boolean passFlag = true;

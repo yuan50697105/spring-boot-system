@@ -5,7 +5,7 @@ import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 import com.yuan.spring.boot.dao.commons.utils.CheckMessageUtils;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
-import com.yuan.spring.boot.test.app1.modules.commons.service.impl.CommonsServiceImpl;
+import com.yuan.spring.boot.test.app1.modules.commons.service.impl.AbstractCommonsServiceImpl;
 import com.yuan.spring.boot.test.app1.modules.system.dao.SysRoleDao;
 import com.yuan.spring.boot.test.app1.modules.system.entity.domain.SysRole;
 import com.yuan.spring.boot.test.app1.modules.system.service.SysRoleService;
@@ -18,7 +18,7 @@ import java.util.StringJoiner;
  * @date 2019/7/17 1:02
  **/
 @Service
-public class SysRoleServiceImpl extends CommonsServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
+public class SysRoleServiceImplAbstract extends AbstractCommonsServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
     @Override
     public ServiceResult checkSave(SysRole sysRole) throws CheckNotPassException {
         boolean passFlag = true;
