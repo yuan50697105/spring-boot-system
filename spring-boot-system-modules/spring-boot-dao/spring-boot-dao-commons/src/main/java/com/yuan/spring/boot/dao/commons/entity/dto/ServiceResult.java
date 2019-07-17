@@ -25,6 +25,10 @@ public class ServiceResult<T> {
         this.data = data;
     }
 
+    public Status getStatus() {
+        return Status.valueOf(code);
+    }
+
     public AjaxResult<T> convert() {
         return AjaxResult.build(code, message, data);
     }

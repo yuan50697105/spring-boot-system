@@ -74,8 +74,8 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setId(t);
             setCommonsParameters(t);
             getBaseDao().insert(t);
@@ -103,8 +103,8 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setCommonsParameters(t);
             getBaseDao().updateByPrimaryKeySelective(t);
             return ServiceResultUtils.ok();
@@ -130,8 +130,8 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteByPrimaryKey(id);
             return ServiceResultUtils.ok();
         } else {
@@ -154,8 +154,8 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().delete(t);
             return ServiceResultUtils.ok();
         } else {

@@ -37,6 +37,8 @@ public class SysPermissionServiceImpl extends CommonsServiceImpl<SysPermissionDa
         String name = sysPermission.getName();
         if (ObjectUtil.isEmpty(name)) {
             passFlag = false;
+            joiner.add("名称不能为空");
+
         }
         return CheckMessageUtils.build(passFlag, joiner.toString());
     }

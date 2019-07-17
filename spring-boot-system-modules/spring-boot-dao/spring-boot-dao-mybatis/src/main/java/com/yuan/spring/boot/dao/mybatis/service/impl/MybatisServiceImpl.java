@@ -73,8 +73,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     @Override
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setId(t);
             setCommonsParameters(t);
             baseDao.insert(t);
@@ -98,8 +98,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     @Override
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkUpdate(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setCommonsParameters(t);
             baseDao.updateIgnoreNull(t);
             return ServiceResultUtils.ok();
@@ -122,8 +122,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     @Override
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteById(id);
             return ServiceResultUtils.ok();
         } else {
@@ -145,8 +145,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     @Override
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             baseDao.delete(t);
             return ServiceResultUtils.ok();
         } else {
@@ -192,7 +192,7 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     }
 
     @Override
-    public Page<com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysUserQueryResult> findAll(Pageable pageable) {
+    public Page<T> findAll(Pageable pageable) {
         return baseDao.findAll(pageable);
     }
 }

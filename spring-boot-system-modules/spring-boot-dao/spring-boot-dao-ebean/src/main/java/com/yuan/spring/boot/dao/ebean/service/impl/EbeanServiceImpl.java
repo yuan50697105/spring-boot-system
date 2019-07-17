@@ -73,8 +73,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setId(t);
             setCommonsParams(t);
             getBaseDao().save(t);
@@ -101,8 +101,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkUpdate(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             T db = getBaseDao().findById(t.getId()).orElse(null);
             if (db != null) {
                 db.copyFrom(t);
@@ -132,8 +132,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteById(id);
             return ServiceResultUtils.ok();
         } else {
@@ -160,8 +160,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().delete(t);
             return ServiceResultUtils.ok();
         } else {

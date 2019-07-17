@@ -16,7 +16,7 @@ public class CheckMessageUtils {
                 return ServiceResultUtils.ok(message);
             }
         } else {
-            return ServiceResultUtils.failure(message);
+            return ServiceResultUtils.error(message);
         }
     }
 }

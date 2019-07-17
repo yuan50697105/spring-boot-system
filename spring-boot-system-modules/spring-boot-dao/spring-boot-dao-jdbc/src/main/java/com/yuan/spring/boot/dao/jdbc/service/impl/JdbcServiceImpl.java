@@ -58,8 +58,8 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setId(t);
             setCommonsParams(t);
             getBaseDao().insert(t);
@@ -72,8 +72,8 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkUpdate(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             T db = getBaseDao().getById(t.getId()).orElse(null);
             if (db != null) {
                 db.copyFrom(t);
@@ -122,8 +122,8 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteByPrimaryKey(id);
             return ServiceResultUtils.ok();
         } else {
@@ -145,8 +145,8 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().delete(t);
             return ServiceResultUtils.ok();
         } else {

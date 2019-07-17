@@ -68,8 +68,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     @Override
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             setId(t);
             setCommonsParams(t);
             getBaseDao().insert(t);
@@ -94,8 +94,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     @Override
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkUpdate(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             T db = get(t.getId());
             db.copyFrom(t);
             getBaseDao().update(db);
@@ -119,8 +119,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     @Override
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteOne(id);
             return ServiceResultUtils.ok();
         } else {
@@ -143,8 +143,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     @Override
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
             getBaseDao().deleteOne(t.getId());
             return ServiceResultUtils.ok();
         } else {

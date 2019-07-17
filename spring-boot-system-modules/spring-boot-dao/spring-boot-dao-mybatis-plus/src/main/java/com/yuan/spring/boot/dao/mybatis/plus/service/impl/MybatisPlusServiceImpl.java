@@ -54,16 +54,10 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult save(T t) {
-        ServiceResult serviceResult = checkSave(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
-            setId(t);
-            setCommonsParameters(t);
-            getBaseDao().insert(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setId(t);
+        setCommonsParameters(t);
+        getBaseDao().insert(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -71,6 +65,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
         return saveBatch(Arrays.asList(arrays));
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public ServiceResult saveBatch(Collection<T> collection) {
         collection.forEach(this::save);
@@ -79,17 +74,11 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult update(T t) {
-        ServiceResult serviceResult = checkUpdate(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
-            T db = getBaseDao().selectById(t.getId());
-            db.copyFrom(t);
-            setCommonsParameters(db);
-            getBaseDao().updateById(db);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        T db = getBaseDao().selectById(t.getId());
+        db.copyFrom(t);
+        setCommonsParameters(db);
+        getBaseDao().updateById(db);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -97,6 +86,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
         return updateBatch(Arrays.asList(arrays));
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public ServiceResult updateBatch(Collection<T> collection) {
         collection.forEach(this::update);
@@ -119,21 +109,14 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult saveOrUpdateBatch(Collection<T> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::saveOrUpdate);
+        collection.forEach(this::saveOrUpdate);
         return ServiceResultUtils.ok();
     }
 
     @Override
     public ServiceResult deleteById(ID id) {
-        ServiceResult serviceResult = checkDelete(get(id));
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
-            checkDelete(get(id));
-            getBaseDao().deleteById(id);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        baseDao.deleteById(id);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -143,21 +126,14 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult deleteById(Collection<ID> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::deleteById);
+        collection.forEach(this::deleteById);
         return ServiceResultUtils.ok();
     }
 
     @Override
     public ServiceResult delete(T t) {
-        ServiceResult serviceResult = checkDelete(t);
-        String code = serviceResult.getCode();
-        if ("ok".equals(code)) {
-            checkDelete(t);
-            getBaseDao().deleteByMap(t.toParamsMap());
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        baseDao.deleteByMap(t.toParamsMap());
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -167,7 +143,7 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult delete(Collection<T> collection) {
-        collection.stream().filter(ObjectUtil::isNotEmpty).forEach(this::delete);
+        collection.forEach(this::delete);
         return ServiceResultUtils.ok();
     }
 
