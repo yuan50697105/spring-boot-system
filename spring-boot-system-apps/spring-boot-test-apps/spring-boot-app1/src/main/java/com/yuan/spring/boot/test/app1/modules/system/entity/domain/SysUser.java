@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -20,7 +21,9 @@ public class SysUser extends AbstractEntity {
     private String username;
     private String password;
     private String name;
+    @Column(name = "name_spell_simple")
     private String nameSpellSimple;
+    @Column(name = "name_spell_full")
     private String nameSpellFull;
     private Integer enabled;
 
