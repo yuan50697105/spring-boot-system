@@ -2,8 +2,6 @@ package com.yuan.spring.boot.dao.mybatis.service;
 
 import com.yuan.spring.boot.dao.commons.service.BaseService;
 import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
@@ -20,9 +18,6 @@ public interface MybatisService<T extends MybatisDomain<ID>, ID extends Serializ
 
     List<T> findAllById(Collection<ID> iterable);
 
-    Page<T> findAll(Pageable pageable);
-
     List<T> findAll(Sort sort);
 
-    List<T> findAll();
 }

@@ -7,63 +7,65 @@ import java.io.Serializable;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AjaxResult implements Serializable {
+public class AjaxResult<T> implements Serializable {
     private String code;
     private String message;
-    private Object data;
+    private T data;
 
-    private AjaxResult(Status status, String message, Object data) {
+    private AjaxResult(Status status, String message, T data) {
         this.code = status.code;
         this.message = message;
         this.data = data;
     }
 
-    private AjaxResult(String code, String message, Object data) {
+    private AjaxResult(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public static AjaxResult build(String code, String message, Object data) {
-        return new AjaxResult(code, message, data);
+    public static <T> AjaxResult<T> build(String code, String message, T data) {
+        return new AjaxResult<>(code, message, data);
     }
 
-    public static AjaxResult build(Status status, String message, Object data) {
-        return new AjaxResult(status, message, data);
+    public static <T> AjaxResult<T> build(Status status, String message, T data) {
+        return new AjaxResult<>(status, message, data);
     }
 
-    public static AjaxResult message(AjaxResult.Status status, String message) {
+    public static <T> AjaxResult<T> message(AjaxResult.Status status, String message) {
         return build(status, message, null);
     }
 
-    public static AjaxResult ok(String message, Object data) {
+    public static <T> AjaxResult<T> ok(String message, T data) {
         return build(AjaxResult.Status.OK, message, data);
     }
 
-
-    public static AjaxResult ok(String message) {
+    public static <T> AjaxResult<T> ok(String message) {
         return ok(message, null);
     }
 
-    public static AjaxResult ok() {
+    public static <T> AjaxResult<T> ok() {
         return ok("操作成功");
     }
 
-    public static AjaxResult error(String message, Object data) {
+    public static <T> AjaxResult<T> error(String message, T data) {
         return build(AjaxResult.Status.ERROR, message, data);
     }
 
-    public static AjaxResult data(String message, Object data) {
+    public static <T> AjaxResult<T> data(String message, T data) {
         return build(Status.DATA, message, data);
     }
 
-    public static AjaxResult data(Object data) {
+    public static <T> AjaxResult<T> data(T data) {
         return data(null, data);
     }
 
-
-    public static AjaxResult error(String message) {
+    public static <T> AjaxResult<T> error(String message) {
         return error(message, null);
+    }
+
+    public Status getStatus() {
+        return Status.valueOf(code);
     }
 
     public enum Status {

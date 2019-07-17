@@ -66,7 +66,7 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
 
     @Override
     public ServiceResult saveOrUpdateBatch(Collection<T> collection) {
-        getBaseDao().saveAll(collection);
+        collection.forEach(this::saveOrUpdate);
         return ServiceResultUtils.ok();
     }
 
@@ -192,7 +192,7 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
     }
 
     @Override
-    public Page<T> findAll(Pageable pageable) {
+    public Page<com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysUserQueryResult> findAll(Pageable pageable) {
         return baseDao.findAll(pageable);
     }
 }

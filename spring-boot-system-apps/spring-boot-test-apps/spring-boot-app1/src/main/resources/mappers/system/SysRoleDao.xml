@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuan.spring.boot.test.app1.modules.system.dao.SysRoleDao">
+    <resultMap id="sysRoleQueryResult"
+               type="com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysRoleQueryResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="enabled" column="enabled"/>
+    </resultMap>
+    <select id="existsByName" resultType="boolean">
+        select count(*)
+        from spring_boot_system.sys_role
+        where name = #{name}
+        limit 1
+    </select>
+    <select id="findPageByParams" resultMap="sysRoleQueryResult">
+        select id,name,enabled from sys_role
+        <where>
+            <if test="param1.id != null">
+                and id = #{param1.id.}
+            </if>
+            <if test="param1.ids != null and param1.ids.length != 0">
+                and id in (<foreach collection="param1.ids" item="ida" separator=",">#{ida}</foreach> )
+            </if>
+            <if test="param1.name != null and param1.name != ''">
+                and name like concat('%',#{param1.name} ,'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <select id="findListByParams" resultMap="sysRoleQueryResult">
+        select id,name,enabled from sys_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids != null and ids.length != 0">
+                and id in (<foreach collection="ids" item="ida" separator=",">#{ida}</foreach> )
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name} ,'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <select id="findOneByParams" resultMap="sysRoleQueryResult">
+        select id,name,enabled from sys_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids != null and ids.length != 0">
+                and id in (<foreach collection="ids" item="ida" separator=",">#{ida}</foreach> )
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name} ,'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>

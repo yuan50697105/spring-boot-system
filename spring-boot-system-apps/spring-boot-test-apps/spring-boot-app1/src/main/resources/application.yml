@@ -1,0 +1,34 @@
+# server配置
+server:
+  #  servlet:
+  #    context-path: spring/boot/system
+  port: 80
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+  undertow:
+    io-threads: 1000
+#   数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/spring_boot_system?serverTimeZone=Asia/Shanghai
+  #    视图配合
+  freemarker:
+    cache: true
+    suffix: .html
+    allow-request-override: true
+    allow-session-override: true
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: ctx
+#    mybatis配置
+mybatis:
+  mapper-locations: classpath*:mappers/*/*Dao.xml
+  type-aliases-package: classpath*:com/yuan/spring/boot/test/app1/modules/*/entity/*/*
+
+

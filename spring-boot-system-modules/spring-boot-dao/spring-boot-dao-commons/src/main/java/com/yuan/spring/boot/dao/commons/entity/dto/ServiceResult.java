@@ -1,6 +1,5 @@
 package com.yuan.spring.boot.dao.commons.entity.dto;
 
-import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
 import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 import lombok.Data;
 
@@ -9,25 +8,25 @@ import lombok.Data;
  * @date 2019/7/13 12:39
  **/
 @Data
-public class ServiceResult {
+public class ServiceResult<T> {
     private String code;
     private String message;
-    private Object data;
+    private T data;
 
-    public ServiceResult(Status status, String message, Object data) {
+    public ServiceResult(Status status, String message, T data) {
         this.code = status.code;
         this.message = message;
         this.data = data;
     }
 
-    public ServiceResult(String code, String message, Object data) {
+    public ServiceResult(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public AjaxResult convert() {
-        return ServiceResultUtils.convert(this);
+    public AjaxResult<T> convert() {
+        return AjaxResult.build(code, message, data);
     }
 
     public enum Status {

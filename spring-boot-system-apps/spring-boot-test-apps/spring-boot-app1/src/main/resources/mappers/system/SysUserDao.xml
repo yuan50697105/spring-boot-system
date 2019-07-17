@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuan.spring.boot.test.app1.modules.system.dao.SysUserDao">
+    <resultMap id="sysUserQueryResult"
+               type="com.yuan.spring.boot.test.app1.modules.system.entity.dto.SysUserQueryResult">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="name" property="name"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+    <select id="findListByParams"
+            resultMap="sysUserQueryResult">
+        select id, username, name, password, enabled from sys_user
+        <where>
+            <if test="ids != null and ids.length != 0">
+                and id in (<foreach collection="ids" item="idA" separator=",">#{idA}</foreach>)
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and (name like concat('%',#{name} ,'%') or username like concat('%',#{name} ,'%'))
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <select id="existsByUsername" resultType="boolean">
+        select count(*)
+        from sys_user
+        where username = #{username}
+        limit 1
+    </select>
+    <select id="findPageByParams" resultMap="sysUserQueryResult">
+
+        select id, username, name, password, enabled from sys_user
+        <where>
+            <if test="param1.ids != null and param1.ids.length != 0">
+                and id in (<foreach collection="param1.ids" item="idA" separator=",">#{idA}</foreach>)
+            </if>
+            <if test="param1.id != null">
+                and id = #{param1.id}
+            </if>
+            <if test="param1.name != null and param1.name != ''">
+                and (name like concat('%',#{param1.name} ,'%') or username like concat('%',#{param1.name} ,'%'))
+            </if>
+        </where>
+        order by id desc limit #{param2.pageSize} offset #{param2.offset}
+    </select>
+    <select id="findOneByParams" resultMap="sysUserQueryResult">
+        select id, username, name, password, enabled from sys_user
+        <where>
+            <if test="ids != null and ids.length != 0">
+                and id in (<foreach collection="ids" item="idA" separator=",">#{idA}</foreach>)
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and (name like concat('%',#{name} ,'%') or username like concat('%',#{name} ,'%'))
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class SysRoleVo extends AbstractVo {
     private String name;
-
+    private Integer enabled;
     public SysRoleVo() {
     }
 

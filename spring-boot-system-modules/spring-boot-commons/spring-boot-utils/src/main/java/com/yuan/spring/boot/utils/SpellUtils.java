@@ -38,7 +38,7 @@ public class SpellUtils {
     }
 
 
-    public static String getFireSpell(String value) {
+    public static String getFirstSpell(String value) {
         HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
         format.setCaseType(HanyuPinyinCaseType.UPPERCASE);
         format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);

@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.test.app1.modules.commons.entity.domain;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import javax.persistence.MappedSuperclass;
 @AllArgsConstructor
 public abstract class AbstractEntity extends MybatisDomain<Long> {
     @Id
+    @Excel(name = "主键", isColumnHidden = true)
     private Long id;
 
 }
