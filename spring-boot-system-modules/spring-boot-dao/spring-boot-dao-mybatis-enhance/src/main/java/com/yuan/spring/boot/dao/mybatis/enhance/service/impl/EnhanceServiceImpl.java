@@ -67,16 +67,10 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
 
     @Override
     public ServiceResult save(T t) {
-        ServiceResult serviceResult = checkSave(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setId(t);
-            setCommonsParams(t);
-            getBaseDao().insert(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setId(t);
+        setCommonsParams(t);
+        getBaseDao().insert(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -93,16 +87,10 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
 
     @Override
     public ServiceResult update(T t) {
-        ServiceResult serviceResult = checkUpdate(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            T db = get(t.getId());
-            db.copyFrom(t);
-            getBaseDao().update(db);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        T db = get(t.getId());
+        db.copyFrom(t);
+        getBaseDao().update(db);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -118,14 +106,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
 
     @Override
     public ServiceResult deleteById(ID id) {
-        ServiceResult serviceResult = checkDelete(get(id));
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            getBaseDao().deleteOne(id);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        getBaseDao().deleteOne(id);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -142,14 +124,8 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
 
     @Override
     public ServiceResult delete(T t) {
-        ServiceResult serviceResult = checkDelete(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            getBaseDao().deleteOne(t.getId());
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        getBaseDao().deleteOne(t.getId());
+        return ServiceResultUtils.ok();
     }
 
     @Override

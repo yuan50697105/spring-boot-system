@@ -72,16 +72,10 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        ServiceResult serviceResult = checkSave(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setId(t);
-            setCommonsParams(t);
-            getBaseDao().save(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setId(t);
+        setCommonsParams(t);
+        getBaseDao().save(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -100,19 +94,13 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        ServiceResult serviceResult = checkUpdate(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            T db = getBaseDao().findById(t.getId()).orElse(null);
-            if (db != null) {
-                db.copyFrom(t);
-                setCommonsParams(db);
-                getBaseDao().save(db);
-            }
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
+        T db = getBaseDao().findById(t.getId()).orElse(null);
+        if (db != null) {
+            db.copyFrom(t);
+            setCommonsParams(db);
+            getBaseDao().save(db);
         }
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -131,14 +119,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        ServiceResult serviceResult = checkDelete(get(id));
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            getBaseDao().deleteById(id);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        getBaseDao().deleteById(id);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -159,14 +141,8 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        ServiceResult serviceResult = checkDelete(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            getBaseDao().delete(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        getBaseDao().delete(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override

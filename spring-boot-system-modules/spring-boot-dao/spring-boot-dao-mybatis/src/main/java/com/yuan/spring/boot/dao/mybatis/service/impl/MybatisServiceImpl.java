@@ -72,16 +72,10 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
 
     @Override
     public ServiceResult save(T t) {
-        ServiceResult serviceResult = checkSave(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setId(t);
-            setCommonsParameters(t);
-            baseDao.insert(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setId(t);
+        setCommonsParameters(t);
+        baseDao.insert(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -97,15 +91,9 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
 
     @Override
     public ServiceResult update(T t) {
-        ServiceResult serviceResult = checkUpdate(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setCommonsParameters(t);
-            baseDao.updateIgnoreNull(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setCommonsParameters(t);
+        baseDao.updateIgnoreNull(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -121,14 +109,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
 
     @Override
     public ServiceResult deleteById(ID id) {
-        ServiceResult serviceResult = checkDelete(get(id));
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            getBaseDao().deleteById(id);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        getBaseDao().deleteById(id);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -144,14 +126,8 @@ public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends 
 
     @Override
     public ServiceResult delete(T t) {
-        ServiceResult serviceResult = checkDelete(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            baseDao.delete(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        baseDao.delete(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override

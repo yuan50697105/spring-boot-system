@@ -46,16 +46,10 @@ public abstract class NutzServiceImpl<S extends NutzDao<T, ID>, T extends NutzDo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
-        ServiceResult serviceResult = checkSave(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setId(t);
-            setCommonsParams(t);
-            baseDao.save(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setId(t);
+        setCommonsParams(t);
+        baseDao.save(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -72,15 +66,9 @@ public abstract class NutzServiceImpl<S extends NutzDao<T, ID>, T extends NutzDo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
-        ServiceResult serviceResult = checkUpdate(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            setCommonsParams(t);
-            baseDao.update(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        setCommonsParams(t);
+        baseDao.update(t);
+        return ServiceResultUtils.ok();
     }
 
     @Override
@@ -120,33 +108,38 @@ public abstract class NutzServiceImpl<S extends NutzDao<T, ID>, T extends NutzDo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
-        ServiceResult serviceResult = checkDelete(get(id));
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            baseDao.deleteById(id);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        baseDao.deleteById(id);
+        return ServiceResultUtils.ok();
     }
 
     @Override
     public ServiceResult deleteById(ID[] ids) {
+        return deleteById(Arrays.asList(ids));
+    }
 
-        return null;
+    @Override
+    public ServiceResult deleteById(Collection<ID> collection) {
+        collection.forEach(this::deleteById);
+        return ServiceResultUtils.ok();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
-        ServiceResult serviceResult = checkDelete(t);
-        ServiceResult.Status status = serviceResult.getStatus();
-        if (status.equals(ServiceResult.Status.OK)) {
-            baseDao.delete(t);
-            return ServiceResultUtils.ok();
-        } else {
-            return serviceResult;
-        }
+        baseDao.delete(t);
+        return ServiceResultUtils.ok();
+    }
+
+    @Override
+    public ServiceResult delete(T[] arrays) {
+        return delete(Arrays.asList(arrays));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ServiceResult delete(Collection<T> collection) {
+        collection.forEach(this::delete);
+        return ServiceResultUtils.ok();
     }
 
     @Override
