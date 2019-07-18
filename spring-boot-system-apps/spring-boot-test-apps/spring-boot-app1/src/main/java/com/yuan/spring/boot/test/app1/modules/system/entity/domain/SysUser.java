@@ -1,7 +1,6 @@
 package com.yuan.spring.boot.test.app1.modules.system.entity.domain;
 
 import com.yuan.spring.boot.test.app1.modules.commons.entity.domain.AbstractEntity;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,6 +26,9 @@ public class SysUser extends AbstractEntity {
     private String nameSpellFull;
     private Integer enabled;
 
+    public SysUser() {
+    }
+
     public SysUser(String username, String password, String name, String nameSpellSimple, String nameSpellFull, Integer enabled) {
         this.username = username;
         this.password = password;
@@ -36,7 +38,6 @@ public class SysUser extends AbstractEntity {
         this.enabled = enabled;
     }
 
-    @Builder
     public SysUser(Long id, String username, String password, String name, String nameSpellSimple, String nameSpellFull, Integer enabled) {
         super(id);
         this.username = username;

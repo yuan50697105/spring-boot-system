@@ -1,7 +1,6 @@
 package com.yuan.spring.boot.test.app1.modules.system.entity.domain;
 
 import com.yuan.spring.boot.test.app1.modules.commons.entity.domain.AbstractEntity;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,7 +17,11 @@ public class SysPermission extends AbstractEntity {
     public SysPermission() {
     }
 
-    @Builder
+    public SysPermission(String name, Integer enabled) {
+        this.name = name;
+        this.enabled = enabled;
+    }
+
     public SysPermission(Long id, String name, Integer enabled) {
         super(id);
         this.name = name;

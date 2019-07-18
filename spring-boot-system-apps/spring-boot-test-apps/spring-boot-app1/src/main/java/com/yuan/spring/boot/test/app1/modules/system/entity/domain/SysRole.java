@@ -28,7 +28,6 @@ public class SysRole extends AbstractEntity {
         this.enabled = enabled;
     }
 
-    @Builder
     public SysRole(Long id, String name, Integer enabled) {
         super(id);
         this.name = name;

@@ -1,6 +1,7 @@
 package com.yuan.spring.boot.test.app1.modules.system.entity.vo;
 
 import com.yuan.spring.boot.test.app1.modules.commons.entity.vo.AbstractVo;
+import com.yuan.spring.boot.test.app1.modules.system.entity.domain.SysRole;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,15 +12,15 @@ import lombok.EqualsAndHashCode;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysRoleVo extends AbstractVo {
-    private String name;
-    private Integer enabled;
+public class SysRoleVo extends SysRole {
     public SysRoleVo() {
     }
 
-    @Builder
-    public SysRoleVo(Long id, String name) {
-        super(id);
-        this.name = name;
+    public SysRoleVo(String name, Integer enabled) {
+        super(name, enabled);
+    }
+
+    public SysRoleVo(Long id, String name, Integer enabled) {
+        super(id, name, enabled);
     }
 }
