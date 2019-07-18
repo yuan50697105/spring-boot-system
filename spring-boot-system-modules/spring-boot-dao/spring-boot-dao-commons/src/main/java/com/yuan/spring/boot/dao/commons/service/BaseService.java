@@ -2,10 +2,10 @@ package com.yuan.spring.boot.dao.commons.service;
 
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
-import com.yuan.spring.boot.dao.commons.exception.CheckNotPassException;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author yuane
@@ -13,75 +13,96 @@ import java.util.Collection;
  **/
 public interface BaseService<T extends BaseDomain<ID>, ID extends Serializable> {
     /**
-     * 检查保存更新操作
-     * 如果在controller中使用请不要使用表单验证
+     * 检查要保存的实体
      *
-     * @param t 需检查的实体
-     * @return 返回处理结果，并提交给
-     * @throws CheckNotPassException
+     * @param t
      */
-    ServiceResult checkSaveOrUpdate(T t) throws CheckNotPassException;
-
-    ServiceResult baseSaveOrUpdate(T t);
+    ServiceResult checkSave(T t);
 
     /**
-     * 执行保存更新,执行之前会执行checkSaveOrUpdate
+     * 保存实体
      *
-     * @param t 操作的实体
-     * @return 操作结果
+     * @param t
+     * @return
+     */
+    ServiceResult save(T t);
+
+    ServiceResult saveAll(T[] arrays);
+
+    ServiceResult saveAll(Collection<T> collection);
+
+    /**
+     * 检查要更新的实体
+     *
+     * @param t
+     * @return
+     */
+    ServiceResult checkUpdate(T t);
+
+    /**
+     * 更新实体
+     *
+     * @param t
+     * @return
+     */
+    ServiceResult update(T t);
+
+    ServiceResult updateAll(T[] arrays);
+
+    ServiceResult updateAll(Collection<T> collection);
+
+    /**
+     * 检查保存更新实体
+     *
+     * @param t
+     * @return
+     */
+    ServiceResult checkSaveOrUpdate(T t);
+
+    /**
+     * 保存更新实体
+     *
+     * @param t
+     * @return
      */
     ServiceResult saveOrUpdate(T t);
 
-    ServiceResult baseSaveOrUpdateBatch(T[] arrays);
+    ServiceResult saveOrUpdateAll(T[] arrays);
 
-    ServiceResult saveOrUpdateBatch(T[] arrays);
+    ServiceResult saveOrUpdateAll(Collection<T> collection);
 
-    ServiceResult baseSaveOrUpdateBatch(Collection<T> collection);
+    /**
+     * 检查删除
+     *
+     * @param t
+     * @return
+     */
+    ServiceResult checkDelete(T t);
 
-    ServiceResult saveOrUpdateBatch(Collection<T> collection);
-
-    ServiceResult checkSave(T t) throws CheckNotPassException;
-
-    ServiceResult baseSave(T t);
-
-    ServiceResult save(T t);
-
-    ServiceResult baseSaveBatch(T[] arrays);
-
-    ServiceResult saveBatch(T[] arrays);
-
-    ServiceResult baseSaveBatch(Collection<T> collection);
-
-    ServiceResult saveBatch(Collection<T> collection);
-
-    ServiceResult checkUpdate(T t) throws CheckNotPassException;
-
-    ServiceResult baseUpdate(T t);
-
-    ServiceResult update(T t);
-
-    ServiceResult baseUpdateBatch(T[] arrays);
-
-    ServiceResult updateBatch(T[] arrays);
-
-    ServiceResult baseUpdateBatch(Collection<T> collection);
-
-    ServiceResult updateBatch(Collection<T> collection);
-
-    ServiceResult deleteById(ID id);
-
-    ServiceResult deleteById(ID[] ids);
-
-    ServiceResult deleteById(Collection<ID> collection);
-
-    ServiceResult checkDelete(T t) throws CheckNotPassException;
-
+    /*
+    删除操作
+     */
     ServiceResult delete(T t);
 
-    ServiceResult delete(T[] arrays);
+    ServiceResult deleteAll(T[] arrays);
 
-    ServiceResult delete(Collection<T> collection);
+    ServiceResult deleteAll(Collection<T> collection);
+
+    /**
+     * 根据ID删除
+     *
+     * @param id
+     * @return
+     */
+    ServiceResult deleteById(ID id);
+
+    ServiceResult deleteAllById(ID[] arrays);
+
+    ServiceResult deleteAllById(Collection<ID> collection);
 
     T get(ID id);
 
+    List<T> findAllById(ID[] arrays);
+
+    List<T> findAllById(Collection<ID> collection);
 }

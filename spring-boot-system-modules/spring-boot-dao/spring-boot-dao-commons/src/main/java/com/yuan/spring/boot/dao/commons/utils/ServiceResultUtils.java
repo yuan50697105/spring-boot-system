@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.dao.commons.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.web.mvc.entity.vo.AjaxResult;
 
@@ -92,5 +93,17 @@ public class ServiceResultUtils {
 
     public static <T> ServiceResult<T> warn() {
         return warn(WARN);
+    }
+
+    public static <T> ServiceResult<T> check(boolean isSuccess, String message) {
+        if (isSuccess) {
+            if (StrUtil.isNotEmpty(message)) {
+                return ok(message);
+            } else {
+                return ok();
+            }
+        } else {
+            return error(message);
+        }
     }
 }
