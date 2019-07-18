@@ -106,9 +106,6 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
         for (ServiceResult result : results) {
             ServiceResult.Status status = result.getStatus();
             String message = result.getMessage();
-            if (message.lastIndexOf(",") == message.length()) {
-                message = message.substring(0, message.lastIndexOf(","));
-            }
             if (!status.equals(ServiceResult.Status.OK)) {
                 joiner.add("第" + (++i) + "条" + message);
             }

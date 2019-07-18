@@ -90,28 +90,28 @@ public class SysRoleController extends AbstractController {
     @RequestMapping("checkSave")
     public WebAsyncTask<AjaxResult> checkSave(@Validated(SaveValidator.class) SysRoleVo roleVo, BindingResult result) {
         return new WebAsyncTask<>(() -> {
-            return checkFormProcess(roleVo, result, sysRoleService.checkSave(sysRoleConverter.voToDomain(roleVo)));
+            return checkFormProcess(roleVo, result, sysRoleService.checkSave(sysRoleConverter.voToDomain(roleVo)).convert());
         });
     }
 
     @RequestMapping("checkUpdate")
     public WebAsyncTask<AjaxResult> checkUpdate(@Validated(UpdateValidator.class) SysRoleVo roleVo, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.checkUpdate(sysRoleConverter.voToDomain(roleVo))));
+        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.checkUpdate(sysRoleConverter.voToDomain(roleVo)).convert()));
     }
 
     @RequestMapping("save")
     public WebAsyncTask<AjaxResult> save(@RequestBody @Validated(SaveValidator.class) SysRoleVo roleVo, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.save(sysRoleConverter.voToDomain(roleVo))));
+        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.save(sysRoleConverter.voToDomain(roleVo)).convert()));
     }
 
     @RequestMapping("update")
     public WebAsyncTask<AjaxResult> update(@RequestBody @Validated(UpdateValidator.class) SysRoleVo roleVo, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.update(sysRoleConverter.voToDomain(roleVo))));
+        return new WebAsyncTask<>(() -> checkFormProcess(roleVo, result, sysRoleService.update(sysRoleConverter.voToDomain(roleVo)).convert()));
     }
 
     @RequestMapping("delete")
     public WebAsyncTask<AjaxResult> delete(Long[] ids) {
-        return new WebAsyncTask<>(() -> sysRoleService.deleteById(ids).convert());
+        return new WebAsyncTask<>(() -> sysRoleService.deleteAllById(ids).convert());
     }
 
     @RequestMapping("upload")

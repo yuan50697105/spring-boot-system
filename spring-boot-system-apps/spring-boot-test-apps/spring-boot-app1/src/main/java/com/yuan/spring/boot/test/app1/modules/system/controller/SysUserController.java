@@ -77,24 +77,28 @@ public class SysUserController extends AbstractController {
 
     @RequestMapping("checkSave")
     public WebAsyncTask<AjaxResult> checkSave(@RequestBody @Validated(SaveValidator.class) SysUserVo sysUser, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.checkSave(sysUserConverter.voToDomain(sysUser))));
+        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.checkSave(sysUserConverter.voToDomain(sysUser)).convert()));
     }
 
     @RequestMapping("checkUpdate")
     public WebAsyncTask<AjaxResult> checkUpdate(@RequestBody @Validated(UpdateValidator.class) SysUserVo sysUser, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.checkUpdate(sysUserConverter.voToDomain(sysUser))));
+        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.checkUpdate(sysUserConverter.voToDomain(sysUser)).convert()));
     }
 
 
     @RequestMapping("save")
     public WebAsyncTask<AjaxResult> save(@RequestBody @Validated(SaveValidator.class) SysUserVo sysUser, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.save(sysUserConverter.voToDomain(sysUser))));
+        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.save(sysUserConverter.voToDomain(sysUser)).convert()));
     }
 
 
     @RequestMapping("update")
     public WebAsyncTask<AjaxResult> update(@RequestBody @Validated(UpdateValidator.class) SysUserVo sysUser, BindingResult result) {
-        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.update(sysUserConverter.voToDomain(sysUser))));
+        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.update(sysUserConverter.voToDomain(sysUser)).convert()));
+    }
+
+    public WebAsyncTask<AjaxResult> delete(Long[] ids) {
+        return new WebAsyncTask<>(() -> sysUserService.deleteAllById(ids).convert());
     }
 
     @RequestMapping("upload")

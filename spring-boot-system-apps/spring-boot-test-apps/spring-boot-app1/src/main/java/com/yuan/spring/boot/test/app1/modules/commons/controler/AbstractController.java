@@ -37,11 +37,11 @@ public abstract class AbstractController extends BaseController {
     }
 
     @SuppressWarnings("ConstantConditions")
-    protected AjaxResult checkFormProcess(Object object, BindingResult result, ServiceResult<?> serviceResult) {
+    protected AjaxResult checkFormProcess(Object object, BindingResult result, AjaxResult<?> ajaxResult) {
         if (result.hasGlobalErrors()) {
             return AjaxResult.error(result.getGlobalError().getDefaultMessage());
         } else {
-            return AjaxResult.ok();
+            return ajaxResult;
         }
     }
 }
