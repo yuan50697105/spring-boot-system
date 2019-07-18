@@ -19,4 +19,6 @@ public interface MybatisPlusService<T extends MybatisPlusDomain<ID>, ID extends 
     IPage<T> findAll(IPage<T> page);
 
     IPage<T> findAll(T t, IPage<T> page);
+
+
 }

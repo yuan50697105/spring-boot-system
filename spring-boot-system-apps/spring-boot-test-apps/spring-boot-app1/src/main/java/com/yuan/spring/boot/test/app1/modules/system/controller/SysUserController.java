@@ -77,9 +77,7 @@ public class SysUserController extends AbstractController {
 
     @RequestMapping("checkSave")
     public WebAsyncTask<AjaxResult> checkSave(@RequestBody @Validated(SaveValidator.class) SysUserVo sysUser, BindingResult result) {
-        return new WebAsyncTask<>(() -> {
-            return checkFormProcess(sysUser, result, sysUserService.checkSave(sysUserConverter.voToDomain(sysUser)));
-        });
+        return new WebAsyncTask<>(() -> checkFormProcess(sysUser, result, sysUserService.checkSave(sysUserConverter.voToDomain(sysUser))));
     }
 
     @RequestMapping("checkUpdate")

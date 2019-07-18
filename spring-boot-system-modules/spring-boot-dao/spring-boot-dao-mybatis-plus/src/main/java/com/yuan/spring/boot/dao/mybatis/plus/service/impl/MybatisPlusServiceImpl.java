@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * @author yuane
@@ -54,10 +56,17 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult save(T t) {
-        setId(t);
-        setCommonsParameters(t);
-        getBaseDao().insert(t);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkSave(t);
+        if (serviceResult.getStatus().equals(ServiceResult.Status.OK)) {
+            return baseSave(t);
+        } else {
+            return serviceResult;
+        }
+    }
+
+    @Override
+    public ServiceResult baseSaveBatch(T[] arrays) {
+        return null;
     }
 
     @Override
@@ -65,20 +74,44 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
         return saveBatch(Arrays.asList(arrays));
     }
 
+
     @SuppressWarnings("Duplicates")
     @Override
     public ServiceResult saveBatch(Collection<T> collection) {
-        collection.forEach(this::save);
-        return ServiceResultUtils.ok();
+        boolean isSave = true;
+        StringJoiner stringJoiner = new StringJoiner(",");
+        List<ServiceResult> collect = collection.stream().map(this::checkSave).collect(Collectors.toList());
+        int i = 0;
+        for (ServiceResult serviceResult : collect) {
+            ServiceResult.Status status = serviceResult.getStatus();
+            String message = serviceResult.getMessage();
+            message = message.substring(0, message.lastIndexOf(","));
+            if (!status.equals(ServiceResult.Status.OK)) {
+                isSave = false;
+                stringJoiner.add(String.format("第%d行" + message, ++i));
+            }
+        }
+        if (isSave) {
+            return baseSaveBatch(collection);
+        } else {
+            return ServiceResultUtils.failure(stringJoiner.toString());
+        }
     }
 
     @Override
     public ServiceResult update(T t) {
-        T db = getBaseDao().selectById(t.getId());
-        db.copyFrom(t);
-        setCommonsParameters(db);
-        getBaseDao().updateById(db);
-        return ServiceResultUtils.ok();
+        ServiceResult serviceResult = checkUpdate(t);
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
+            return baseUpdate(t);
+        } else {
+            return serviceResult;
+        }
+    }
+
+    @Override
+    public ServiceResult baseUpdateBatch(T[] arrays) {
+        return baseUpdateBatch(Arrays.asList(arrays));
     }
 
     @Override
@@ -89,17 +122,40 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     @SuppressWarnings("Duplicates")
     @Override
     public ServiceResult updateBatch(Collection<T> collection) {
-        collection.forEach(this::update);
-        return ServiceResultUtils.ok();
+        List<ServiceResult> collect = collection.stream().map(this::checkUpdate).collect(Collectors.toList());
+        int i = 0;
+        boolean isUpdate = true;
+        StringJoiner stringJoiner = new StringJoiner(",");
+        for (ServiceResult serviceResult : collect) {
+            ServiceResult.Status status = serviceResult.getStatus();
+            String message = serviceResult.getMessage();
+            message = message.substring(0, message.lastIndexOf(","));
+            if (!status.equals(ServiceResult.Status.OK)) {
+                isUpdate = false;
+                stringJoiner.add(String.format("第%d行" + message, ++i));
+            }
+        }
+        if (isUpdate) {
+            return baseUpdateBatch(collection);
+        } else {
+            return ServiceResultUtils.failure(stringJoiner.toString());
+        }
     }
 
     @Override
     public ServiceResult saveOrUpdate(T t) {
-        if (isNew(t)) {
-            return save(t);
+        ServiceResult serviceResult = checkSaveOrUpdate(t);
+        ServiceResult.Status status = serviceResult.getStatus();
+        if (status.equals(ServiceResult.Status.OK)) {
+            return baseSaveOrUpdate(t);
         } else {
-            return update(t);
+            return serviceResult;
         }
+    }
+
+    @Override
+    public ServiceResult baseSaveOrUpdateBatch(T[] arrays) {
+        return baseSaveOrUpdateBatch(Arrays.asList(arrays));
     }
 
     @Override
@@ -109,7 +165,30 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
 
     @Override
     public ServiceResult saveOrUpdateBatch(Collection<T> collection) {
-        collection.forEach(this::saveOrUpdate);
+        int i = 0;
+        boolean isSave = true;
+        StringJoiner joiner = new StringJoiner(",");
+        List<ServiceResult> collect = collection.stream().map(this::checkSaveOrUpdate).collect(Collectors.toList());
+        for (ServiceResult serviceResult : collect) {
+            ServiceResult.Status status = serviceResult.getStatus();
+            String message = serviceResult.getMessage();
+            message = message.substring(0, message.lastIndexOf(","));
+            if (!status.equals(ServiceResult.Status.OK)) {
+                isSave = false;
+                joiner.add("第" + (++i) + "行" + message);
+            }
+        }
+        if (isSave) {
+            return baseSaveOrUpdateBatch(collection);
+        } else {
+            return ServiceResultUtils.failure(joiner.toString());
+        }
+    }
+
+
+    @Override
+    public ServiceResult baseSaveOrUpdateBatch(Collection<T> collection) {
+        collection.forEach(this::baseSaveOrUpdate);
         return ServiceResultUtils.ok();
     }
 
@@ -170,5 +249,43 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     @Override
     public IPage<T> findAll(T t, IPage<T> page) {
         return baseDao.selectPage(page, new QueryWrapper<>(t));
+    }
+
+    @Override
+    public ServiceResult baseSave(T t) {
+        setId(t);
+        setCommonsParameters(t);
+        getBaseDao().insert(t);
+        return ServiceResultUtils.ok();
+    }
+
+    @Override
+    public ServiceResult baseSaveBatch(Collection<T> collection) {
+        collection.forEach(this::baseSave);
+        return ServiceResultUtils.ok();
+    }
+
+    @Override
+    public ServiceResult baseUpdate(T t) {
+        T db = getBaseDao().selectById(t.getId());
+        db.copyFrom(t);
+        setCommonsParameters(db);
+        getBaseDao().updateById(db);
+        return ServiceResultUtils.ok();
+    }
+
+    @Override
+    public ServiceResult baseSaveOrUpdate(T t) {
+        if (isNew(t)) {
+            return baseSave(t);
+        } else {
+            return baseUpdate(t);
+        }
+    }
+
+    @Override
+    public ServiceResult baseUpdateBatch(Collection<T> collection) {
+        collection.forEach(this::update);
+        return ServiceResultUtils.ok();
     }
 }
