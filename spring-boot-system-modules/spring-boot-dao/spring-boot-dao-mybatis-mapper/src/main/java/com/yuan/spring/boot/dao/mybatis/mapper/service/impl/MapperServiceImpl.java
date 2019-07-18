@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.StringJoiner;
 
 /**
  * @author yuane
@@ -60,7 +60,13 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
 
     @Override
     public List<T> findAllById(Collection<ID> collection) {
-        return collection.stream().map(baseDao::selectByPrimaryKey).collect(Collectors.toList());
+        StringJoiner joiner = new StringJoiner(",");
+        for (ID id : collection) {
+            joiner.add(id.toString());
+        }
+        String string = joiner.toString();
+        string = string.substring(0, string.lastIndexOf(","));
+        return baseDao.selectByIds(string);
     }
 }
 
