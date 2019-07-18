@@ -5,6 +5,7 @@ import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
 import com.yuan.spring.boot.dao.commons.service.BaseService;
 import com.yuan.spring.boot.dao.commons.utils.ServiceResultUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -14,11 +15,13 @@ import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Serializable> implements BaseService<T, ID> {
     /**
      * 设置主键,不添加直接返回
      *
      * @param t
+     *
      * @return
      */
     protected abstract T setId(T t);
@@ -27,6 +30,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 设置公共方法，不添加直接返回
      *
      * @param t
+     *
      * @return
      */
     protected abstract T setCommonsParams(T t);
@@ -43,16 +47,20 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 基本保存，需要根据底层配合实现
      *
      * @param t
+     *
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     protected abstract void baseSave(T t);
 
     /**
      * 基本保存，需要根据底层配合实现
      *
      * @param t
+     *
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     protected abstract void baseUpdate(T t);
 
     /**
@@ -60,6 +68,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      *
      * @param t
      */
+    @Transactional(rollbackFor = Exception.class)
     protected abstract void baseDelete(T t);
 
     /**
@@ -67,8 +76,10 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      *
      * @param id
      */
+    @Transactional(rollbackFor = Exception.class)
     protected abstract void baseDeleteById(ID id);
 
+    @Transactional(rollbackFor = Exception.class)
     private void baseSaveOrUpdate(T t) {
         if (isNew(t)) {
             baseSave(t);
@@ -115,17 +126,19 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
         }
     }
 
-
+    @Transactional(rollbackFor = Exception.class)
     protected ServiceResult baseSaveBatch(Collection<T> collection) {
         collection.stream().map(this::setId).map(this::setCommonsParams).forEach(this::baseSave);
         return ServiceResultUtils.ok();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     protected ServiceResult baseUpdateBatch(Collection<T> collection) {
         collection.stream().map(this::setCommonsParams).forEach(this::baseUpdate);
         return ServiceResultUtils.ok();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     protected ServiceResult baseSaveOrUpdateBatch(Collection<T> collection) {
         List<T> saveList = collection.stream().filter(this::isNew).map(this::setId).map(this::setCommonsParams).collect(Collectors.toList());
         List<T> updateList = collection.stream().filter(this::isNotNew).map(this::setCommonsParams).collect(Collectors.toList());
@@ -134,11 +147,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
         return ServiceResultUtils.ok();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     protected ServiceResult baseDeleteBatch(Collection<T> collection) {
         collection.forEach(this::delete);
         return ServiceResultUtils.ok();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     protected ServiceResult baseDeleteBatchById(Collection<ID> collection) {
         collection.forEach(this::deleteById);
         return ServiceResultUtils.ok();
@@ -146,6 +161,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult save(T t) {
         ServiceResult serviceResult = checkSave(t);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -158,11 +174,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveAll(T[] arrays) {
         return saveAll(Arrays.asList(arrays));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveAll(Collection<T> collection) {
         ServiceResult serviceResult = checkBatchSave(collection);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -175,6 +193,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult update(T t) {
         ServiceResult serviceResult = checkUpdate(t);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -187,11 +206,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult updateAll(T[] arrays) {
         return updateAll(Arrays.asList(arrays));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult updateAll(Collection<T> collection) {
         ServiceResult serviceResult = checkBatchUpdate(collection);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -203,6 +224,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult checkSaveOrUpdate(T t) {
         if (isNew(t)) {
             return checkSave(t);
@@ -212,6 +234,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdate(T t) {
         ServiceResult serviceResult = checkSaveOrUpdate(t);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -224,11 +247,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdateAll(T[] arrays) {
         return saveAll(Arrays.asList(arrays));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult saveOrUpdateAll(Collection<T> collection) {
         ServiceResult serviceResult = checkBatchSaveOrUpdate(collection);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -241,6 +266,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult delete(T t) {
         ServiceResult serviceResult = checkDelete(t);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -253,11 +279,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteAll(T[] arrays) {
         return deleteAll(Arrays.asList(arrays));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteAll(Collection<T> collection) {
         ServiceResult serviceResult = checkBatchDelete(collection);
         ServiceResult.Status status = serviceResult.getStatus();
@@ -269,6 +297,7 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteById(ID id) {
         ServiceResult serviceResult = checkDelete(get(id));
         ServiceResult.Status status = serviceResult.getStatus();
@@ -281,11 +310,13 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteAllById(ID[] arrays) {
         return deleteAllById(Arrays.asList(arrays));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServiceResult deleteAllById(Collection<ID> collection) {
         ServiceResult serviceResult = checkBatchDelete(findAllById(collection));
         ServiceResult.Status status = serviceResult.getStatus();

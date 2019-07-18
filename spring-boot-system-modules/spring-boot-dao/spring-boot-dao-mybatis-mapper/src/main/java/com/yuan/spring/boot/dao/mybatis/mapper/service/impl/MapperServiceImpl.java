@@ -25,11 +25,13 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseSave(T t) {
         baseDao.insert(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
         T db = baseDao.selectByPrimaryKey(t.getId());
         if (db != null) {
@@ -39,11 +41,13 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDelete(T t) {
         baseDao.delete(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
         baseDao.deleteByPrimaryKey(id);
     }

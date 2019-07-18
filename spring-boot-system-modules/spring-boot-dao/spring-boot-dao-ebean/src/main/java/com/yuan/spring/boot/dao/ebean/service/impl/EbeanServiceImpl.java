@@ -6,6 +6,7 @@ import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
 import com.yuan.spring.boot.dao.ebean.service.EbeanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.ebean.querychannel.EbeanQueryChannelService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -32,11 +33,13 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseSave(T t) {
         baseDao.save(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
         Optional<T> one = baseDao.findById(t.getId());
         if (one.isPresent()) {
@@ -47,11 +50,13 @@ public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends Ebea
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDelete(T t) {
         baseDao.delete(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
         baseDao.deleteById(id);
     }

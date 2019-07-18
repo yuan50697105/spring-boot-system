@@ -21,11 +21,13 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseSave(T t) {
         baseDao.insert(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
         T db = baseDao.selectOne(t.getId());
         if (db != null) {
@@ -35,11 +37,13 @@ public abstract class EnhanceServiceImpl<S extends BaseDao<T, ID>, T extends Enh
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDelete(T t) {
         baseDao.deleteOne(t.getId());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
         baseDao.deleteOne(id);
     }

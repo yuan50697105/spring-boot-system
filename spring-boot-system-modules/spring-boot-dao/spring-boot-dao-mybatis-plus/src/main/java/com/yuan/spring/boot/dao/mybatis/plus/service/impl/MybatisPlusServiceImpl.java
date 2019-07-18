@@ -26,11 +26,13 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseSave(T t) {
         baseDao.insert(t);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
         T db = baseDao.selectById(t.getId());
         if (db != null) {
@@ -40,11 +42,13 @@ public abstract class MybatisPlusServiceImpl<M extends MybatisPlusDao<T, ID>, T 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDelete(T t) {
         baseDao.deleteByMap(t.toParamsMap());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
         baseDao.deleteById(id);
     }

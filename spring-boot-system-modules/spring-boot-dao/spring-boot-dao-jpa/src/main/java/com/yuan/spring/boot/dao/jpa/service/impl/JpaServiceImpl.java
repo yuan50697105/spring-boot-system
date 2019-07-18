@@ -1,9 +1,10 @@
-package com.yuan.spring.boot.dao.jdbc.service.impl;
+package com.yuan.spring.boot.dao.jpa.service.impl;
 
 import com.yuan.spring.boot.dao.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.dao.jdbc.dao.JdbcDao;
-import com.yuan.spring.boot.dao.jdbc.entity.domain.JdbcDomain;
-import com.yuan.spring.boot.dao.jdbc.service.JdbcService;
+import com.yuan.spring.boot.dao.jpa.dao.JpaDao;
+import com.yuan.spring.boot.dao.jpa.entity.domain.JpaDomain;
+import com.yuan.spring.boot.dao.jpa.service.JpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,12 @@ import java.util.Optional;
 
 /**
  * @author yuane
- * @date 2019/7/13 22:42
+ * @date 2019/6/15 19:07
  **/
+
+@Slf4j
 @Transactional(rollbackFor = Exception.class)
-public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements JdbcService<T, ID> {
+public abstract class JpaServiceImpl<S extends JpaDao<T, ID>, T extends JpaDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements JpaService<T, ID> {
     @Autowired
     protected S baseDao;
 
@@ -29,17 +32,17 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseSave(T t) {
-        baseDao.insert(t);
+        baseDao.save(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
-        Optional<T> daoById = baseDao.getById(t.getId());
-        if (daoById.isPresent()) {
-            T t1 = daoById.get();
+        Optional<T> one = baseDao.findById(t.getId());
+        if (one.isPresent()) {
+            T t1 = one.get();
             t1.copyFrom(t);
-            baseDao.update(t1);
+            baseDao.save(t1);
         }
     }
 
@@ -52,12 +55,12 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
-        baseDao.deleteByPrimaryKey(id);
+        baseDao.deleteById(id);
     }
 
     @Override
     public T get(ID id) {
-        return baseDao.getById(id).orElse(null);
+        return baseDao.findById(id).orElse(null);
     }
 
     @Override
@@ -67,6 +70,6 @@ public abstract class JdbcServiceImpl<S extends JdbcDao<T, ID>, T extends JdbcDo
 
     @Override
     public List<T> findAllById(Collection<ID> collection) {
-        return baseDao.findByIds(collection);
+        return baseDao.findAllById(collection);
     }
 }
