@@ -2,7 +2,6 @@ package com.yuan.spring.boot.dao.commons.service;
 
 import com.yuan.spring.boot.dao.commons.entity.domain.BaseDomain;
 import com.yuan.spring.boot.dao.commons.entity.dto.ServiceResult;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;

@@ -40,7 +40,7 @@
 
         <dependency>
             <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-dao-mybatis-plus</artifactId>
+            <artifactId>spring-boot-dao-mybatis</artifactId>
             <type>jar</type>
         </dependency>
         <dependency>
