@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class EnhanceQueryParams<ID extends Serializable> extends BaseQueryParams<ID> implements Serializable {
-    public EnhanceQueryParams() {
+public abstract class MybatisEnhanceQueryParams<ID extends Serializable> extends BaseQueryParams<ID> implements Serializable {
+    public MybatisEnhanceQueryParams() {
     }
 
-    public EnhanceQueryParams(ID id, ID[] ids) {
+    public MybatisEnhanceQueryParams(ID id, ID[] ids) {
         super(id, ids);
     }
 }

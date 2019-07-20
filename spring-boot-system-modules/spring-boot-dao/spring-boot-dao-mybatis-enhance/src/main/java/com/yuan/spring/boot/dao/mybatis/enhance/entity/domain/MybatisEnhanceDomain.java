@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class EnhanceDomain<ID extends Serializable> extends BaseDomain<ID> {
-    public EnhanceDomain() {
+public abstract class MybatisEnhanceDomain<ID extends Serializable> extends BaseDomain<ID> {
+    public MybatisEnhanceDomain() {
     }
 }

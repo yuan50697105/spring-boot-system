@@ -12,11 +12,11 @@ import java.io.Serializable;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class MapperQueryParams<ID extends Serializable> extends BaseQueryParams<ID> implements Serializable {
-    public MapperQueryParams() {
+public abstract class MybatisMapperQueryParams<ID extends Serializable> extends BaseQueryParams<ID> implements Serializable {
+    public MybatisMapperQueryParams() {
     }
 
-    public MapperQueryParams(ID id, ID[] ids) {
+    public MybatisMapperQueryParams(ID id, ID[] ids) {
         super(id, ids);
     }
 }

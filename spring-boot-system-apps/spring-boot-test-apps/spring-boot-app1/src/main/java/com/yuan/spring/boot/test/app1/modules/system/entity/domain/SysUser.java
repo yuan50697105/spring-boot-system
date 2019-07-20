@@ -1,50 +1,47 @@
 package com.yuan.spring.boot.test.app1.modules.system.entity.domain;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import com.yuan.spring.boot.test.app1.modules.commons.entity.domain.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 /**
  * @author yuane
- * @date 2019/7/17 0:47
+ * @date 2019/7/19 21:55
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "sys_user")
 public class SysUser extends AbstractEntity {
+    @Excel(name = "账户名")
     private String username;
+    @ExcelIgnore
     private String password;
+    @Excel(name = "用户名")
     private String name;
-    @Column(name = "name_spell_simple")
-    private String nameSpellSimple;
-    @Column(name = "name_spell_full")
+    @Excel(name = "用户名全拼")
     private String nameSpellFull;
+    @Excel(name = "用户名简拼")
+    private String nameSpellSimple;
     private Integer enabled;
 
     public SysUser() {
     }
 
-    public SysUser(String username, String password, String name, String nameSpellSimple, String nameSpellFull, Integer enabled) {
+    public SysUser(String username, String password, String name, String nameSpellFull, String nameSpellSimple) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.nameSpellSimple = nameSpellSimple;
         this.nameSpellFull = nameSpellFull;
-        this.enabled = enabled;
+        this.nameSpellSimple = nameSpellSimple;
     }
 
-    public SysUser(Long id, String username, String password, String name, String nameSpellSimple, String nameSpellFull, Integer enabled) {
+    public SysUser(Long id, String username, String password, String name, String nameSpellFull, String nameSpellSimple) {
         super(id);
         this.username = username;
         this.password = password;
         this.name = name;
-        this.nameSpellSimple = nameSpellSimple;
         this.nameSpellFull = nameSpellFull;
-        this.enabled = enabled;
+        this.nameSpellSimple = nameSpellSimple;
     }
 }

@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.mybatis.mapper.entity.vo;
+package com.yuan.spring.boot.dao.mybatis.enhance.entity.vo;
 
 import com.yuan.spring.boot.dao.commons.entity.vo.BaseVo;
 import lombok.Data;
@@ -8,15 +8,15 @@ import java.io.Serializable;
 
 /**
  * @author yuane
- * @date 2019/7/13 21:02
+ * @date 2019/7/13 15:00
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MapperVo<ID extends Serializable> extends BaseVo<ID> {
-    public MapperVo() {
+public class MybatisEnhanceVo<ID extends Serializable> extends BaseVo<ID> {
+    public MybatisEnhanceVo() {
     }
 
-    public MapperVo(ID id) {
+    public MybatisEnhanceVo(ID id) {
         super(id);
     }
 }

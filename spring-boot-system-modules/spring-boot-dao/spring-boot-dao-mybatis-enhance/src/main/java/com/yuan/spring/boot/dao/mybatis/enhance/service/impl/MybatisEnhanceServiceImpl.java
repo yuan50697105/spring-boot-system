@@ -1,23 +1,19 @@
-package com.yuan.spring.boot.dao.mybatis.mapper.service.impl;
+package com.yuan.spring.boot.dao.mybatis.enhance.service.impl;
 
 import com.yuan.spring.boot.dao.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.dao.mybatis.mapper.dao.MapperDao;
-import com.yuan.spring.boot.dao.mybatis.mapper.entity.domain.MapperDomain;
-import com.yuan.spring.boot.dao.mybatis.mapper.service.MapperService;
+import com.yuan.spring.boot.dao.mybatis.enhance.dao.MybatisEnhanceDao;
+import com.yuan.spring.boot.dao.mybatis.enhance.entity.domain.MybatisEnhanceDomain;
+import com.yuan.spring.boot.dao.mybatis.enhance.service.MybatisEnhanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * @author yuane
- * @date 2019/6/15 23:10
- **/
 @Transactional(rollbackFor = Exception.class)
-public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends MapperDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements MapperService<T, ID> {
+public abstract class MybatisEnhanceServiceImpl<S extends MybatisEnhanceDao<T, ID>, T extends MybatisEnhanceDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements MybatisEnhanceService<T, ID> {
+    @Autowired
     protected S baseDao;
 
     protected S getBaseDao() {
@@ -33,38 +29,39 @@ public abstract class MapperServiceImpl<S extends MapperDao<T, ID>, T extends Ma
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseUpdate(T t) {
-        T db = baseDao.selectByPrimaryKey(t.getId());
+        T db = baseDao.selectOne(t.getId());
         if (db != null) {
             db.copyFrom(t);
-            baseDao.updateByPrimaryKey(db);
+            baseDao.update(db);
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseDelete(T t) {
-        baseDao.delete(t);
+        baseDao.deleteOne(t.getId());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void baseDeleteById(ID id) {
-        baseDao.deleteByPrimaryKey(id);
+        baseDao.deleteOne(id);
     }
+
 
     @Override
     public T get(ID id) {
-        return baseDao.selectByPrimaryKey(id);
+        return baseDao.selectOne(id);
     }
 
     @Override
     public List<T> findAllById(ID[] arrays) {
-        return findAllById(Arrays.asList(arrays));
+        return baseDao.selectArray(arrays);
     }
 
     @Override
     public List<T> findAllById(Collection<ID> collection) {
-        return collection.stream().map(baseDao::selectByPrimaryKey).collect(Collectors.toList());
+        return baseDao.selectCollection(collection);
     }
 }
 

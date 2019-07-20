@@ -1,14 +1,12 @@
 package com.yuan.spring.boot.test.app1.modules.commons.entity.domain;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.yuan.spring.boot.dao.mybatis.plus.entity.domain.MybatisPlusDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 
 /**
  * @author yuane
@@ -16,11 +14,10 @@ import javax.persistence.MappedSuperclass;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class AbstractEntity extends MybatisDomain<Long> {
-    @Id
+public abstract class AbstractEntity extends MybatisPlusDomain<Long> {
+    @TableId
     @Excel(name = "主键", isColumnHidden = true)
     private Long id;
 
