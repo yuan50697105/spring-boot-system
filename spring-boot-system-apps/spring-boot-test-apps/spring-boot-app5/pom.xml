@@ -22,7 +22,7 @@
             <dependency>
                 <groupId>com.yuan</groupId>
                 <artifactId>spring-boot-system-dependencies</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -36,6 +36,10 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-mvc</artifactId>

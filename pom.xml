@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.yuan</groupId>
     <artifactId>spring-boot-system</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <description>个人测试项目</description>

@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-system</artifactId>
-        <version>1.0.1</version>
-        <relativePath>../../pom.xml</relativePath>
+        <artifactId>spring-boot-system-modules</artifactId>
+        <version>1.0.2</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-dao</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
     <properties>

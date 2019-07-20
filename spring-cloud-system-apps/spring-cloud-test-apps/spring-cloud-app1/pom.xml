@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-system</artifactId>
-        <version>1.0.1</version>
+        <artifactId>spring-cloud-test-apps</artifactId>
+        <version>1.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spring-cloud-app1</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <description>个人测试项目</description>
@@ -35,7 +35,7 @@
             <dependency>
                 <groupId>com.yuan</groupId>
                 <artifactId>spring-boot-system-dependencies</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
