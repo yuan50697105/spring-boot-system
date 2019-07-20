@@ -1,5 +1,6 @@
-package com.yuan.spring.boot.dao.jpa.entity.dto;
+package com.yuan.spring.boot.dao.mybatis.entity.dto;
 
+import com.yuan.spring.boot.dao.commons.entity.dto.BaseQueryParams;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.domain.PageRequest;
@@ -14,27 +15,26 @@ import java.io.Serializable;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class JpaQueryParams<ID extends Serializable> extends com.yuan.spring.boot.dao.commons.entity.dto.BaseQueryParams<ID> implements Serializable {
+public abstract class MybatisQueryParam<ID extends Serializable> extends BaseQueryParams<ID> {
     private int pageNumber;
     private int pageSize;
     private Sort sort;
 
-    public JpaQueryParams() {
+    public MybatisQueryParam() {
     }
 
-    public JpaQueryParams(ID id, ID[] ids) {
-
+    public MybatisQueryParam(ID id, ID[] ids) {
         super(id, ids);
     }
 
-    public JpaQueryParams(ID id, ID[] ids, int pageNumber, int pageSize) {
+    public MybatisQueryParam(ID id, ID[] ids, int pageNumber, int pageSize) {
         super(id, ids);
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.sort = Sort.unsorted();
     }
 
-    public JpaQueryParams(ID id, ID[] ids, int pageNumber, int pageSize, Sort sort) {
+    public MybatisQueryParam(ID id, ID[] ids, int pageNumber, int pageSize, Sort sort) {
         super(id, ids);
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;

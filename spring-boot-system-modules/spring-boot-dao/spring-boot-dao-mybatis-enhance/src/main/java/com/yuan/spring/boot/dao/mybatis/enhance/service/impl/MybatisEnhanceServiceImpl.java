@@ -61,7 +61,9 @@ public abstract class MybatisEnhanceServiceImpl<S extends MybatisEnhanceDao<T, I
 
     @Override
     public List<T> findAllById(Collection<ID> collection) {
+
         return baseDao.selectCollection(collection);
     }
+
 }
 
