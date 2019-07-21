@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Sort;
+
+import java.util.Date;
 
 /**
  * @author yuane
@@ -17,15 +18,11 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor
 public class BaseQueryParams extends MybatisQueryParam<Long> {
 
-    public BaseQueryParams(Long id, Long[] ids) {
-        super(id, ids);
-    }
+    private String createBy;
+    private String modifyBy;
+    private Date createDateStart;
+    private Date createDateEne;
+    private Date modifyDateStart;
+    private Date modifyDateEnd;
 
-    public BaseQueryParams(Long id, Long[] ids, int pageNumber, int pageSize) {
-        super(id, ids, pageNumber, pageSize);
-    }
-
-    public BaseQueryParams(Long id, Long[] ids, int pageNumber, int pageSize, Sort sort) {
-        super(id, ids, pageNumber, pageSize, sort);
-    }
 }
