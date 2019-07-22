@@ -6,6 +6,9 @@ import com.yuan.spring.web.mvc.annotation.ViewPrefix;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author yuane
  * @date 2019/7/21 23:49
@@ -18,5 +21,8 @@ public class SysUserController extends BaseController {
 
     public SysUserController(SysUserService sysUserService) {
         this.sysUserService = sysUserService;
+    }
+
+    public void download(HttpServletRequest request, HttpServletResponse response) {
     }
 }

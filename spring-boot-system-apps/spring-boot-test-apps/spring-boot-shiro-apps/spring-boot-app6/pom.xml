@@ -52,8 +52,7 @@
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-dao-hibernate</artifactId>
-            <type>jar</type>
+            <artifactId>spring-boot-dao-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

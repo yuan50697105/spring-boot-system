@@ -1,5 +1,6 @@
 package com.yuan.spring.boot.test.app1.module.commons.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.yuan.spring.boot.dao.mybatis.service.impl.MybatisServiceImpl;
 import com.yuan.spring.boot.test.app1.module.commons.dao.BaseDao;
 import com.yuan.spring.boot.test.app1.module.commons.entity.domain.BaseEntity;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public abstract class BaseServiceImpl<S extends BaseDao<T>, T extends BaseEntity> extends MybatisServiceImpl<S, T, Long> implements BaseService<T> {
     @Override
     protected T setId(T t) {
+        t.setId(IdUtil.getSnowflake(1, 1).nextId());
         return t;
     }
 
