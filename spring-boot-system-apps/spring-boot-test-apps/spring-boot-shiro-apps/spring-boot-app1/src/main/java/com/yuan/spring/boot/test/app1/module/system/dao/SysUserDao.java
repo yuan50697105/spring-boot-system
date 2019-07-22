@@ -3,6 +3,7 @@ package com.yuan.spring.boot.test.app1.module.system.dao;
 import com.yuan.spring.boot.test.app1.module.commons.dao.BaseDao;
 import com.yuan.spring.boot.test.app1.module.system.entity.domain.SysUser;
 import org.mapstruct.Mapper;
+import org.springframework.data.mybatis.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface SysUserDao extends BaseDao<SysUser> {
+    @Query
     boolean existsByUsernameEquals(String username);
 }

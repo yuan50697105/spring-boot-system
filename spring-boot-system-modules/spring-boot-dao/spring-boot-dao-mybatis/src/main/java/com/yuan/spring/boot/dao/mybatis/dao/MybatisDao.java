@@ -12,4 +12,5 @@ import java.io.Serializable;
  **/
 @NoRepositoryBean
 public interface MybatisDao<T extends MybatisDomain<ID>, ID extends Serializable> extends MybatisRepository<T, ID> {
+
 }

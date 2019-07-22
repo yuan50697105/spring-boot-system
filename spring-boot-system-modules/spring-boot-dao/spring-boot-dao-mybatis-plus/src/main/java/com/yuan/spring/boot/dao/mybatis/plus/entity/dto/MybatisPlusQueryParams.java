@@ -20,4 +20,6 @@ public abstract class MybatisPlusQueryParams<ID extends Serializable> extends Ba
     public MybatisPlusQueryParams(ID id, ID[] ids) {
         super(id, ids);
     }
+
+
 }
