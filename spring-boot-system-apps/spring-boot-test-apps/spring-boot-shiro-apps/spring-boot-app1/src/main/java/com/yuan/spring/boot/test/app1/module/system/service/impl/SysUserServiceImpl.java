@@ -26,7 +26,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         boolean passFlag = true;
         StringJoiner joiner = new StringJoiner(",");
         String username = sysUser.getUsername();
-        if (baseDao.existsByUsernameEquals(username)) {
+        if (baseDao.findByUsernameEquals(username).isPresent()) {
             passFlag = false;
             joiner.add(username + "已存在");
         }

@@ -39,4 +39,6 @@ public class SysUser extends BaseEntity {
     @Column(name = "name_spell_simple")
     private String nameSpellSimple;
 
+    public SysUser() {
+    }
 }
