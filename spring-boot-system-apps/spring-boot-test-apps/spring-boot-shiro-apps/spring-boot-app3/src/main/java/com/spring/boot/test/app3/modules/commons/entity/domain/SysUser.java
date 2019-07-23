@@ -10,5 +10,5 @@ import javax.persistence.Table;
 @Table(name = "sys_user")
 public class SysUser extends BaseEntity {
     private String username;
-
+    private String name;
 }

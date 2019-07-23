@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuan.spring.boot.test.app1.module.system.dao.SysUserDao">
+    <select id="findAllByNameContains"
+            resultType="com.yuan.spring.boot.test.app1.module.system.entity.domain.SysUser">
+        select id,
+               create_by,
+               modify_by,
+               create_date,
+               modify_date,
+               username,
+               name,
+               name_spell_full,
+               name_spell_simple,
+               password,
+               enabled
+        from sys_user su
+        where name like concat('%', #{name}, '%')
+    </select>
+    <select id="findAllByUsernameContaining"
+            resultType="com.yuan.spring.boot.test.app1.module.system.entity.domain.SysUser">
+        select id,
+               create_by,
+               modify_by,
+               create_date,
+               modify_date,
+               username,
+               name,
+               name_spell_full,
+               name_spell_simple,
+               password,
+               enabled
+        from sys_user su
+        where username like concat('%', #{username}, '%')
+    </select>
+    <select id="findAllByParams"
+            resultType="com.yuan.spring.boot.test.app1.module.system.entity.domain.SysUser">
+        select id,
+        create_by,
+        modify_by,
+        create_date,
+        modify_date,
+        username,
+        name,
+        name_spell_full,
+        name_spell_simple,
+        password,
+        enabled
+        from sys_user su
+        <!--        limit #{pageSize} offset #{offset}-->
+    </select>
+    <select id="findCountByParams" resultType="java.lang.Long">
+        select count(*)
+        from sys_user su
+    </select>
+    <select id="count_findAllByParams" resultType="java.lang.Long">
+        select count(*)
+        from sys_user su
+    </select>
+</mapper>

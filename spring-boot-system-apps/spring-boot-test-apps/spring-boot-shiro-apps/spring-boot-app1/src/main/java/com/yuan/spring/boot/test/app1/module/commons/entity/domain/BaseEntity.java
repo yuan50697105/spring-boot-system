@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mybatis.annotation.Condition;
+import org.springframework.data.mybatis.annotation.CreatedBy;
+import org.springframework.data.mybatis.annotation.CreatedDate;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @author yuane
@@ -18,7 +22,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class BaseEntity extends MybatisDomain<Long> {
     @Id
+    @Condition
     private Long id;
+    @CreatedDate
+    private Date createDate;
+    //    @LastModifiedDate
+    private Date modifyDate;
+    @CreatedBy
+    private Long createBy;
+    //    @LastModifiedBy
+    private Long modifyBy;
 
 
 }

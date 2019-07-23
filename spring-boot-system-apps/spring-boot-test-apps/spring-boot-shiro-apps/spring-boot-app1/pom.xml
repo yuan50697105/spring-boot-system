@@ -36,7 +36,11 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.8.3</version>
+        </dependency>
 
         <dependency>
             <groupId>com.yuan</groupId>
@@ -51,10 +55,10 @@
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-mvc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-web-mvc-shiro</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.yuan</groupId>-->
+        <!--            <artifactId>spring-boot-web-mvc-shiro</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
