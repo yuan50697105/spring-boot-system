@@ -35,6 +35,6 @@ public class SysUser extends BaseEntity {
     private String nameSpellFull;
     @Excel(name = "姓名简拼")
     private String nameSpellSimple;
-
+    private Integer enabled;
 
 }

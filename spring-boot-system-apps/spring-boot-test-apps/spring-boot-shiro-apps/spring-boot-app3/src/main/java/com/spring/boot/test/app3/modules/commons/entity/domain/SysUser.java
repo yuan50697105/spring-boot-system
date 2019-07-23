@@ -11,4 +11,8 @@ import javax.persistence.Table;
 public class SysUser extends BaseEntity {
     private String username;
     private String name;
+    private String password;
+    private String nameSpellFull;
+    private String nameSpellSimple;
+    private Integer enabled;
 }

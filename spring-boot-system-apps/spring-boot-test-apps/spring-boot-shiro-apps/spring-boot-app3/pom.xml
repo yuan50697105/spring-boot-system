@@ -36,18 +36,27 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-mvc</artifactId>
-            <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>com.yuan</groupId>
-            <artifactId>spring-boot-web-mvc-shiro</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.yuan</groupId>-->
+        <!--            <artifactId>spring-boot-web-mvc-shiro</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-dao-mybatis-mapper</artifactId>
@@ -60,7 +69,6 @@
         <dependency>
             <groupId>com.yuan</groupId>
             <artifactId>spring-boot-web-views-freemarker</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 
