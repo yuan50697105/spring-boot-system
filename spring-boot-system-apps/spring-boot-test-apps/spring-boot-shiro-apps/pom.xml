@@ -18,15 +18,6 @@
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>spring-boot-app1</module>
-        <module>spring-boot-app2</module>
-        <module>spring-boot-app3</module>
-        <module>spring-boot-app4</module>
-        <module>spring-boot-app5</module>
-        <module>spring-boot-app6</module>
-        <module>spring-boot-app7</module>
-        <module>spring-boot-app8</module>
-        <module>spring-boot-app9</module>
     </modules>
     <dependencies>
     </dependencies>
