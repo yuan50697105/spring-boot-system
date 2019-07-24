@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-test-apps</artifactId>
+        <artifactId>spring-boot-system-apps</artifactId>
         <version>1.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-shiro-apps</artifactId>
+    <artifactId>spring-boot-security-apps</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.2</version>
     <packaging>pom</packaging>
@@ -20,6 +20,7 @@
     <modules>
     </modules>
     <dependencies>
+
     </dependencies>
 
     <build>
