@@ -30,35 +30,13 @@
             <artifactId>jpa-spec</artifactId>
             <version>3.2.4</version>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.lucene</groupId>-->
-        <!--            <artifactId>lucene-analyzers-smartcn</artifactId>-->
-        <!--            <version>5.5.5</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-jooq</artifactId>-->
-        <!--        </dependency>-->
-        <!--                <dependency>-->
-        <!--            <groupId>org.hibernate</groupId>-->
-        <!--            <artifactId>hibernate-search-orm</artifactId>-->
-        <!--            <version>5.10.5.Final</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <artifactId>jboss-transaction-api_1.2_spec</artifactId>-->
-        <!--                    <groupId>org.jboss.spec.javax.transaction</groupId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>5.4.3.Final</version>
         </dependency>
 
 

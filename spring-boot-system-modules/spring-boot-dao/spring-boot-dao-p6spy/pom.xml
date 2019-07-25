@@ -11,7 +11,7 @@
     <artifactId>spring-boot-dao-p6spy</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.2</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>

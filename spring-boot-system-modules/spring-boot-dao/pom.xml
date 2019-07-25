@@ -35,10 +35,8 @@
         <module>spring-boot-dao-mybatis-enhance</module>
         <module>spring-boot-dao-mybatis-mapper</module>
         <module>spring-boot-dao-mybatis-plus</module>
-        <module>spring-boot-dao-nutz</module>
         <module>spring-boot-dao-extra-sharding</module>
-        <module>spring-boot-dao-p6spy
-        </module>
+        <module>spring-boot-dao-p6spy</module>
     </modules>
     <dependencies>
 

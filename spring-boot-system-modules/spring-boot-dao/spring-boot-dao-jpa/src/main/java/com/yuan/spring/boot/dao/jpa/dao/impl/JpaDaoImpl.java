@@ -1,5 +1,7 @@
 package com.yuan.spring.boot.dao.jpa.dao.impl;
 
+import com.querydsl.jpa.HQLTemplates;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yuan.spring.boot.dao.jpa.dao.JpaDao;
 import com.yuan.spring.boot.dao.jpa.entity.domain.JpaDomain;
 import com.yuan.spring.boot.dao.jpa.entity.dto.ArrayQuery;
@@ -32,13 +34,18 @@ import java.util.Optional;
 public class JpaDaoImpl<T extends JpaDomain<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements JpaDao<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
+    private final JPAQueryFactory queryFactory;
 
     public JpaDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
         this.entityInformation = entityInformation;
+        this.queryFactory = new JPAQueryFactory(new HQLTemplates(), entityManager);
     }
 
+    public JPAQueryFactory getQueryFactory() {
+        return this.queryFactory;
+    }
 
     @Override
     public EntityManager getEntityManager() {
