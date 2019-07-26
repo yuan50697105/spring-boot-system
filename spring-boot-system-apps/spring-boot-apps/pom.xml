@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yuan</groupId>
-        <artifactId>spring-boot-system</artifactId>
+        <artifactId>spring-boot-system-apps</artifactId>
         <version>1.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>spring-boot-system-apps</artifactId>
+    <artifactId>spring-boot-apps</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.2</version>
     <packaging>pom</packaging>
@@ -18,9 +18,6 @@
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>spring-boot-apps</module>
-        <module>spring-boot-shiro-apps</module>
-        <module>spring-boot-security-apps</module>
     </modules>
     <dependencies>
 

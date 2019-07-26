@@ -32,7 +32,6 @@ import java.util.Optional;
 public class JpaDaoImpl<T extends JpaDomain<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements JpaDao<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
-
     public JpaDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
