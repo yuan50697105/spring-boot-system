@@ -21,7 +21,6 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 设置主键,不添加直接返回
      *
      * @param t
-     *
      * @return
      */
     protected abstract T setId(T t);
@@ -30,7 +29,6 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 设置公共方法，不添加直接返回
      *
      * @param t
-     *
      * @return
      */
     protected abstract T setCommonsParams(T t);
@@ -47,7 +45,6 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 基本保存，需要根据底层配合实现
      *
      * @param t
-     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -57,7 +54,6 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
      * 基本保存，需要根据底层配合实现
      *
      * @param t
-     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -79,8 +75,15 @@ public abstract class BaseServiceImpl<T extends BaseDomain<ID>, ID extends Seria
     @Transactional(rollbackFor = Exception.class)
     protected abstract void baseDeleteById(ID id);
 
+    protected void updateIgnoreNull(T t) {
+        T t1 = get(t.getId());
+        t1.copyFrom(t);
+        setCommonsParams(t1);
+        baseUpdate(t);
+    }
+
     @Transactional(rollbackFor = Exception.class)
-    private void baseSaveOrUpdate(T t) {
+    protected void baseSaveOrUpdate(T t) {
         if (isNew(t)) {
             baseSave(t);
         } else {
