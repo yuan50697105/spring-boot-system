@@ -30,8 +30,6 @@ public interface SysUserConverter {
     @Mapping(target = "asc", ignore = true)
     Page<SysUserVo> toVo(Page<SysUser> users);
 
-    org.springframework.data.domain.Page<SysUserVo> toVo(org.springframework.data.domain.Page<SysUser> users);
-
     SysUser toDomain(SysUserVo sysUserVo);
 
     PageVo<SysUserVo> toVo(PageVo<SysUser> pageVo);

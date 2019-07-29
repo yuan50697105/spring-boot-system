@@ -33,6 +33,10 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>spring-boot-utils</artifactId>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>

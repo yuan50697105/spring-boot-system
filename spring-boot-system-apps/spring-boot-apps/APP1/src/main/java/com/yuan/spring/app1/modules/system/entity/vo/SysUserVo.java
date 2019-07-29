@@ -1,8 +1,11 @@
 package com.yuan.spring.app1.modules.system.entity.vo;
 
 import com.yuan.spring.app1.modules.system.entity.domain.SysUser;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 
 /**
  * @author yuane
@@ -11,4 +14,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SysUserVo extends SysUser {
+
+    public SysUserVo() {
+    }
+
+    public SysUserVo(String id) {
+        super(id);
+    }
+
+    public SysUserVo(String username, String password, String name, Integer enabled) {
+        super(username, password, name, enabled);
+    }
+
+    @Builder
+    public SysUserVo(String id, String createBy, String updateBy, Date createDate, Date updateDate, String username, String password, String name, String nameSpellFull, String nameSpellSimple, Integer enabled) {
+        super(id, createBy, updateBy, createDate, updateDate, username, password, name, nameSpellFull, nameSpellSimple, enabled);
+    }
 }
