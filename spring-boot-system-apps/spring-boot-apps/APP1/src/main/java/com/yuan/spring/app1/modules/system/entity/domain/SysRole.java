@@ -32,12 +32,6 @@ public class SysRole extends BaseEntity {
         this.nameSpellSimple = nameSpellSimple;
     }
 
-    public SysRole(String id, String createBy, String updateBy, Date createDate, Date updateDate, String name, String nameSpellFull, String nameSpellSimple) {
-        super(id, createBy, updateBy, createDate, updateDate);
-        this.name = name;
-        this.nameSpellFull = nameSpellFull;
-        this.nameSpellSimple = nameSpellSimple;
-    }
 
     public SysRole(String id, String[] ids, String createBy, String updateBy, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd, String name, String nameSpellFull, String nameSpellSimple) {
         super(id, ids, createBy, updateBy, createDate, updateDate, createDateStart, createDateEnd, updateDateStart, updateDateEnd);

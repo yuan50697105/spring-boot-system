@@ -1,8 +1,8 @@
 package com.yuan.spring.boot.dao.jpa.service.impl;
 
 import com.yuan.spring.boot.dao.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.dao.jpa.dao.JpaDao;
 import com.yuan.spring.boot.dao.jpa.entity.domain.JpaDomain;
+import com.yuan.spring.boot.dao.jpa.repository.BaseJpaRepository;
 import com.yuan.spring.boot.dao.jpa.service.JpaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public abstract class JpaServiceImpl<S extends JpaDao<T, ID>, T extends JpaDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements JpaService<T, ID> {
+public abstract class JpaServiceImpl<S extends BaseJpaRepository<T, ID>, T extends JpaDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements JpaService<T, ID> {
     @Autowired
     protected S baseDao;
 

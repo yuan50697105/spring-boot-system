@@ -1,4 +1,4 @@
-package com.yuan.spring.boot.dao.jpa.dao;
+package com.yuan.spring.boot.dao.jpa.repository;
 
 import com.yuan.spring.boot.dao.jpa.entity.domain.JpaDomain;
 import com.yuan.spring.boot.dao.jpa.entity.dto.ArrayQuery;
@@ -21,7 +21,7 @@ import java.util.Optional;
  *         ToMap 是结果集为map，ToBean是用于VO实体，其他的都是针对持久类实体与基础类型
  **/
 @NoRepositoryBean
-public interface JpaDao<T extends JpaDomain<ID>, ID extends Serializable> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface BaseJpaRepository<T extends JpaDomain<ID>, ID extends Serializable> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
     EntityManager getEntityManager();
 

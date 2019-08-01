@@ -17,10 +17,6 @@ public class SysRoleQueryParams extends SysRole {
     public SysRoleQueryParams() {
     }
 
-    public SysRoleQueryParams(String name) {
-        super(name);
-    }
-
     @Builder
     public SysRoleQueryParams(String id, String[] ids, String createBy, String updateBy, Date createDate, Date updateDate, Date createDateStart, Date createDateEnd, Date updateDateStart, Date updateDateEnd, String name, String nameSpellFull, String nameSpellSimple) {
         super(id, ids, createBy, updateBy, createDate, updateDate, createDateStart, createDateEnd, updateDateStart, updateDateEnd, name, nameSpellFull, nameSpellSimple);

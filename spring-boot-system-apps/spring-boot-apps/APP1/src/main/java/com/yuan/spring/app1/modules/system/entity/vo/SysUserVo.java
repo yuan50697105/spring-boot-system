@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
 /**
  * @author yuane
  * @date 2019/7/27 11:23
@@ -22,12 +20,9 @@ public class SysUserVo extends SysUser {
         super(id);
     }
 
+    @Builder
     public SysUserVo(String username, String password, String name, Integer enabled) {
         super(username, password, name, enabled);
     }
 
-    @Builder
-    public SysUserVo(String id, String createBy, String updateBy, Date createDate, Date updateDate, String username, String password, String name, String nameSpellFull, String nameSpellSimple, Integer enabled) {
-        super(id, createBy, updateBy, createDate, updateDate, username, password, name, nameSpellFull, nameSpellSimple, enabled);
-    }
 }

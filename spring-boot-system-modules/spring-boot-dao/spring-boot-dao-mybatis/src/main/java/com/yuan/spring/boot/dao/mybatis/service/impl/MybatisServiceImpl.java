@@ -1,8 +1,8 @@
 package com.yuan.spring.boot.dao.mybatis.service.impl;
 
 import com.yuan.spring.boot.dao.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.dao.mybatis.dao.MybatisDao;
 import com.yuan.spring.boot.dao.mybatis.entity.domain.MybatisDomain;
+import com.yuan.spring.boot.dao.mybatis.repository.BaseMybatisRepository;
 import com.yuan.spring.boot.dao.mybatis.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import java.util.List;
  **/
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class MybatisServiceImpl<S extends MybatisDao<T, ID>, T extends MybatisDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements MybatisService<T, ID> {
+public abstract class MybatisServiceImpl<S extends BaseMybatisRepository<T, ID>, T extends MybatisDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements MybatisService<T, ID> {
     @Autowired
     protected S baseDao;
 

@@ -1,8 +1,8 @@
 package com.yuan.spring.boot.dao.ebean.service.impl;
 
 import com.yuan.spring.boot.dao.commons.service.impl.BaseServiceImpl;
-import com.yuan.spring.boot.dao.ebean.dao.EbeanDao;
 import com.yuan.spring.boot.dao.ebean.entity.domain.EbeanDomain;
+import com.yuan.spring.boot.dao.ebean.repository.BaseEbeanRepository;
 import com.yuan.spring.boot.dao.ebean.service.EbeanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.ebean.querychannel.EbeanQueryChannelService;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author yuane
  * @date 2019/7/13 12:37
  **/
-public abstract class EbeanServiceImpl<S extends EbeanDao<T, ID>, T extends EbeanDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements EbeanService<T, ID> {
+public abstract class EbeanServiceImpl<S extends BaseEbeanRepository<T, ID>, T extends EbeanDomain<ID>, ID extends Serializable> extends BaseServiceImpl<T, ID> implements EbeanService<T, ID> {
     @Autowired
     protected S baseDao;
     @Autowired

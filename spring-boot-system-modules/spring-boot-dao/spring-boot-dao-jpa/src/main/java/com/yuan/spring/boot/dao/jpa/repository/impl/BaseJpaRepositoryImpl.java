@@ -1,9 +1,9 @@
-package com.yuan.spring.boot.dao.jpa.dao.impl;
+package com.yuan.spring.boot.dao.jpa.repository.impl;
 
-import com.yuan.spring.boot.dao.jpa.dao.JpaDao;
 import com.yuan.spring.boot.dao.jpa.entity.domain.JpaDomain;
 import com.yuan.spring.boot.dao.jpa.entity.dto.ArrayQuery;
 import com.yuan.spring.boot.dao.jpa.entity.dto.MapQuery;
+import com.yuan.spring.boot.dao.jpa.repository.BaseJpaRepository;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.query.internal.QueryImpl;
 import org.hibernate.transform.AliasToBeanResultTransformer;
@@ -29,10 +29,11 @@ import java.util.Optional;
  **/
 @SuppressWarnings({"Duplicates", "unchecked"})
 @NoRepositoryBean
-public class JpaDaoImpl<T extends JpaDomain<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements JpaDao<T, ID> {
+public class BaseJpaRepositoryImpl<T extends JpaDomain<ID>, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseJpaRepository<T, ID> {
     private final EntityManager entityManager;
     private final JpaEntityInformation<T, ?> entityInformation;
-    public JpaDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+
+    public BaseJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
         this.entityInformation = entityInformation;
