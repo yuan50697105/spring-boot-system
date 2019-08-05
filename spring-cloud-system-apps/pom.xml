@@ -14,8 +14,6 @@
     <packaging>pom</packaging>
     <description>个人测试项目</description>
     <modules>
-        <module>spring-cloud-production-apps</module>
-        <module>spring-cloud-test-apps</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
